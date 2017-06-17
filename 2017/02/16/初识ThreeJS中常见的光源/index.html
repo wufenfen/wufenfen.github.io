@@ -1,0 +1,802 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Translate,JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="现实环境中，人们之所以能看得到物体，是因为有光，物体的材质反射光到人眼中。在ThreeJS中有几种光源，去模拟现实环境。最常见的四种为：">
+<meta name="keywords" content="Translate,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识ThreeJS中常见的光源">
+<meta property="og:url" content="http://yoursite.com/2017/02/16/初识ThreeJS中常见的光源/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="现实环境中，人们之所以能看得到物体，是因为有光，物体的材质反射光到人眼中。在ThreeJS中有几种光源，去模拟现实环境。最常见的四种为：">
+<meta property="og:image" content="http://img.blog.csdn.net/20170216100706703?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170216100753095?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170216100816605?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170216100831908?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170216101026107?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170216101219873?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170216101109989?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170216101139334?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170216101301639?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170216101318820?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170216101339515?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170216101353061?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170216101435182?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170216101453167?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170216101502401?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-06-17T15:23:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初识ThreeJS中常见的光源">
+<meta name="twitter:description" content="现实环境中，人们之所以能看得到物体，是因为有光，物体的材质反射光到人眼中。在ThreeJS中有几种光源，去模拟现实环境。最常见的四种为：">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170216100706703?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/16/初识ThreeJS中常见的光源/"/>
+
+
+
+
+
+  <title>初识ThreeJS中常见的光源 | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/16/初识ThreeJS中常见的光源/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">初识ThreeJS中常见的光源</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-16T21:52:26+08:00">
+                2017-02-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>现实环境中，人们之所以能看得到物体，是因为有光，物体的材质反射光到人眼中。在ThreeJS中有几种光源，去模拟现实环境。最常见的四种为：</p>
+<a id="more"></a>
+<ul>
+<li>环境光( AmbientLight )：笼罩在整个空间无处不在的光</li>
+<li>点光源( PointLight )：向四面八方发射的单点光源</li>
+<li>聚光灯( SpotLight )：发射出锥形状的光， 模拟手电筒，台灯等光源</li>
+<li>平行光( DirectinalLight )：平行的一束光，模拟从很远处照射的太阳光</li>
+</ul>
+<p>还有半球光光源( HemisphereLight )，平面光光源( AreaLight )，这里暂不做介绍。下面以一只高跟鞋为例来演示这几种光源。<br><img src="http://img.blog.csdn.net/20170216100706703?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="白色环境光 + 白色平行光的鞋子效果"></p>
+<p>图1 白色环境光 + 白色平行光的鞋子效果</p>
+<p>P.S. 此处的坐标轴是为了辅助创建光源，更好地放置光源的位置。其中红色线表示X轴，绿色线表示Y轴，蓝色线表示Z轴，很好记，红绿蓝，RGB-XYZ。有时候为了搞错，可以用右手法则去验证一下。代码也非常简单。</p>
+<pre><code>var axis = new THREE.AxisHelper(3); // 3表示轴的长度
+scene.add(axis);
+</code></pre><h2 id="环境光-AmbientLight"><a href="#环境光-AmbientLight" class="headerlink" title="环境光(AmbientLight)"></a>环境光(AmbientLight)</h2><p>环境光可以说是场景的整体基调。如何创建环境光呢？代码如下。</p>
+<pre><code>var ambient = new THREE.AmbientLight(0xffffff);
+scene.add(ambient); //将环境光添加到场景中
+</code></pre><p>API也很简单，只有color和intensity参数。</p>
+<pre><code>AmbientLight( color, intensity )
+
+color — 光的颜色值，十六进制，默认值为0xffffff.
+intensity — 光的强度，默认值为1.  
+</code></pre><p>图1示例中的环境光为白光。我们将颜色设置为红色，看看什么效果。结果是整只鞋子都变成了红色。</p>
+<p><img src="http://img.blog.csdn.net/20170216100753095?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="红色环境光 + 白色平行光的鞋子效果"></p>
+<p>图2  红色环境光 + 白色平行光的鞋子效果</p>
+<p>需要注意的是，由于环境光无处不在，也就是说它是没有方向的，当然不能产生阴影。而且，它也不能作为环境中唯一的光源。我们来看一下只有环境光的效果。</p>
+<p><img src="http://img.blog.csdn.net/20170216100816605?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="仅有红色环境光的鞋子效果"></p>
+<p>图3  仅有红色环境光的鞋子效果</p>
+<p><img src="http://img.blog.csdn.net/20170216100831908?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="仅有白色环境光光的鞋子效果"></p>
+<p>图4  仅有白色环境光光的鞋子效果</p>
+<p>显然，只有环境光的场景是不真实的。那环境光什么作用呢？据说是弱化阴影或者给场景添加一些颜色。 </p>
+<h2 id="点光源"><a href="#点光源" class="headerlink" title="点光源"></a>点光源</h2><p>可以将点光源想象成萤火虫一样发出的光。由于它的光线也发射到四面八方，在ThreeJS中它也是不能产生阴影的。创建的方法如下：</p>
+<pre><code>PointLight( color, intensity, distance, decay )
+
+color — 光的颜色值，十六进制，默认值为0xffffff.
+intensity — 光的强度，默认值为1.   
+distance — 光照距离，默认为0，表示无穷远都能照到.
+decay — 随着光的距离，强度衰减的程度，默认为1，为模拟真实效果，建议设置为2
+</code></pre><p>我们给最初的那个场景图4创建一个坐标为(3, 3, 3)，强度为0.2，照射距离为100的点光源。我们分别将光照强度改为1，颜色调成红色，光照距离调成1，进行对比。 </p>
+<pre><code>var pointLight = new THREE.PointLight(0xffffff, 0.2, 100);
+pointLight.position.set(3,3,3);
+scene.add(pointLight);
+</code></pre><p><img src="http://img.blog.csdn.net/20170216101026107?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="白色环境光 + 强度为0.2，距离为100的白色点光源的鞋子效果"></p>
+<p>图5  白色环境光 + 强度为0.2，距离为100的白色点光源的鞋子效果</p>
+<pre><code>var pointLight = new THREE.PointLight(0xffffff, 1, 100);
+</code></pre><p> <img src="http://img.blog.csdn.net/20170216101219873?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="白色环境光 + 强度为1，距离为100的白色点光源的鞋子效果"></p>
+<p>图6  白色环境光 + 强度为1，距离为100的白色点光源的鞋子效果</p>
+<pre><code>var pointLight = new THREE.PointLight(0xffffff, 1, 10);
+</code></pre><p><img src="http://img.blog.csdn.net/20170216101109989?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="白色环境光 + 强度为1，距离为100的白色点光源的鞋子效果"></p>
+<p>图7  白色环境光 + 强度为1，距离为10的白色点光源的鞋子效果</p>
+<pre><code>var pointLight = new THREE.PointLight(0xff0000, 1, 100);
+</code></pre><p> <img src="http://img.blog.csdn.net/20170216101139334?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="白色环境光 + 强度为1，距离为100的红色点光源的鞋子效果"></p>
+<p>图8  白色环境光 + 强度为1，距离为100的红色点光源的鞋子效果</p>
+<h2 id="聚光灯-SpotLight"><a href="#聚光灯-SpotLight" class="headerlink" title="聚光灯( SpotLight )"></a>聚光灯( SpotLight )</h2><p>聚光灯是比较常见的光源，特别是当你想产生阴影的时候。聚光灯的属性不同版本的threeJS改动还有点大。以官网最新的版本8.3为准。</p>
+<pre><code>SpotLight( color, intensity, distance, angle, penumbra, decay )
+
+color — 光的颜色值，十六进制，默认值为0xffffff.
+intensity — 光的强度，默认值为1.   
+
+distance — 光照距离，默认为0，表示无穷远都能照到.
+angle —  圆椎体的半顶角角度，最大不超过90度，默认为最大值。
+penumbra — 光照边缘的模糊化程度，范围0-1，默认为0，不模糊
+decay — 随着光的距离，强度衰减的程度，默认为1，为模拟真实效果，建议设置为2 
+</code></pre><p>我们给图4的场景添加位置为( 0, 4, 0 )，强度为1，距离为100的白光聚光灯。对于颜色，距离，强度的效果已经在点光源处实践过。我们来看下角度angle，边缘模糊程度penumbra，衰减decay的效果。代码如下。</p>
+<pre><code>var spotLight = new THREE.SpotLight( 0xFFFFFF, 1, 100);
+spotLight.position.set(0,4,0);  
+scene.add(spotLight);
+</code></pre><p><img src="http://img.blog.csdn.net/20170216101301639?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="白色环境光 + 强度为1，距离为100的白色聚光灯的鞋子效果"></p>
+<p>图9 白色环境光 + 强度为1，距离为100的白色聚光灯的鞋子效果</p>
+<pre><code>var spotLight = new THREE.SpotLight( 0xFFFFFF, 1, 100, 0.06);
+</code></pre><p> <img src="http://img.blog.csdn.net/20170216101318820?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="白色环境光 + 强度为1，距离为100的白色聚光灯的鞋子效果"></p>
+<p>图10 白色环境光 + 强度为1，距离为100，角度为0.06（弧度）的白色聚光灯的鞋子效果</p>
+<pre><code>var spotLight = new THREE.SpotLight( 0xFFFFFF, 1, 100, 0.06, 0.5);
+</code></pre><p> <img src="http://img.blog.csdn.net/20170216101339515?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="白色环境光 + 强度为1，距离为100，角度为0.06（弧度），边缘模糊为0.5的白色聚光灯的鞋子效果"></p>
+<p>图11 白色环境光 + 强度为1，距离为100，角度为0.06（弧度），边缘模糊为0.5的白色聚光灯的鞋子效果</p>
+<pre><code>var spotLight = new THREE.SpotLight( 0xFFFFFF, 1, 100, 0.06, 0.5, 10);
+</code></pre><p><img src="http://img.blog.csdn.net/20170216101353061?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="白色环境光 + 强度为1，距离为100，角度为0.06（弧度），边缘模糊为0.5，衰减为10的白色聚光灯的鞋子效果"></p>
+<p>图12 白色环境光 + 强度为1，距离为100，角度为0.06（弧度），边缘模糊为0.5，衰减为10的白色聚光灯的鞋子效果</p>
+<p>附带说一句，聚光灯还可以限制所能产生阴影的区域，但本文不涉及具体的阴影设置。</p>
+<h2 id="平行光-DirectionalLight"><a href="#平行光-DirectionalLight" class="headerlink" title="平行光( DirectionalLight )"></a>平行光( DirectionalLight )</h2><p>平行光或者说方向光可以看成是另类的聚光灯，距离太远以至于光线基本平行了，就像太阳对于我们来说一样。它与聚光灯不同的一点是，它在任何地方的强度都是一样的。当然它也是可以产生阴影的。创建平行光的接口与环境光一致。</p>
+<pre><code>DirectionalLight( color, intensity )
+
+color — 光的颜色值，十六进制，默认值为0xffffff.
+intensity — 光的强度，默认值为1.  
+</code></pre><p>同样就创建一个坐标为( 0, 4, 0)，强度为1的白色平行光。效果如下。</p>
+<p><img src="http://img.blog.csdn.net/20170216101435182?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="白色环境光 + 强度为1，距离为100的白色平行灯的鞋子效果"></p>
+<p>图13 白色环境光 + 强度为1，距离为100的白色平行灯的鞋子效果</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们现在来看一下，相同环境光，相同参数的点光源，聚光灯，平行光之间的效果差别。仔细地观察俯视图的鞋尖部分，发现平行光 &gt; 聚光灯 &gt; 点光源，这其实也好理解。我觉得关键差别在于平行光和聚光灯能产生阴影吧。还有聚光灯能做出舞台的效果。至于具体需用到什么光源，怎么去布置光源，需要根据具体场景来定。我并没有多少实战经验，也不具体说了。</p>
+<p><img src="http://img.blog.csdn.net/20170216101453167?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="点光源，聚光灯，平行光之间的效果（坐标均为(0,4,0)）  "></p>
+<p>图14  点光源，聚光灯，平行光之间的效果（坐标均为(0,4,0)）  </p>
+<p><img src="http://img.blog.csdn.net/20170216101502401?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="点光源，聚光灯，平行光之间的效果（坐标均为(3,3,3)）  "></p>
+<p>图15  点光源，聚光灯，平行光之间的效果（坐标均为(3,3,3)）</p>
+<p>本文中的例子和代码可在<a href="https://wufenfen.github.io/threeJS_Demo/shoe.html" target="_blank" rel="external">我的github</a>上下载和查看，素材取自<a href="http://www.zzokk.com/3dTest/xz2/xiezi.html" target="_blank" rel="external">这里</a>，感谢知乎用户@小程序提供。</p>
+<p>参考资料：<br><a href="https://threejs.org/" target="_blank" rel="external">https://threejs.org/</a>  threeJS官网<br><a href="http://www.hewebgl.com/article/getarticle/60" target="_blank" rel="external">http://www.hewebgl.com/article/getarticle/60</a>  第5章 五彩的光源(一)<br>书籍 Jos Dirksen 《Learning Three.js 》</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Translate/" rel="tag"># Translate</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/14/全景虚拟漫游实现(three.js)/" rel="next" title="全景虚拟漫游实现(three.js)">
+                <i class="fa fa-chevron-left"></i> 全景虚拟漫游实现(three.js)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/18/你不知道的JS读书笔记1—闭包&作用域/" rel="prev" title="你不知道的JS读书笔记1—闭包&作用域">
+                你不知道的JS读书笔记1—闭包&作用域 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境光-AmbientLight"><span class="nav-number">1.</span> <span class="nav-text">环境光(AmbientLight)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#点光源"><span class="nav-number">2.</span> <span class="nav-text">点光源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚光灯-SpotLight"><span class="nav-number">3.</span> <span class="nav-text">聚光灯( SpotLight )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平行光-DirectionalLight"><span class="nav-number">4.</span> <span class="nav-text">平行光( DirectionalLight )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

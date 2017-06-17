@@ -1,0 +1,992 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Translate,JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="原文链接：Understanding Nodejs Event-driven Architecture  作者：Samer Buna 翻译：野草 本文首发于前端早读课【第958期】  Node中的绝大多数对象，比如HTTP请求，响应，流，都是实现了EventEmitter模块，所以它们可以触发或监听事件。 const EventEmitter = require(&amp;apos;events&amp;apo">
+<meta name="keywords" content="Translate,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】理解Node事件驱动架构">
+<meta property="og:url" content="http://yoursite.com/2017/06/02/【译】理解Node事件驱动架构/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="原文链接：Understanding Nodejs Event-driven Architecture  作者：Samer Buna 翻译：野草 本文首发于前端早读课【第958期】  Node中的绝大多数对象，比如HTTP请求，响应，流，都是实现了EventEmitter模块，所以它们可以触发或监听事件。 const EventEmitter = require(&amp;apos;events&amp;apo">
+<meta property="og:updated_time" content="2017-06-17T15:20:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】理解Node事件驱动架构">
+<meta name="twitter:description" content="原文链接：Understanding Nodejs Event-driven Architecture  作者：Samer Buna 翻译：野草 本文首发于前端早读课【第958期】  Node中的绝大多数对象，比如HTTP请求，响应，流，都是实现了EventEmitter模块，所以它们可以触发或监听事件。 const EventEmitter = require(&amp;apos;events&amp;apo">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/02/【译】理解Node事件驱动架构/"/>
+
+
+
+
+
+  <title>【译】理解Node事件驱动架构 | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/02/【译】理解Node事件驱动架构/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【译】理解Node事件驱动架构</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-02T21:52:26+08:00">
+                2017-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文链接：<a href="https://medium.freecodecamp.com/understanding-node-js-event-driven-architecture-223292fcbc2d" target="_blank" rel="external">Understanding Nodejs Event-driven Architecture</a> </p>
+<p>作者：<a href="https://medium.freecodecamp.com/@samerbuna" target="_blank" rel="external">Samer Buna</a></p>
+<p>翻译：野草</p>
+<p>本文首发于前端早读课<a href="http://mp.weixin.qq.com/s/XUUMtC8hNmTLGARfqddxug" target="_blank" rel="external">【第958期】</a></p>
+</blockquote>
+<p>Node中的绝大多数对象，比如HTTP请求，响应，流，都是实现了<code>EventEmitter</code>模块，所以它们可以触发或监听事件。</p>
+<pre><code>const EventEmitter = require(&apos;events&apos;);
+</code></pre><a id="more"></a>
+<p>能体现事件驱动机制本质的最简单形式就是函数的回调，比如Node中常用的<code>fs.readFile</code>。在这个例子中，事件仅触发一次（当Node完成文件的读取操作后），回调函数也就充当了事件处理者的身份。</p>
+<p>让我们更深入地探究一下回调形式。</p>
+<h2 id="Node的回调"><a href="#Node的回调" class="headerlink" title="Node的回调"></a>Node的回调</h2><p>Node处理异步事件最开始使用的是回调。很久之后（也就是现在），原生JavaScript有了Promise对象和async／await特性来处理异步。</p>
+<p>回调函数其实就是作为函数参数的函数，这个概念的实现得益于JavaScript语言中的函数是第一类对象。</p>
+<p>但我们必须要搞清楚，回调并不意味着异步。函数的回调可以是同步的，也可以是异步的。<br>比如，下例中的主函数<code>fileSize</code>接受一个名为<code>cb</code>的回调函数。该回调函数可以根据判断条件来决定是同步执行还是异步执行回调。</p>
+<pre><code>function fileSize (fileName, cb) {
+  if (typeof fileName !== &apos;string&apos;) {
+    return cb(new TypeError(&apos;argument should be string&apos;)); // 同步调用
+  }
+  fs.stat(fileName, (err, stats) =&gt; {
+    if (err) { return cb(err); } // 异步调用
+    cb(null, stats.size);        // 异步调用
+  });
+}
+</code></pre><p>注意，这是不好的实践，很容易出现意想不到的bug。设计主函数时，回调函数的调用应该总是同步或者异步的。</p>
+<p>再看一个经典的异步回调例子：</p>
+<pre><code>const readFileAsArray = function(file, cb) {
+  fs.readFile(file, function(err, data) {
+    if (err) {
+      return cb(err);
+    }
+    const lines = data.toString().trim().split(&apos;\n&apos;);
+    cb(null, lines);
+  });
+};
+</code></pre><p><code>readFileAsArray</code>接收一个文件路径参数以及一个回调函数。它读取文件内容，将内容拆分成数组<code>lines</code>，然后调用回调函数处理这个数组。</p>
+<p>举个实例。假设有个<code>numbers.txt</code>文件，内容如下：</p>
+<pre><code>//numbers.txt
+10
+11
+12
+13
+14
+15
+</code></pre><p>现需要计算文件中奇数的个数，上面的<code>readFileAsArray</code>函数就可以利用起来了：</p>
+<pre><code>readFileAsArray(&apos;./numbers.txt&apos;, (err, lines) =&gt; {
+  if (err) throw err;
+
+  const numbers = lines.map(Number);
+  const oddNumbers = numbers.filter(n =&gt; n%2 === 1);
+  console.log(&apos;Odd numbers count:&apos;, oddNumbers.length);
+});
+</code></pre><p>这段代码读取txt文件中的数字成字符数组，解析成数字，然后计算出奇数的个数。</p>
+<p>此处的回调函数用得恰到好处。主函数将回调函数作为最后一个参数，而回调函数的第一个参数是可为<code>null</code>的错误信息参数<code>err</code>。这种参数传递方式是开发者默认的规则，你最好也遵守：将回调作为主函数的最后一个参数，将错误信息作为回调函数的第一个参数。</p>
+<h2 id="Promise：回调的取代者"><a href="#Promise：回调的取代者" class="headerlink" title="Promise：回调的取代者"></a>Promise：回调的取代者</h2><p>如今，JavaScript有了Promise对象，异步可以不再需要回调了。回调方式将回调函数作为参数传递给主函数，同时在主函数内部处理错误信息。Promise对象则不同，它可以单独处理成功／失败情况，也可以链接多个异步调用，而不是嵌套处理。</p>
+<p>如果<code>readFileAsArray</code>函数支持Promise写法，我们就可以这么用：</p>
+<pre><code>readFileAsArray(&apos;./numbers.txt&apos;)
+.then(lines =&gt; {
+    const numbers = lines.map(Number);
+    const oddNumbers = numbers.filter(n =&gt; n%2 === 1);
+    console.log(&apos;Odd numbers count:&apos;, oddNumbers.length);
+})
+.catch(console.error);
+</code></pre><p>Promise用法使得我们可以直接在主函数的返回值上调用<code>.then</code>函数，而不是传入一个回调函数。<code>.then</code>函数能获取到之前用回调获取的内容，并且执行相同的业务操作。继续添加<code>.catch</code>函数，捕捉可能会产生的错误信息。</p>
+<p>由于原生JavaScript自带 Promise对象，主函数很容易改造成支持Promise接口。以下是改造后的结合回调方式的<code>readFileAsArray</code>。</p>
+<pre><code>const readFileAsArray = function(file, cb = () =&gt; {}) {
+  return new Promise((resolve, reject) =&gt; {
+    fs.readFile(file, function(err, data) {
+      if (err) {
+        reject(err);
+        return cb(err);
+      }
+      const lines = data.toString().trim().split(&apos;\n&apos;);
+      resolve(lines);
+      cb(null, lines);
+    });
+  });
+};
+</code></pre><p>现在这个函数返回一个包含<code>fs.readFile</code>异步调用的Promise对象。Promise对象有两个参数，<code>resolve</code>函数和<code>reject</code>函数。</p>
+<p>当我们获取了错误信息需要回调时，用<code>reject</code>处理信息；反之，当我们获取结果数据需要回调时，用<code>resolve</code>来处理。</p>
+<p>另外，回调函数要指定一个缺省值，以免直接用Promise接口调用，这里我们指定为空函数<code>()=&gt;{}</code>。</p>
+<h2 id="Promise升级：结合async-await使用"><a href="#Promise升级：结合async-await使用" class="headerlink" title="Promise升级：结合async/await使用"></a>Promise升级：结合async/await使用</h2><p>当异步遇到循环的时候，Promise接口会让代码简单很多。用回调的话，代码容易混乱。处理异步的最新特性是<code>async</code>函数，它能让我们像处理同步函数一样处理异步函数，使得代码更具可读性。</p>
+<p>我们用async/await的方式调用<code>readFileAsArray</code>:</p>
+<pre><code>async function countOdd () {
+  try {
+    const lines = await readFileAsArray(&apos;./numbers&apos;);
+    const numbers = lines.map(Number);
+    const oddCount = numbers.filter(n =&gt; n%2 === 1).length;
+    console.log(&apos;Odd numbers count:&apos;, oddCount);
+  } catch(err) {
+    console.error(err);
+  }
+}
+countOdd();
+</code></pre><p>首先创建一个异步函数，其实就是一个带<code>async</code>关键词的普通函数。函数内部，在<code>readFileAsArray</code>函数前面加上<code>await</code>关键词，保证lines结果返回才执行下一行。 </p>
+<p>执行这个异步函数<code>countOdd</code>，就能得到我们想要的结果。代码看起来简单且更具可读性。需要注意的是，我们需要用<code>try</code>/<code>catch</code>处理这个异步调用，以免出错。</p>
+<p>有了async/await特性之后，我们不再需要像<code>.then</code>,<code>.catch</code>之类的特殊接口。我们仅仅标记一下函数，然后用纯原生的代码写书。</p>
+<p>我们可以给所有支持Promise接口的函数添加async/await特性，不过，不包括异步回调的函数，比如setTimeout。</p>
+<h2 id="EventEmitter模块"><a href="#EventEmitter模块" class="headerlink" title="EventEmitter模块"></a>EventEmitter模块</h2><p>EventEmitter是促进Node中对象之间交流的模块，它是Node异步事件驱动机制的核心。Node中很多自带的模块都继承自事件触发模块。</p>
+<p>概念很简单：触发器触发事件，该事件对应的监听函数被调用。也就是说，触发器有两个特征：</p>
+<ul>
+<li>触发某个事件</li>
+<li>注册／注销监听函数</li>
+</ul>
+<p>我们创建一个继承EventEmitter模块的类：</p>
+<pre><code>class MyEmitter extends EventEmitter {
+
+}
+</code></pre><p>实例化该类，得到一个事件触发器：</p>
+<pre><code>const myEmitter = new MyEmitter()；
+</code></pre><p>在事件触发器的生命周期任何时候，我们都能利用emit函数触发已有的事件。</p>
+<pre><code>myEmitter.emit(&apos;something-happened&apos;);
+</code></pre><p>触发事件意味着某些情况发生，通常是关于触发器的状态变化。</p>
+<p>使用<code>on</code>方法添加某个事件的监听函数，每次触发器触发事件时，对应的监听函数就会被执行。</p>
+<h2 id="事件-异步"><a href="#事件-异步" class="headerlink" title="事件!==异步"></a>事件!==异步</h2><p>看个例子：</p>
+<pre><code>const EventEmitter = require(&apos;events&apos;);
+
+class WithLog extends EventEmitter {
+  execute(taskFunc) {
+    console.log(&apos;Before executing&apos;);
+    this.emit(&apos;begin&apos;);
+    taskFunc();
+    this.emit(&apos;end&apos;);
+    console.log(&apos;After executing&apos;);
+  }
+}
+
+const withLog = new WithLog();
+
+withLog.on(&apos;begin&apos;, () =&gt; console.log(&apos;About to execute&apos;));
+withLog.on(&apos;end&apos;, () =&gt; console.log(&apos;Done with execute&apos;));
+
+withLog.execute(() =&gt; console.log(&apos;*** Executing task ***&apos;));
+</code></pre><p><code>WithLog</code>类是事件触发器，它里面定义了<code>execute</code>函数。该函数接收一个任务函数的参数，头尾分别用打印语句打印提示信息，并且在任务函数执行前后触发事件。</p>
+<p>为了弄清楚执行顺序，我们注册好事件的监听函数，给定一个简单的任务函数，然后执行代码。</p>
+<p>运行的结果如下：</p>
+<pre><code>Before executing
+About to execute
+*** Executing task ***
+Done with execute
+After executing
+</code></pre><p>注意，上述的结果说明代码执行是同步的，没有任何异步代码。</p>
+<ul>
+<li>首先输出<code>Before executing</code></li>
+<li><code>begin</code>事件触发对应的监听函数，函数执行输出<code>About to execute</code></li>
+<li>任务函数执行并且输出<code>*** Executing task ***</code></li>
+<li><code>end</code>事件触发对应的监听函数，函数执行输出<code>Done with execute</code></li>
+<li>最后输出<code>After executing</code></li>
+</ul>
+<p>正如回调一样，不要想当然地认为事件一定是同步或者异步的。</p>
+<p>明白这点至关重要，如果给<code>execute</code>函数传入异步的<code>taskFunc</code>，事件触发时机就不准确了。</p>
+<p>我们可以借助<code>setImmediate</code>函数模拟异步的函数：</p>
+<pre><code>// ...
+
+withLog.execute(() =&gt; {
+  setImmediate(() =&gt; {
+    console.log(&apos;*** Executing task ***&apos;)
+  });
+});
+</code></pre><p>执行结果如下：</p>
+<pre><code>Before executing
+About to execute
+Done with execute
+After executing
+*** Executing task ***
+</code></pre><p>执行的结果是有问题的，异步调用之后的那些代码，即输出<code>Done with execute</code>，<code>After executing</code>的部分，不再是正确有效的提示。</p>
+<p>若要在异步函数执行完毕之后触发事件，需要结合回调或者Promise对象。下文会具体讲到如何解决。</p>
+<p>相对于一般的回调，事件触发的优点在于可以通过定义多个监听函数来达到一个事件触发多个函数的执行。如果用回调方式，需要在单个回调函数中写很多代码逻辑。</p>
+<h2 id="异步事件"><a href="#异步事件" class="headerlink" title="异步事件"></a>异步事件</h2><p>我们将上面这个同步的例子再修改一下，变成实用一点的异步例子。</p>
+<pre><code>const fs = require(&apos;fs&apos;);
+const EventEmitter = require(&apos;events&apos;);
+
+class WithTime extends EventEmitter {
+  execute(asyncFunc, ...args) {
+    this.emit(&apos;begin&apos;);
+    console.time(&apos;execute&apos;);
+    asyncFunc(...args, (err, data) =&gt; {
+      if (err) {
+        return this.emit(&apos;error&apos;, err);
+      }
+
+      this.emit(&apos;data&apos;, data);
+      console.timeEnd(&apos;execute&apos;);
+      this.emit(&apos;end&apos;);
+    });
+  }
+}
+
+const withTime = new WithTime();
+
+withTime.on(&apos;begin&apos;, () =&gt; console.log(&apos;About to execute&apos;));
+withTime.on(&apos;end&apos;, () =&gt; console.log(&apos;Done with execute&apos;));
+
+withTime.execute(fs.readFile, __filename);
+</code></pre><p><code>WithTime</code>类执行异步函数<code>asyncFunc</code>，通过<code>console.time</code>和<code>console.timeEnd</code>打印出异步函数执行所需的时间，并且在函数执行前后触发正确的事件。在异步函数的回调中，根据执行情况触发<code>error</code>或者<code>data</code>事件。</p>
+<p> 我们传入异步函数<code>fs.readFile</code>来测试<code>WithTime</code>。 现在我们不再需要通过回调来处理读取后的文件数据，我们只要监听<code>data</code>事件就好了。</p>
+<p>执行之后，我们得到正确的事件触发结果，也得到了函数执行所需的时间。</p>
+<pre><code>About to execute
+execute: 4.507ms
+Done with execute
+</code></pre><p>我们可以看到上述代码是如何结合回调和事件触发器完成的。如果<code>asyncFunc</code>支持Promise的话，我们还可以用async/await来代替。</p>
+<pre><code>class WithTime extends EventEmitter {
+  async execute(asyncFunc, ...args) {
+    this.emit(&apos;begin&apos;);
+    try {
+      console.time(&apos;execute&apos;);
+      const data = await asyncFunc(...args);
+      this.emit(&apos;data&apos;, data);
+      console.timeEnd(&apos;execute&apos;);
+      this.emit(&apos;end&apos;);
+    } catch(err) {
+      this.emit(&apos;error&apos;, err);
+    }
+  }
+}
+</code></pre><p>我不知道你怎么看，但对我来说这代码比起回调或者<code>.then</code>/<code>.catch</code>来说清晰多了。async/await特性让我们更近距离地接触JavaScript语言本身，我觉得非常棒。</p>
+<h2 id="事件参数和错误处理"><a href="#事件参数和错误处理" class="headerlink" title="事件参数和错误处理"></a>事件参数和错误处理</h2><p>上一个例子中，有两个事件触发时附带额外参数。</p>
+<p><code>error</code>事件触发时带有错误信息：</p>
+<pre><code>this.emit(&apos;error&apos;, err);
+</code></pre><p>而<code>data</code>事件对应的是数据信息：</p>
+<pre><code>this.emit(&apos;data&apos;, data);
+</code></pre><p>我们可以在事件参数后面带上任意多的参数，这些参数会作为对应监听函数的参数。</p>
+<p>比如，我们传入的<code>data</code>参数会被注册的监听函数接收，而这个<code>data</code>对象正好是异步函数<code>asyncFunc</code>返回的结果数据。</p>
+<pre><code>withTime.on(&apos;data&apos;, (data) =&gt; {
+  // do something with data
+});
+</code></pre><p><code>error</code>事件比较特殊，在那个回调例子中，如果我们不人为处理错误事件，node进程会自动退出。</p>
+<p>下面例子可以证明：</p>
+<pre><code>class WithTime extends EventEmitter {
+  execute(asyncFunc, ...args) {
+    console.time(&apos;execute&apos;);
+    asyncFunc(...args, (err, data) =&gt; {
+      if (err) {
+        return this.emit(&apos;error&apos;, err); // 未被处理
+      }
+
+      console.timeEnd(&apos;execute&apos;);
+    });
+  }
+}
+
+const withTime = new WithTime();
+
+withTime.execute(fs.readFile, &apos;&apos;); // 不好的调用
+withTime.execute(fs.readFile, __filename);
+</code></pre><p>第一次调用会抛出错误，node进程崩溃然后自动退出；</p>
+<pre><code>events.js:163
+      throw er; // Unhandled &apos;error&apos; event
+      ^
+Error: ENOENT: no such file or directory, open &apos;&apos;
+</code></pre><p>第二次调用受上一行的崩溃影响，根本就没有机会执行。</p>
+<p>如果我们注册<code>error</code>事件的监听函数，结果就不一样。比如：</p>
+<pre><code>withTime.on(&apos;error&apos;, (err) =&gt; {
+  // 处理错误信息， 比如说打印出来
+  console.log(err)
+});
+</code></pre><p>如有上述代码存在，第一次调用的错误会被报告，node进程不会像之前一样崩溃退出。这也就意味着第二次调用正常进行：</p>
+<pre><code>{ Error: ENOENT: no such file or directory, open &apos;&apos; errno: -2, code: &apos;ENOENT&apos;, syscall: &apos;open&apos;, path: &apos;&apos; }
+execute: 4.276ms
+</code></pre><p>但是，如果是Promise形式函数的话，Node中表现又会不一样，它只会输出警告：</p>
+<pre><code>UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): Error: ENOENT: no such file or directory, open &apos;&apos;
+DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+</code></pre><p>处理<code>error</code>事件触发的异常的另一种方式是注册一个监听全局<code>uncaughtException</code>进程事件的函数，但这并不是个好主意。</p>
+<p>一般情况下，建议避免使用<code>uncaughtException</code>。但如果非用不可（比如打印日志或者清理工作之类的），必须在监听函数中退出进程。</p>
+<pre><code>process.on(&apos;uncaughtException&apos;, (err) =&gt; { 
+  // 还不够
+  console.error(err); 
+
+  // 还需要强制推出进程
+  process.exit(1);
+});
+</code></pre><p>问题是，如果同时有多个错误事件触发，就会多次触发<code>uncaughtException</code>事件注册的监听函数，多次清理工作可能会造成问题。比如，当异常事件触发关闭数据库的动作时。</p>
+<p><code>EventEmitter</code>模块暴露一个<code>once</code>方法，限制了事件触发的监听函数只能被调用一次。它很适用未捕获异常的情况，因为只要第一次异常发生，我们就会开始清理，然后退出进程。</p>
+<h2 id="监听函数的顺序"><a href="#监听函数的顺序" class="headerlink" title="监听函数的顺序"></a>监听函数的顺序</h2><p>如果给一个事件注册了多个监听函数，它们的调用是有序进行的。调用的顺序跟注册的顺序保持一致。</p>
+<pre><code>// 第一个监听函数
+withTime.on(&apos;data&apos;, (data) =&gt; {
+  console.log(`Length: ${data.length}`);
+});
+
+// 第二个监听函数
+withTime.on(&apos;data&apos;, (data) =&gt; {
+  console.log(`Characters: ${data.toString().length}`);
+});
+
+withTime.execute(fs.readFile, __filename);
+</code></pre><p>上述代码执行后，会先打印出Length这行信息，然后再打印Characters这行信息，因为这是监听函数的注册顺序。</p>
+<p>如果想让定义在后面的监听函数先调用，可以通过<code>prependListener</code>方法：</p>
+<pre><code>// 第一个监听函数
+withTime.on(&apos;data&apos;, (data) =&gt; {
+  console.log(`Length: ${data.length}`);
+});
+
+// 第二个监听函数
+withTime.prependListener(&apos;data&apos;, (data) =&gt; {
+  console.log(`Characters: ${data.toString().length}`);
+});
+
+withTime.execute(fs.readFile, __filename);
+</code></pre><p>这样就会先打印出Characters这行信息了。</p>
+<p>最后，如果想要移除某个监听函数，用<code>removeListener</code>方法。</p>
+<p>【译者注】如果你看到这里，那么谢谢你耐心地看完了本文。是不是有着满满的疑惑，不是讲事件驱动架构吗，怎么看完一脸懵逼？很巧，我第一次看完这篇文章的时候也是这种感受，直到现在我也没很理解题目与文章内容的联系。不过，反正我看完有点收获，关于异步，事件等等。希望你也有点收获吧，至少也花了时间阅读了。</p>
+<blockquote>
+<p>野草，前端早读课专栏作者。为社区持续输出优秀前沿的前端技术文章翻译，欢迎关注知乎<a href="https://www.zhihu.com/people/wufenfen" target="_blank" rel="external">【野草】</a>，也欢迎关注【前端早读课】微信公众号。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Translate/" rel="tag"># Translate</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/20/JavaScript单线程异步的背后——事件循环机制/" rel="next" title="JavaScript单线程异步的背后——事件循环机制">
+                <i class="fa fa-chevron-left"></i> JavaScript单线程异步的背后——事件循环机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Node的回调"><span class="nav-number">1.</span> <span class="nav-text">Node的回调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise：回调的取代者"><span class="nav-number">2.</span> <span class="nav-text">Promise：回调的取代者</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise升级：结合async-await使用"><span class="nav-number">3.</span> <span class="nav-text">Promise升级：结合async/await使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EventEmitter模块"><span class="nav-number">4.</span> <span class="nav-text">EventEmitter模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件-异步"><span class="nav-number">5.</span> <span class="nav-text">事件!==异步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步事件"><span class="nav-number">6.</span> <span class="nav-text">异步事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件参数和错误处理"><span class="nav-number">7.</span> <span class="nav-text">事件参数和错误处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监听函数的顺序"><span class="nav-number">8.</span> <span class="nav-text">监听函数的顺序</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

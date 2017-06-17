@@ -1,0 +1,839 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Translate,JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="原文链接：So You Want to be a Functional Programmer (Part 4)  作者：Charles Scalfani 翻译：野草  本文首发于前端早读课【第882期】  往期回顾： 成为一名函数式码农系列之一">
+<meta name="keywords" content="Translate,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】成为一名函数式码农系列之四">
+<meta property="og:url" content="http://yoursite.com/2017/03/18/【译】成为一名函数式码农系列之四/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="原文链接：So You Want to be a Functional Programmer (Part 4)  作者：Charles Scalfani 翻译：野草  本文首发于前端早读课【第882期】  往期回顾： 成为一名函数式码农系列之一">
+<meta property="og:updated_time" content="2017-06-17T15:20:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】成为一名函数式码农系列之四">
+<meta name="twitter:description" content="原文链接：So You Want to be a Functional Programmer (Part 4)  作者：Charles Scalfani 翻译：野草  本文首发于前端早读课【第882期】  往期回顾： 成为一名函数式码农系列之一">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/18/【译】成为一名函数式码农系列之四/"/>
+
+
+
+
+
+  <title>【译】成为一名函数式码农系列之四 | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/18/【译】成为一名函数式码农系列之四/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【译】成为一名函数式码农系列之四</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-18T21:52:26+08:00">
+                2017-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文链接：<a href="https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-4-18fbe3ea9e49#.d6yj2h6s5" target="_blank" rel="external">So You Want to be a Functional Programmer (Part 4)</a> </p>
+<p>作者：<a href="https://medium.com/@cscalfani" target="_blank" rel="external">Charles Scalfani</a></p>
+<p>翻译：野草 </p>
+<p>本文首发于前端早读课<a href="https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651226238&amp;idx=1&amp;sn=de32c7342a30e2c307cf03d4c9aea924&amp;chksm=bd4959fa8a3ed0ecf3a8091793c986505792f2d828f80628c8097b9e8a253fe7f1e4f17c9df7&amp;scene=21#wechat_redirect" target="_blank" rel="external">【第882期】</a></p>
+</blockquote>
+<p>往期回顾：</p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651225912&amp;idx=1&amp;sn=0480641a8159e7d57b5cab7c0b524a7a&amp;chksm=bd49a6bc8a3e2faac1df5c45e04a568445b7db209d2c575866ab388d8f37e1d007c13c103ffb&amp;mpshare=1&amp;scene=1&amp;srcid=03213ZhGX9UngrryBnEQy2h3#rd" target="_blank" rel="external">成为一名函数式码农系列之一</a><br><a id="more"></a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651225913&amp;idx=1&amp;sn=61e3a679dd2356276a10943bc5ef5f18&amp;chksm=bd49a6bd8a3e2fabdc746a5a97e8d6ee58606c202280156f0190d1b66ab82d3b7a166ca57794&amp;mpshare=1&amp;scene=1&amp;srcid=0315JKNKt4HZQRfnC5JicSP8#rd" target="_blank" rel="external">成为一名函数式码农系列之二</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651226010&amp;idx=1&amp;sn=903e29821020dd7e83f837670f211d75&amp;chksm=bd49a61e8a3e2f080a24ab0e0799628f552ac580f326c8f2a3765955be35a5c9e26d962a38ba&amp;mpshare=1&amp;scene=1&amp;srcid=03150bJQxkg916RYYBQl8G3C#rd" target="_blank" rel="external">成为一名函数式码农系列之三</a></p>
+<h2 id="柯里化-Currying"><a href="#柯里化-Currying" class="headerlink" title="柯里化(Currying)"></a>柯里化(Currying)</h2><p>还记得<a href="https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651226010&amp;idx=1&amp;sn=903e29821020dd7e83f837670f211d75&amp;chksm=bd49a61e8a3e2f080a24ab0e0799628f552ac580f326c8f2a3765955be35a5c9e26d962a38ba&amp;mpshare=1&amp;scene=1&amp;srcid=03150bJQxkg916RYYBQl8G3C&amp;key=3c01354203bd85a602c0e41da949217d9473da775388bdb1cc46bac1c171d3e70c1fa20ad4e233d9678b8470af34e99ae799f70c48e5f909f2becf71bc157a553cf951cb79c354c2060e6e67f446c670&amp;ascene=0&amp;uin=MTQ2MjQ2MjU4MQ%3D%3D&amp;devicetype=iMac+MacBookPro13%2C2+OSX+OSX+10.12.2+build(16C67" target="_blank" rel="external">上一篇</a>&amp;version=12020010&amp;nettype=WIFI&amp;fontScale=100&amp;pass_ticket=JFf28rl3lRGLTbD%2BeYD6h8wkUGWvoH%2F01Zq%2BK7gOhD5pHe4AAQLoPJz9TyOx7Y%2Fm)我们讲的吗？当<code>mult5</code>接受1个参数，而<code>add</code>接受2个参数时，<code>mult5</code>和<code>add</code> 的函数复合遇到了麻烦。</p>
+<p>其实解决这个问题很简单，我们只需限定所有的函数只能接受1个函数。</p>
+<p>听起来有点难以接受？相信我，并没有你想得那么糟糕。</p>
+<p>我们只需将接受2个参数的<code>add</code>函数写成每次只接受1个参数（下简称单参）的函数。那要怎么做呢？正巧，函数柯里化就是用来干这个的。</p>
+<blockquote>
+<p>柯里化函数是每次只接受单参的函数。</p>
+</blockquote>
+<p>我们先赋值<code>add</code>的第1个参数，然后再组合上<code>mult5</code>，得到<code>mult5AfterAdd10</code>函数。当<code>mult5AfterAdd10</code>函数被调用的时候，<code>add</code>得到了它的第2个参数。</p>
+<p>我们用JavaScript重写<code>add</code>函数：</p>
+<pre><code>var add = x =&gt; y =&gt; x + y
+</code></pre><p>此时的<code>add</code>函数先后分两次得到第1个和第2个参数。具体地说，<code>add</code>函数接受单参<code>x</code>，返回一个也接受单参<code>y</code>的函数，这个函数最终返回<code>x+y</code>的结果。</p>
+<p>现在我们可以利用这个<code>add</code>函数来写出一个可行的<code>mult5AfterAdd10</code>函数。</p>
+<pre><code>var compose = (f, g) =&gt; x =&gt; f(g(x));
+var mult5AfterAdd10 = compose(mult5, add(10));
+</code></pre><p>该复合函数接受2个函数，<code>f</code>和<code>g</code>，然后返回一个接受单参<code>x</code>的函数，当这个函数被调用时，<code>f</code>复合上<code>g</code>的映射就会应用在<code>x</code>上。</p>
+<p>总结一下，我们到底做了什么？我们就是将简单常见的<code>add</code>函数转化成了柯里化函数，这样<code>add</code>函数就变得更加自由灵活了。我们先将第1个参数10输入，而当<code>mult5AfterAdd10</code>函数被调用的时候，最后1个参数才有了确定的值。</p>
+<p>至此，你可能在思考怎么用Elm语言重写<code>add</code>函数。根本无需思考。在Elm这类的函数式语言中，所有的函数都默认是柯里化处理的。</p>
+<p>所以，柯里化版本的<code>add</code>函数还是这样写（指跟上一篇提到的写法一致）：</p>
+<pre><code>add x y = 
+    x + y
+</code></pre><p>而在上一篇文章中，我们已经知道了<code>mult5AfterAdd10</code>函数的写法。</p>
+<pre><code>mult5AfterAdd10 = 
+    (mult5 &lt;&lt; add 10)
+</code></pre><p>从语法上来说，比起命令式语言（如JavaScript），Elm更胜一筹。因为它在函数式处理上进行了优化，比如柯里化，函数复合上。</p>
+<h2 id="柯里化与重构-Curring-and-Refactoring"><a href="#柯里化与重构-Curring-and-Refactoring" class="headerlink" title="柯里化与重构(Curring and Refactoring)"></a>柯里化与重构(Curring and Refactoring)</h2><p>当你创建了一个接受很多参数的普适函数，然后想限制部分参数生成接受更少参数的一些特殊函数，此时柯里化大展拳脚，可以为你独当一面。</p>
+<p>例如，我们有以下两个函数，它们分别将输入字符串用单花括号和双花括号包裹起来：</p>
+<pre><code>bracket str =
+    &quot;{&quot; ++ str ++ &quot;}&quot;
+doubleBracket str =
+    &quot;{{" ++ str ++ "}}&quot;
+</code></pre><p>调用方式如下：</p>
+<pre><code>bracketedJoe =
+    bracket &quot;Joe&quot;
+doubleBracketedJoe =
+    doubleBracket &quot;Joe&quot;
+</code></pre><p>我们可以将<code>bracket</code>和<code>doubleBracket</code>推广为更普适的函数：</p>
+<pre><code>generalBracket prefix str suffix =
+    prefix ++ str ++ suffix
+</code></pre><p>但每次我们调用<code>generalBracket</code>函数的时候，都得这么传参：</p>
+<pre><code>bracketedJoe =
+    generalBracket &quot;{&quot; &quot;Joe&quot; &quot;}&quot;
+doubleBracketedJoe =
+    generalBracket &quot;{{" "Joe" "}}&quot;
+</code></pre><p>之前参数只需要输入1个，但定义了2个独立的函数；现在函数统一了，每次却需要传入3个参数。能不能鱼与熊掌兼得呢？</p>
+<p>如果重新调整一下<code>generalBracket</code>函数的参数顺序，由于函数是可以被柯里化的，我们可以利用<code>generalBracket</code>函数创建出<code>bracket</code>函数和<code>doubleBracket</code>函数：</p>
+<pre><code>generalBracket prefix suffix str =
+    prefix ++ str ++ suffix
+bracket =
+    generalBracket &quot;{&quot; &quot;}&quot;
+doubleBracket =
+    generalBracket &quot;{{" "}}&quot;
+</code></pre><p>只要将将最可能不变的参数即<code>prefix</code>和<code>suffix</code>放在最前面，把最可能变化的参数即 <code>str</code>放在最后面，我们很容易就能创建出<code>generalBracket</code>函数的特殊版本。</p>
+<blockquote>
+<p>参数顺序是能否最大程度利用柯里化的关键所在。</p>
+</blockquote>
+<p>同时注意一下，<code>bracket</code>函数和<code>doubleBracket</code>函数都是隐参标记式(point-free notation)写法，即参数 <code>str</code>是隐含的。它们都是单参数函数，等待着最后的参数输入。</p>
+<p>现在我们可以像最开始那样调用了：</p>
+<pre><code>bracketedJoe =
+    bracket &quot;Joe&quot;
+doubleBracketedJoe =
+    doubleBracket &quot;Joe&quot;
+</code></pre><p>但，这次我们调用的是更普适的柯里化函数，<code>generalBracket</code>。</p>
+<h2 id="常见的函数式函数-Common-Functional-Function"><a href="#常见的函数式函数-Common-Functional-Function" class="headerlink" title="常见的函数式函数(Common Functional Function)"></a>常见的函数式函数(Common Functional Function)</h2><p>我们来看下函数式语言中3个常见的函数：<code>Map</code>,<code>Filter</code>,<code>Reduce</code>。</p>
+<p>在这之前，先看如下JavaScript代码：</p>
+<pre><code>for (var i = 0; i &lt; something.length; ++i) {
+     // do stuff
+}
+</code></pre><p>这段代码存在一个很大的问题，但不是bug。问题在于它有很多重复代码(boilerplate code)。</p>
+<p>如果你用命令式语言来编程，比如Java，C#，JavaScript，PHP，Python等等，你会发现这样的代码你写地最多。</p>
+<p>这就是问题所在。</p>
+<p>现在让我们来一起解决这个问题。将代码重写成一个（或者几个）绝对不需要for循环的函数。额，我是说，几乎不需要，至少在我们投入函数式语言之后。</p>
+<p>先用名为<code>things</code>的数组来修改上述代码：</p>
+<pre><code>var things = [1, 2, 3, 4];
+for (var i = 0; i &lt; things.length; ++i) {
+    things[i] = things[i] * 10; // 警告：值被改变 !!!!
+}
+console.log(things); // [10, 20, 30, 40]
+</code></pre><p>什么？！数值被改变了！</p>
+<p>我们再试一次，这次不会再修改<code>things</code>。</p>
+<pre><code>var things = [1, 2, 3, 4];
+var newThings = [];
+for (var i = 0; i &lt; things.length; ++i) {
+    newThings[i] = things[i] * 10;
+}
+console.log(newThings); // [10, 20, 30, 40]
+</code></pre><p>我们没有修改<code>things</code>数值，实质上却修改了<code>newThings</code>。暂时先不管这个，毕竟我们现在用的是JavaScript。一旦使用函数式语言，任何东西都是不可变的。</p>
+<p>到此，你应该明白这些函数是如何运行以及如何减少可变性带来的混乱。</p>
+<p>现在我们将代码封装成一个函数，这就是我们要说的第一个常见的函数式函数。我们将其命名为<code>map</code>，因为这个函数的功能就是将一个数组的每个值映射(map)到新数组的一个新值。</p>
+<pre><code>var map = (f, array) =&gt; {
+    var newArray = [];
+    for (var i = 0; i &lt; array.length; ++i) {
+        newArray[i] = f(array[i]);
+    }
+    return newArray;
+};
+</code></pre><p>函数<code>f</code>作为参数传入，那么函数<code>map</code>可以对<code>array</code>数组的每项进行任意的操作。</p>
+<p>现在我们可以使用<code>map</code>重写之前的代码：</p>
+<pre><code>var things = [1, 2, 3, 4];
+var newThings = map(v =&gt; v * 10, things);
+</code></pre><p>瞧，没有for循环！而且代码更具可读性，也更易分析。</p>
+<p>好吧，对技术上来说，函数<code>map</code>中还是存在for循环。至少现在不需要写一堆重复代码了。</p>
+<p>我们再看另外一个常见的数组过滤(filter)函数是怎么写的：</p>
+<pre><code>var filter = (pred, array) =&gt; {
+    var newArray = [];
+    for (var i = 0; i &lt; array.length; ++i) {
+        if (pred(array[i]))
+            newArray[newArray.length] = array[i];
+    }
+    return newArray;
+}
+</code></pre><p>当某些项需要被保留的时候，断言函数<code>pred</code>返回TRUE，否则返回FALSE。</p>
+<p>来看下实例，怎么用<code>filter</code>函数过滤奇数。</p>
+<pre><code>var isOdd = x =&gt; x % 2 !== 0;
+var numbers = [1, 2, 3, 4, 5];
+var oddNumbers = filter(isOdd, numbers);
+console.log(oddNumbers); // [1, 3, 5]
+</code></pre><p>比起用for循环的手动编程(hand code)，<code>filter</code>函数简单多了。</p>
+<p>最后一个常见函数叫<code>reduce</code>。通常这个函数用来将一个数列归约(reduce)成一个数值，但事实上它能做很多事情。</p>
+<p>在函数式语言中，这个函数称为<code>fold</code>。</p>
+<pre><code>var reduce = (f, start, array) =&gt; {
+    var acc = start;
+    for (var i = 0; i &lt; array.length; ++i)
+        acc = f(array[i], acc); // f() 接受2个参数
+    return acc;
+});
+</code></pre><p><code>reduce</code>函数接受一个归约函数<code>f</code>，一个初始值<code>start</code>，以及一个数组<code>array</code>。</p>
+<p>归约函数<code>f</code>接受2个参数，<code>array</code> 的当前项，累加器<code>acc</code>。它在每次迭代中利用这些参数又产生新的累加器，直到迭代完成返回最后一次的累加器。</p>
+<p>下面这个例子可以帮助我们理解具体的过程：</p>
+<pre><code>var add = (x, y) =&gt; x + y;
+var values = [1, 2, 3, 4, 5];
+var sumOfValues = reduce(add, 0, values);
+console.log(sumOfValues); // 15
+</code></pre><p><code>add</code>函数接受2个参数，并将它们加起来。我们的归约函数正好也接受2个参数，所以<code>add</code>可以作为归约函数传入。</p>
+<p>我们从<code>start</code>为0开始，传入待累加的数组<code>values</code>。<code>reduce</code>函数遍历数组<code>values</code>，每次迭代值都被累加，然后返回最后的累加值，并赋值给<code>sumOfValues</code>。</p>
+<p>这三个函数，<code>map</code>,<code>filter</code>,<code>reduce</code>能让我们绕过for循环这种重复的方式，对数组做一些常见的操作。但在函数式语言中只有递归没有循环，这三个函数就更有用了。附带提一句，在函数式语言中，递归函数不仅非常有用，还必不可少。</p>
+<p>预告：下一篇，我将讲述引用完整性，执行顺序，类型等等。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Translate/" rel="tag"># Translate</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/18/《一线大厂如何面试前端工程师》听后感/" rel="next" title="《一线大厂如何面试前端工程师》听后感">
+                <i class="fa fa-chevron-left"></i> 《一线大厂如何面试前端工程师》听后感
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/22/前端开发中的地理定位问题小总结/" rel="prev" title="前端开发中的地理定位问题小总结">
+                前端开发中的地理定位问题小总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#柯里化-Currying"><span class="nav-number">1.</span> <span class="nav-text">柯里化(Currying)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#柯里化与重构-Curring-and-Refactoring"><span class="nav-number">2.</span> <span class="nav-text">柯里化与重构(Curring and Refactoring)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的函数式函数-Common-Functional-Function"><span class="nav-number">3.</span> <span class="nav-text">常见的函数式函数(Common Functional Function)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

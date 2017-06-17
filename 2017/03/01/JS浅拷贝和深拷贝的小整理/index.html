@@ -1,0 +1,784 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Translate,JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="这个话题应该是说大也大，说不大也不大。我就简单给自己总结整理一下。记得16届春招网易校招的最后一个笔试题，实现一个深拷贝。 说这个话题之前，先扯一下JS的基本数据类型。">
+<meta name="keywords" content="Translate,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS浅拷贝和深拷贝的小整理">
+<meta property="og:url" content="http://yoursite.com/2017/03/01/JS浅拷贝和深拷贝的小整理/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="这个话题应该是说大也大，说不大也不大。我就简单给自己总结整理一下。记得16届春招网易校招的最后一个笔试题，实现一个深拷贝。 说这个话题之前，先扯一下JS的基本数据类型。">
+<meta property="og:updated_time" content="2017-06-17T15:25:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS浅拷贝和深拷贝的小整理">
+<meta name="twitter:description" content="这个话题应该是说大也大，说不大也不大。我就简单给自己总结整理一下。记得16届春招网易校招的最后一个笔试题，实现一个深拷贝。 说这个话题之前，先扯一下JS的基本数据类型。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/01/JS浅拷贝和深拷贝的小整理/"/>
+
+
+
+
+
+  <title>JS浅拷贝和深拷贝的小整理 | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/01/JS浅拷贝和深拷贝的小整理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JS浅拷贝和深拷贝的小整理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-01T21:52:26+08:00">
+                2017-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这个话题应该是说大也大，说不大也不大。我就简单给自己总结整理一下。记得16届春招网易校招的最后一个笔试题，实现一个深拷贝。</p>
+<p>说这个话题之前，先扯一下JS的基本数据类型。</p>
+<a id="more"></a>
+<p>大家都知道JS中的数据类型分为</p>
+<ul>
+<li><p>基本类型：string, number, boolean, null, undefined</p>
+</li>
+<li><p>引用类型：Object，特殊的有Array, Function, Date, Math, RegExp, Error等</p>
+</li>
+</ul>
+<p>那什么是引用类型呢？这又得扯上JS的内存机制了。<br>JS的内存跟其他的内存差不多，分为堆（heap）和栈（stack）。</p>
+<ul>
+<li><p>栈：由系统自动分配，自动回收，效率高，但容量小。</p>
+</li>
+<li><p>堆：由程序员手动分配内存，并且手动销毁（高级语言如JS中有垃圾自动回收机制），效率不如栈，但容量大。</p>
+</li>
+</ul>
+<p>请注意区分数据结构中所说的堆栈和内存中的堆栈是两回事。关于JS的垃圾自动回收机制，我会另写一篇小总结。</p>
+<p>JS的基本类型分配在栈中，而因为引用类型大小的不固定，系统将存储该引用类型的地址存在栈中，并赋值给变量本身，而具体的内容存在堆中。所以当访问一个对象的时候，先访问栈中它的地址，然后按照这个地址去堆中找到它的实际内容。</p>
+<p>所以当复制的时候，对于基本类型的变量，系统会为新的变量在栈中开辟一个新的空间，赋予相同的值，然后这两个变量就各自独立，毫无牵连。而对于引用类型的变量，新的变量复制的是那个对象在堆中的地址，这两个变量指向的是同一个对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var obj = &#123;name: &apos;Yecao&apos;&#125;;</div><div class="line"></div><div class="line">var obj2 = obj;</div><div class="line"></div><div class="line">console.log(obj2.name); // &apos;Yecao&apos;</div><div class="line"></div><div class="line">obj2.name = &apos;Claire&apos;;</div><div class="line"></div><div class="line">console.log(obj.name); //&apos;Claire&apos;</div></pre></td></tr></table></figure>
+<p>以上是个很简单的例子，obj2复制了obj之后，两个其实指向的是同一个对象。</p>
+<p>好了，终于要说到我们的主题了，浅拷贝和深拷贝。最最简单的拷贝，就是将一个变量复制给另个变量，比如上文中的var obj2 = obj。 JS的基本类型不存在浅拷贝还是深拷贝的问题，主要是针对于对象，比如一般的对象，和特殊的数组对象。</p>
+<p>浅拷贝是指复制对象的时候，指对第一层键值对进行独立的复制。一个简单的实现如下：</p>
+<pre><code>// 浅拷贝实现
+function shallowCopy(target, source){ 
+    if( !source || typeof source !== &apos;object&apos;){
+        return;
+    }
+    // 这个方法有点小trick，target一定得事先定义好，不然就不能改变实参了。
+    // 具体原因解释可以看参考资料中 JS是值传递还是引用传递
+    if( !target || typeof target !== &apos;object&apos;){
+        return;
+    }  
+    // 这边最好区别一下对象和数组的复制
+    for(var key in source){
+        if(source.hasOwnProperty(key)){
+            target[key] = source[key];
+        }
+    }
+}
+</code></pre><p>我们分别对对象和数组进行测试，发现成功地复制了。</p>
+<pre><code>//测试例子
+var arr = [1,2,3];
+var arr2 = [];
+shallowCopy(arr2, arr);
+console.log(arr2);
+//[1,2,3]
+
+var today = {
+    weather: &apos;Sunny&apos;,
+    date: {
+        week: &apos;Wed&apos;
+    } 
+}
+
+var tomorrow = {};
+shallowCopy(tomorrow, today);
+console.log(tomorrow);
+// Object {weather: &quot;Sunny&quot;, date: Object}
+</code></pre><p>我们来看看浅拷贝会带来什么问题？对于date这个属性，tomorrow变量复制的是它在堆中的地址，这也导致了today和tomorrow的date其实是指向堆中的同一个对象。</p>
+<pre><code>tomorrow.weather = &apos;Cloudy&apos;;
+tomorrow.date.week = &apos;Thurs&apos;;
+
+console.log(today.weather); // &apos;Sunny&apos;
+console.log(today.date.week); //&apos;Thurs&apos;
+</code></pre><p>那如何完全独立地拷贝出一份呢？这也就是所谓的深拷贝。想想，其实只要递归下去，把那些属性的值仍然是对象的再次进入对象内部一一进行复制即可。</p>
+<pre><code>//深拷贝实现
+function deepCopy(target, source){ 
+    if( !source || typeof source !== &apos;object&apos;){ 
+        return;
+    }
+    // 这个方法有点小trick，target一定得事先定义好，不然就不能改变实参了。
+    // 具体原因解释可以看参考资料中 JS是值传递还是引用传递
+    if( !target || typeof source !== &apos;object&apos;){
+        return; 
+    }  
+    for(var key in source){
+        if(source.hasOwnProperty(key)){
+            if( source[key] &amp;&amp; typeof source[key] == &apos;object&apos;){
+               target[key] = Array.isArray(source[key])?[]:{}; 
+               deepCopy(target[key], source[key]);
+            } 
+            else{
+                target[key] = source[key];
+            }    
+        }    
+    } 
+}
+</code></pre><p>注意：Array方法的slice，concat其实是一种浅复制。</p>
+<p>深复制还可以利用JSON的方式。<br>JSON.parse(JSON.stringify(obj));</p>
+<p>对于一般的需求是可以满足的，但是它有缺点。下例中，可以看到JSON复制会忽略掉值为undefined以及函数表达式。</p>
+<pre><code>var obj = {
+    a: 1,
+    b: 2,
+    c: undefined,
+    sum: function() { return a + b; }
+};
+
+var obj2 = JSON.parse(JSON.stringify(obj));
+console.log(obj2);
+//Object {a: 1, b: 2}
+</code></pre><p>还有说，JSON不能复制正则表达式，其实我想知道一般正则表达式是怎么复制的。知道的可以回复一下。</p>
+<p>参考资料: </p>
+<ul>
+<li><p><a href="http://www.cnblogs.com/ys-ys/p/5300189.html" target="_blank" rel="external">http://www.cnblogs.com/ys-ys/p/5300189.html</a> JavaScript 中对内存的一些了解</p>
+</li>
+<li><p><a href="https://www.zhihu.com/question/27114726" target="_blank" rel="external">https://www.zhihu.com/question/27114726</a>  javascript传递参数如果是object的话，是按值传递还是按引用传递？</p>
+</li>
+<li><p><a href="http://bosn.me/js/js-call-by-sharing/" target="_blank" rel="external">http://bosn.me/js/js-call-by-sharing/</a>  JS是按值传递还是按引用传递?</p>
+</li>
+<li><p><a href="http://www.cleey.com/blog/single/id/776.html" target="_blank" rel="external">http://www.cleey.com/blog/single/id/776.html</a> 堆和栈的区别之数据结构和内存</p>
+</li>
+<li><a href="http://www.imooc.com/article/11253" target="_blank" rel="external">http://www.imooc.com/article/11253</a> 也来谈一谈js的浅复制和深复制</li>
+<li><a href="https://github.com/sofish/everyday/blob/master/writings/javascript-type.md" target="_blank" rel="external">https://github.com/sofish/everyday/blob/master/writings/javascript-type.md</a> JavaScript 类型</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Translate/" rel="tag"># Translate</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/27/数据双向绑定的分析和简单实现/" rel="next" title="数据双向绑定的分析和简单实现">
+                <i class="fa fa-chevron-left"></i> 数据双向绑定的分析和简单实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/03/【译】深入学习JavaScript闭包/" rel="prev" title="【译】深入学习JavaScript闭包">
+                【译】深入学习JavaScript闭包 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

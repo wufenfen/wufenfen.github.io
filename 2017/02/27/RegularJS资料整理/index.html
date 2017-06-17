@@ -1,0 +1,692 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Translate,JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="据说，RegularJS是基于动态模版实现的用于构建数据驱动型组建的新一代类库。结合了AngularJS的脏检查机制的数据双向绑定和ReactJS组件化的思想，用起来应该和VueJS差不多（因为我没用过VueJS）。 RegularJS是极具网易特色的库，项目中在用，稍微研究研究。搜索了一下网上所有有关的资料，还真的不多。这是我能找到的所有靠谱资料。">
+<meta name="keywords" content="Translate,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RegularJS资料整理">
+<meta property="og:url" content="http://yoursite.com/2017/02/27/RegularJS资料整理/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="据说，RegularJS是基于动态模版实现的用于构建数据驱动型组建的新一代类库。结合了AngularJS的脏检查机制的数据双向绑定和ReactJS组件化的思想，用起来应该和VueJS差不多（因为我没用过VueJS）。 RegularJS是极具网易特色的库，项目中在用，稍微研究研究。搜索了一下网上所有有关的资料，还真的不多。这是我能找到的所有靠谱资料。">
+<meta property="og:updated_time" content="2017-06-17T15:26:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RegularJS资料整理">
+<meta name="twitter:description" content="据说，RegularJS是基于动态模版实现的用于构建数据驱动型组建的新一代类库。结合了AngularJS的脏检查机制的数据双向绑定和ReactJS组件化的思想，用起来应该和VueJS差不多（因为我没用过VueJS）。 RegularJS是极具网易特色的库，项目中在用，稍微研究研究。搜索了一下网上所有有关的资料，还真的不多。这是我能找到的所有靠谱资料。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/27/RegularJS资料整理/"/>
+
+
+
+
+
+  <title>RegularJS资料整理 | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/27/RegularJS资料整理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RegularJS资料整理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T21:52:26+08:00">
+                2017-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>据说，RegularJS是基于动态模版实现的用于构建数据驱动型组建的新一代类库。结合了AngularJS的脏检查机制的数据双向绑定和ReactJS组件化的思想，用起来应该和VueJS差不多（因为我没用过VueJS）。</p>
+<p>RegularJS是极具网易特色的库，项目中在用，稍微研究研究。搜索了一下网上所有有关的资料，还真的不多。这是我能找到的所有靠谱资料。<br><a id="more"></a></p>
+<p>官网资料</p>
+<ul>
+<li><a href="http://regularjs.github.io" target="_blank" rel="external">http://regularjs.github.io</a> RegularJS官网</li>
+<li><a href="https://github.com/regularjs/regular" target="_blank" rel="external">https://github.com/regularjs/regular</a> 源码地址</li>
+<li><a href="http://regularjs.github.io/guide/zh/index.html" target="_blank" rel="external">http://regularjs.github.io/guide/zh/index.html</a> 官网指南</li>
+<li><a href="http://regularjs.github.io/reference/?api-zh" target="_blank" rel="external">http://regularjs.github.io/reference/?api-zh</a> 官网API说明</li>
+<li><a href="http://regularjs.github.io/reference/?syntax-zh" target="_blank" rel="external">http://regularjs.github.io/reference/?syntax-zh</a> 官网模版语法说明<br>网上资源</li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzIzMzEzODYwOA==&amp;mid=417800028&amp;idx=1&amp;sn=b808077f55d82c3e98745a460bac6006&amp;scene=0#rd" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MzIzMzEzODYwOA==&amp;mid=417800028&amp;idx=1&amp;sn=b808077f55d82c3e98745a460bac6006&amp;scene=0#rd</a>  作者分享心路历程： 前端框架Regularjs的设计与选型之路</li>
+<li><a href="https://cnodejs.org/topic/53fb01aabbdaa79d51d1a00c" target="_blank" rel="external">https://cnodejs.org/topic/53fb01aabbdaa79d51d1a00c</a>  Regularjs: 用于创建数据驱动组件的新一代的活动模板引擎</li>
+<li><a href="http://www.html-js.com/article/Guide-Regularjs-Regularjs-Chinese" target="_blank" rel="external">http://www.html-js.com/article/Guide-Regularjs-Regularjs-Chinese</a>  Regularjs是什么</li>
+<li><a href="http://www.html-js.com/article/Regularjs-Chinese-guidelines-for-a-comprehensive-summary-of-the-front-template-technology" target="_blank" rel="external">http://www.html-js.com/article/Regularjs-Chinese-guidelines-for-a-comprehensive-summary-of-the-front-template-technology</a> 一个对前端模板技术的全面总结</li>
+<li><a href="http://www.html-js.com/article/Regularjs-Chinese-guidelines-teach-you-step-by-step-to-achieve-a-todomvc-based-on-Regularjs" target="_blank" rel="external">http://www.html-js.com/article/Regularjs-Chinese-guidelines-teach-you-step-by-step-to-achieve-a-todomvc-based-on-Regularjs</a>  一步步教你实现一个todomvc(基于Regularjs)</li>
+</ul>
+<p>拓展库&amp;工具</p>
+<ul>
+<li><a href="https://regular-ui.github.io" target="_blank" rel="external">https://regular-ui.github.io</a>  regularUI官网</li>
+<li><a href="https://github.com/regular-ui/regular-ui" target="_blank" rel="external">https://github.com/regular-ui/regular-ui</a>  regularUI源码</li>
+<li><a href="https://github.com/regularjs/regular-hub" target="_blank" rel="external">https://github.com/regularjs/regular-hub</a> regularJS组件初始化中心</li>
+<li><a href="https://github.com/regularjs/regular-loader" target="_blank" rel="external">https://github.com/regularjs/regular-loader</a> regular-loader </li>
+<li><a href="https://github.com/regularjs/regular-state" target="_blank" rel="external">https://github.com/regularjs/regular-state</a>   Regular的单页应用框架. </li>
+<li><a href="https://github.com/mejustme/regular-devtools-sidebar" target="_blank" rel="external">https://github.com/mejustme/regular-devtools-sidebar</a>  chrome插件  sidebar</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Translate/" rel="tag"># Translate</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/21/你不知道的JS读书笔记2—this对象/" rel="next" title="你不知道的JS读书笔记2—this对象">
+                <i class="fa fa-chevron-left"></i> 你不知道的JS读书笔记2—this对象
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/27/数据双向绑定的分析和简单实现/" rel="prev" title="数据双向绑定的分析和简单实现">
+                数据双向绑定的分析和简单实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

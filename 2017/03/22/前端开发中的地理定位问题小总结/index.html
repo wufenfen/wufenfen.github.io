@@ -1,0 +1,895 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Translate,JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="项目中遇到地理定位的问题，没遇过不知道，遇过就发现这是个比较坑的问题。这个问题其实困扰了我挺久的，还不如一次性了解清楚。所以本文进行了一些小总结，先简单总结我看过的关于定位技术的资料，然后介绍前端开发中的可选定位方案，以及存在的一些问题。">
+<meta name="keywords" content="Translate,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端开发中的地理定位问题小总结">
+<meta property="og:url" content="http://yoursite.com/2017/03/22/前端开发中的地理定位问题小总结/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="项目中遇到地理定位的问题，没遇过不知道，遇过就发现这是个比较坑的问题。这个问题其实困扰了我挺久的，还不如一次性了解清楚。所以本文进行了一些小总结，先简单总结我看过的关于定位技术的资料，然后介绍前端开发中的可选定位方案，以及存在的一些问题。">
+<meta property="og:image" content="http://www.waiqin365.com/p/upload/www/201401/171809095ttk.png">
+<meta property="og:image" content="https://pic1.zhimg.com/e682d1909113142660ab7e921eb59d8c_b.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/c1442d3b436c4b6e6d7bc7c43a6f40c1_b.jpg">
+<meta property="og:image" content="http://images.cnblogs.com/cnblogs_com/magicboy110/Windows-Live-Writer/GPS_3B2/GPS_thumb22_thumb.png">
+<meta property="og:updated_time" content="2017-06-17T15:14:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端开发中的地理定位问题小总结">
+<meta name="twitter:description" content="项目中遇到地理定位的问题，没遇过不知道，遇过就发现这是个比较坑的问题。这个问题其实困扰了我挺久的，还不如一次性了解清楚。所以本文进行了一些小总结，先简单总结我看过的关于定位技术的资料，然后介绍前端开发中的可选定位方案，以及存在的一些问题。">
+<meta name="twitter:image" content="http://www.waiqin365.com/p/upload/www/201401/171809095ttk.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/22/前端开发中的地理定位问题小总结/"/>
+
+
+
+
+
+  <title>前端开发中的地理定位问题小总结 | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/22/前端开发中的地理定位问题小总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前端开发中的地理定位问题小总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-22T21:52:26+08:00">
+                2017-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>项目中遇到地理定位的问题，没遇过不知道，遇过就发现这是个比较坑的问题。这个问题其实困扰了我挺久的，还不如一次性了解清楚。所以本文进行了一些小总结，先简单总结我看过的关于定位技术的资料，然后介绍前端开发中的可选定位方案，以及存在的一些问题。</p>
+<a id="more"></a>
+<h2 id="定位技术"><a href="#定位技术" class="headerlink" title="定位技术"></a>定位技术</h2><p>概念上很好理解，就是定位你在哪里的技术。常见的定位方式有基站定位，WiFi定位，IP定位，GPS定位等。</p>
+<h3 id="基站定位"><a href="#基站定位" class="headerlink" title="基站定位"></a>基站定位</h3><p>基站是能进行信号交换的站点。手机能接受信号，打电话就是通过手机基站。这些基站是由国家移动通信运营商建的，比如中国移动，中国联通，中国电信。原理如下，通过手机接受不同几个基站的信号强度来判断二者之间距离，当然基站的位置信息本来是已知的，所以手机的位置就知道了。前提是手机必须处于SIM卡注册状态下。由于手机信号会受干扰，基站定位精度较低。而且精度也受基站的密度影响，密度越大越精准。</p>
+<p><img src="http://www.waiqin365.com/p/upload/www/201401/171809095ttk.png" alt=""></p>
+<h3 id="WiFi定位"><a href="#WiFi定位" class="headerlink" title="WiFi定位"></a>WiFi定位</h3><p>WiFi是无线上网的一种技术。平时手机不连上WiFi的功能就能定位。大致的原理是，WiFi信号被设备检测到，数据库记录这个WiFi信号和设备对应的位置。当它被越来越多的设备检测到，它的位置就可以利用这些数据通过某种算法来得出。由于信号随着距离的增加而减少，根据设备获取到的WiFi信号强度就可以计算出两者之间的距离。知道了周围几个点，以及与这些点之间的距离，待定位的设备位置就不难计算出来了。WiFi定位是由谷歌提出的，主要解决了室内定位的问题。缺点是，当某个WiFi搬家的时候，数据库没有及时更新，就会出现定位不准的问题。</p>
+<p><img src="https://pic1.zhimg.com/e682d1909113142660ab7e921eb59d8c_b.jpg" alt="身边wifi坐标获取"></p>
+<p><img src="https://pic2.zhimg.com/c1442d3b436c4b6e6d7bc7c43a6f40c1_b.jpg" alt="根据周围wifi信息计算设备"></p>
+<h3 id="IP定位"><a href="#IP定位" class="headerlink" title="IP定位"></a>IP定位</h3><p>每个能联网的设备都被分配了一个ip，通过查到数据库，可以粗略地知道这个ip所在的地理位置。你可以点<a href="https://www.opengps.cn/Data/IP/LocHighAcc.aspx" target="_blank" rel="external">这里</a>试试IP定位。</p>
+<h3 id="GPS定位"><a href="#GPS定位" class="headerlink" title="GPS定位"></a>GPS定位</h3><p>GPS，全称Global Position System，全球定位系统，简单的说，就是天上有很多卫星(24颗)，通过4颗卫星的位置以及卫星与待定位设备之间的距离，计算出该设备的位置。GPS精度高，但费电。还有在室内的时候，讯号就会被阻挡 ，所以室内GPS定位不准。</p>
+<p><img src="http://images.cnblogs.com/cnblogs_com/magicboy110/Windows-Live-Writer/GPS_3B2/GPS_thumb22_thumb.png" alt="image"></p>
+<h3 id="AGPS定位"><a href="#AGPS定位" class="headerlink" title="AGPS定位"></a>AGPS定位</h3><p>AGPS是Assisted GPS的意思。由于GPS定位最初使用都有一个冷启动时间（2-3分钟），在此之前先借助其他的定位方式进行粗略地定位，然后可以较快地根据GPS进行精确定位。一般借用的辅助定位方式为基站定位。</p>
+<h3 id="定位技术比较"><a href="#定位技术比较" class="headerlink" title="定位技术比较"></a>定位技术比较</h3><p>以上的定位方式各有优缺点，实际开发中一般同时采用多个定位方式进行定位。</p>
+<table>
+<thead>
+<tr>
+<th>定位方式</th>
+<th>应用场景</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基站定位</td>
+<td>能通电话的手机</td>
+<td>快速，耗能小</td>
+<td>受基站的密度影响，信号也会被干扰</td>
+<td></td>
+</tr>
+<tr>
+<td>WiFi定位</td>
+<td>有WiFi的地方</td>
+<td>精度尚可，解决室内定位问题</td>
+<td>WiFi数据库更新不及时</td>
+<td></td>
+</tr>
+<tr>
+<td>IP定位</td>
+<td>能上网的设备</td>
+<td></td>
+<td>精度依赖数据库</td>
+</tr>
+<tr>
+<td>GPS定位</td>
+<td>室外</td>
+<td>精确度高</td>
+<td>不能用于室内，首次定位较慢</td>
+</tr>
+<tr>
+<td>AGPS定位</td>
+<td>同上</td>
+<td>同上，解决了首次定位慢的问题</td>
+<td>不能用于室内</td>
+</tr>
+</tbody>
+</table>
+<h2 id="开发实战"><a href="#开发实战" class="headerlink" title="开发实战"></a>开发实战</h2><p>一般情况下，我们肯定不会自己去实现这些定位技术的算法，而是借助于第三方的SDK。</p>
+<p>h5开发中的方案大体来说有以下几种：</p>
+<ul>
+<li>微信JSSDK定位</li>
+<li>HTML5定位</li>
+<li>高德JS API定位</li>
+</ul>
+<p>这些定位基本上都是需要获取用户的授权。</p>
+<h3 id="微信JSSDK定位"><a href="#微信JSSDK定位" class="headerlink" title="微信JSSDK定位"></a>微信JSSDK定位</h3><p>利用微信的JSSDK来定位，简单代码如下。具体可以参考<a href="http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html" target="_blank" rel="external">开发手册</a>。</p>
+<pre><code>wx.config({
+     debug: false,
+     appId: json.appid,
+     timestamp: json.timestamp,
+     nonceStr: json.nonceStr,
+     signature: json.signature,
+     jsApiList: [
+         &apos;getLocation&apos;
+     ]
+ });
+ wx.error(function (res) {
+     console.log(res.errMsg); 
+     options.callback();
+ });
+ wx.ready(function () { 
+     wx.getLocation({
+        type: &apos;wgs84&apos;, // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入&apos;gcj02&apos;
+        success: function (res) {
+            var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+            var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。 
+            console.log(&apos;微信定位成功；&apos;); 
+        },
+        fail: function(){
+            console.log(&apos;微信定位失败；&apos;); 
+        }
+    });
+ }); 
+</code></pre><p>在网上没有找到微信定位的原理，估计就是混合定位的方式。微信定位比较好用，只要你授权了定位，成功率比较高。缺点是，只能有微信客户端才能调用微信JSSDK。</p>
+<p>但我发现在微信web开发者工具中，定位不准确。原因不详。</p>
+<h3 id="HTML5定位"><a href="#HTML5定位" class="headerlink" title="HTML5定位"></a>HTML5定位</h3><p>HTML5定位是HTML5新增的特性。官网上对它使用的定位技术进行了描述：</p>
+<blockquote>
+<p>The Geolocation API defines a high-level interface to location information associated only with the device hosting the implementation, such as latitude and longitude. The API itself is agnostic of the underlying location information sources. Common sources of location information include Global Positioning System (GPS) and location inferred from network signals such as IP address, RFID, WiFi and Bluetooth MAC addresses, and GSM/CDMA cell IDs, as well as user input. No guarantee is given that the API returns the device’s actual location.</p>
+</blockquote>
+<p>简而言之，HTML5定位是优先采用GPS，失败就用网络信号，比如IP地址，WiFi，蓝牙等等。而且它明确说明，不能保证返回结果的正确性。</p>
+<p>简单例子如下，具体的API可参考<a href="http://www.cnblogs.com/tugenhua0707/p/4520832.html" target="_blank" rel="external">这篇博客</a>。</p>
+<pre><code>if (navigator.geolocation) {
+    console.log(&quot;h5 定位中&quot;);
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var latitude  = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        console.log(&apos;h5定位成功；&apos;); 
+    }, function(error) {
+        console.log(&apos;h5定失败；&apos;); 
+    })
+}
+</code></pre><p>Geolocation API规范提供了一套保护用户隐私的机制，必须先得到用户明确许可，才能获取用户的位置信息。</p>
+<p>看起来这是个很不错的方式，现代浏览器都已经支持HTML5了。不幸的是，Chrome浏览器从50版本开始，http协议的网址是不能用了。控制台会有这样的提示：</p>
+<pre><code>getCurrentPosition() and watchPosition() no longer work on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gl/rStTGz for more details.
+</code></pre><h3 id="高德JS-API定位"><a href="#高德JS-API定位" class="headerlink" title="高德JS API定位"></a>高德JS API定位</h3><p>以下是高德官网的说明。你可以点击<a href="http://lbs.amap.com/api/javascript-api/example/location/browser-location?demo" target="_blank" rel="external">这里</a>来测试高德的定位功能。</p>
+<blockquote>
+<p>AMap.Geolocation定位服务插件。融合了浏览器定位、高精度IP定位、安卓定位sdk辅助定位等多种手段，提供了获取当前准确位置、获取当前城市信息、持续定位(浏览器定位)等功能。</p>
+<p>由于Chrome、IOS10等已不再支持非安全域的浏览器定位请求，为保证定位成功率和精度，请尽快升级您的站点到HTTPS。</p>
+</blockquote>
+<p>高德用Geolocation.getCurrentPosition获取精确位置的流程如下：</p>
+<blockquote>
+<p>在PC端，因为原生接口成功率很低，JS-API会优先调用精确IP定位服务，在IP定位失败的时候，尝试使用浏览器原生定位接口进行定位，如果原生定位接口也定位失败，则返回error事件或回调error信息。定位成功之后我们会对浏览器定位的经纬度结果进行向高德坐标的转化，并对所有有效定位结果融合地址信息后返回complete事件或者回调complete信息。</p>
+<p>在移动端，如果开发者开启了sdk辅助定位，那么安卓手机上我们会优先尝试调用sdk的定位接口，失败之后优先调用浏览器原生定位接口进行定位，浏览器定位失败之后尝试进行精确IP定位，如果以上三种定位全部尝试失败则返回error事件或回调error信息，否则和PC端的一样，定位成功之后进行高德坐标转化和地址融合。</p>
+<p>我们在定位的回调或者事件响应中返回了message字段，message字段明确指出了每一步的成功和失败原因。</p>
+</blockquote>
+<p>以及高德对 getCurrentPosition定位失败的原因说明：</p>
+<ol>
+<li><p>IP精确定位失败，message包含‘Get ipLocation failed.’信息，精确IP定位服务无法完全覆盖所有IP和用户，故而失败；</p>
+</li>
+<li><p>sdk定位失败，请检查sdk的key是否设置好，以及webview的定位权限及应用和系统的定位权限是否开启。</p>
+</li>
+<li><p>浏览器定位失败，有多种情况：  </p>
+<ol>
+<li>第一种情况，浏览器不支持原生定位接口，如IE较低版本的浏览器等，message字段包含‘Browser not Support html5 geolocation.’信息；   </li>
+<li>第二种情况，用户禁用了定位权限，需要用户开启定位权限，message字段包含‘Geolocation permission denied.’   </li>
+<li>第三种情况，浏览器禁止了非安全域的定位请求，比如Chrome、IOS10已陆续禁止，这时候需要升级站点到HTTPS，message字段也是包含‘Geolocation permission denied.’信息。注意Chrome不会禁止localhost等域名HTTP协议下的定位；   </li>
+<li>第四种情况，浏览器定位超时，包括原生的超时，可以适当增加超时属性的设定值以减少这一现象，另外还有个别浏览器本身的定位接口就是黑洞，完全没有回应，也会超时返回失败，message字段包含‘Get geolocation time out.’信息；  </li>
+<li>第五种情况，确实定位失败，Chrome、火狐以及部分套壳浏览器接入的定位服务在国外，有较大限制，失败率高； </li>
+</ol>
+</li>
+</ol>
+<p>具体的代码例子如下：</p>
+<pre><code>AMap.service(&apos;AMap.Geolocation&apos;, function() {
+    geolocation = new AMap.Geolocation({
+        enableHighAccuracy: true, //是否使用高精度定位，默认:true
+        timeout: 10000, //超过10秒后停止定位，默认：无穷大
+        zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+        buttonPosition: &apos;LB&apos;, //显示定位按钮的位置 ，右下角 
+    }); 
+    geolocation.getCurrentPosition();
+    AMap.event.addListener(geolocation, &apos;complete&apos;, onComplete); //返回定位信息
+    AMap.event.addListener(geolocation, &apos;error&apos;, onError); //返回定位出错信息
+})
+</code></pre><p>我做了一点小测试，结果如下：</p>
+<pre><code>A处：我的实际地址
+B处: 我的IP地址
+
++ PC端
+    + Chrome：B处
+    + IE：B处
+    + Safari：B处
++ 手机端(安卓)
+    + 数据
+        + 自带浏览器：A处偏一点
+        + 微信浏览器：A处
+        + Chrome：合肥市
+        + Safari：准确
+    + WiFi
+        + 自带浏览器：A处
+        + 微信浏览器：A处
+        + Chrome：杭州市
+        + Safari：准确
+</code></pre><p>结果分析：PC端定位都是IP，所以是精确IP定位；在手机端，由于自带浏览器和微信浏览器都支持HTML5定位（即浏览器定位，访问前也有授权操作），所以都返回了同样的结果；对于Chrome，浏览器定位不管用了，WiFi的IP定位定准确了城市，而3G下的IP定位定到了手机号码归属地。</p>
+<p>那么，问题是对于这些定位不成功的例子怎么来解决？</p>
+<h3 id="我的方案"><a href="#我的方案" class="headerlink" title="我的方案"></a>我的方案</h3><p>最初，我只用高德地图的定位来做。但是时好时坏，我瞎折腾，又添加浏览器定位。然后想想这个在附在微信公众号上的，于是又添加了微信JSSDK的方式。</p>
+<p>所以，这个项目使用的定位方案是这样的：同时调用微信定位，浏览器定位，高德定位，以最快出结果的为准。想想三重保障是不是很完美了？</p>
+<p>现实很残酷，问题还很多，不然就不会有这篇文章了。</p>
+<p>本来我还缓存了一定时间的城市和位置信息，但考虑到出错的情况，还是取消缓存比较恰当。</p>
+<p>分析下来，其实浏览器定位的方式已经包括在高德定位了。由于微信定位的高成功率，方案可以调整为：<strong>判断是否为微信客户端，是的话优先调用微信定位，若微信定位失败再调用高德；否的话，直接调用高德定位</strong>。</p>
+<h3 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h3><p>由于有些测试需要在项目上线后才好测试，我只是做一些分析猜测。据我所了解，目前的问题主要考虑的是高德定位失败后怎么办？</p>
+<p>而高德失败的主要原因也就是浏览器定位失败，条件允许的话把网站（只需要那个页面）升级到HTTPS就好了。</p>
+<p>那网址即使已经HTTPS协议的了呢？我们换个角度来思考一下。</p>
+<p>从产品的角度出发，无论怎么样还是要考虑一定不成功的情况，那就提供手动输入地址的功能吧。这就万无一失了。</p>
+<p>参考资料：</p>
+<ul>
+<li><a href="http://www.cnblogs.com/magicboy110/archive/2010/12/09/1901669.html" target="_blank" rel="external">http://www.cnblogs.com/magicboy110/archive/2010/12/09/1901669.html</a> GPS定位原理</li>
+<li><a href="https://www.zhihu.com/question/20355764/answer/26765991" target="_blank" rel="external">https://www.zhihu.com/question/20355764/answer/26765991</a> WiFi定位原理 </li>
+<li><a href="http://www.pmcaff.com/article/index/492872948080768?from=related&amp;pmc_param%5Bentry_id%5D=414603611639936" target="_blank" rel="external">http://www.pmcaff.com/article/index/492872948080768?from=related&amp;pmc_param%5Bentry_id%5D=414603611639936</a> 我们常用的手机定位方法</li>
+<li><a href="http://www.cnblogs.com/syfwhu/p/5084115.html" target="_blank" rel="external">http://www.cnblogs.com/syfwhu/p/5084115.html</a> 常见手机定位方式浅谈</li>
+<li><a href="http://www.jianshu.com/p/a776ed702765" target="_blank" rel="external">http://www.jianshu.com/p/a776ed702765</a> 常用手机定位原理</li>
+<li><a href="http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html#.E5.9C.B0.E7.90.86.E4.BD.8D.E7.BD.AE" target="_blank" rel="external">http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html#.E5.9C.B0.E7.90.86.E4.BD.8D.E7.BD.AE</a> 微信JSSDK说明文档</li>
+<li><a href="https://www.w3.org/TR/geolocation-API/" target="_blank" rel="external">https://www.w3.org/TR/geolocation-API/</a> HTML5 geolocation api</li>
+<li><a href="http://www.cnblogs.com/tugenhua0707/p/4520832.html" target="_blank" rel="external">http://www.cnblogs.com/tugenhua0707/p/4520832.html</a> html5获取地理位置信息API</li>
+<li><a href="https://developers.google.com/web/updates/2016/04/geolocation-on-secure-contexts-only" target="_blank" rel="external">https://developers.google.com/web/updates/2016/04/geolocation-on-secure-contexts-only</a><br>Geolocation API Removed from Unsecured Origins in Chrome 50</li>
+<li><a href="http://lbs.amap.com/api/javascript-api/reference/location" target="_blank" rel="external">http://lbs.amap.com/api/javascript-api/reference/location</a> 高德地图定位api</li>
+<li><a href="http://lbs.amap.com/faq/web/javascript-api/80" target="_blank" rel="external">http://lbs.amap.com/faq/web/javascript-api/80</a> 高德定位失败原因说明</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Translate/" rel="tag"># Translate</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/18/【译】成为一名函数式码农系列之四/" rel="next" title="【译】成为一名函数式码农系列之四">
+                <i class="fa fa-chevron-left"></i> 【译】成为一名函数式码农系列之四
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/24/【译】成为一名函数式码农系列之六/" rel="prev" title="【译】成为一名函数式码农系列之六">
+                【译】成为一名函数式码农系列之六 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定位技术"><span class="nav-number">1.</span> <span class="nav-text">定位技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基站定位"><span class="nav-number">1.1.</span> <span class="nav-text">基站定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WiFi定位"><span class="nav-number">1.2.</span> <span class="nav-text">WiFi定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP定位"><span class="nav-number">1.3.</span> <span class="nav-text">IP定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GPS定位"><span class="nav-number">1.4.</span> <span class="nav-text">GPS定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AGPS定位"><span class="nav-number">1.5.</span> <span class="nav-text">AGPS定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定位技术比较"><span class="nav-number">1.6.</span> <span class="nav-text">定位技术比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发实战"><span class="nav-number">2.</span> <span class="nav-text">开发实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#微信JSSDK定位"><span class="nav-number">2.1.</span> <span class="nav-text">微信JSSDK定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML5定位"><span class="nav-number">2.2.</span> <span class="nav-text">HTML5定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高德JS-API定位"><span class="nav-number">2.3.</span> <span class="nav-text">高德JS API定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#我的方案"><span class="nav-number">2.4.</span> <span class="nav-text">我的方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存在的问题"><span class="nav-number">2.5.</span> <span class="nav-text">存在的问题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

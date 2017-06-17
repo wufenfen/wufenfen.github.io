@@ -267,7 +267,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/10/测试文章/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/02/【译】理解Node事件驱动架构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claire_Yecao">
@@ -286,7 +286,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/06/10/测试文章/" itemprop="url">测试文章</a></h1>
+                <a class="post-title-link" href="/2017/06/02/【译】理解Node事件驱动架构/" itemprop="url">【译】理解Node事件驱动架构</a></h1>
         
 
         <div class="post-meta">
@@ -298,8 +298,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-10T23:22:22+08:00">
-                2017-06-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-02T21:52:26+08:00">
+                2017-06-02
               </time>
             
 
@@ -308,28 +308,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/cat/" itemprop="url" rel="index">
-                    <span itemprop="name">cat</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -356,10 +334,1104 @@
 
       
         
-          
-            <p>  第一次用hexo搭建博客系统，参考了<a href="http://hcysun.me/2015/09/21/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%B9%B6%E5%85%B3%E8%81%94%E5%88%B0github-page/" target="_blank" rel="external">hexo搭建博客并关联到github page</a>。感谢作者的简单明了的教程。</p>
+          <blockquote>
+<p>原文链接：<a href="https://medium.freecodecamp.com/understanding-node-js-event-driven-architecture-223292fcbc2d" target="_blank" rel="external">Understanding Nodejs Event-driven Architecture</a> </p>
+<p>作者：<a href="https://medium.freecodecamp.com/@samerbuna" target="_blank" rel="external">Samer Buna</a></p>
+<p>翻译：野草</p>
+<p>本文首发于前端早读课<a href="http://mp.weixin.qq.com/s/XUUMtC8hNmTLGARfqddxug" target="_blank" rel="external">【第958期】</a></p>
+</blockquote>
+<p>Node中的绝大多数对象，比如HTTP请求，响应，流，都是实现了<code>EventEmitter</code>模块，所以它们可以触发或监听事件。</p>
+<pre><code>const EventEmitter = require(&apos;events&apos;);
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/02/【译】理解Node事件驱动架构/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/20/JavaScript单线程异步的背后——事件循环机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/20/JavaScript单线程异步的背后——事件循环机制/" itemprop="url">JavaScript单线程异步的背后——事件循环机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-20T21:52:26+08:00">
+                2017-05-20
+              </time>
+            
+
+            
+
+            
+          </span>
 
           
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>感觉这篇文章拖了很久，好尴尬的拖延症 </p>
+<p>正文从这里开始～～～</p>
+<p>对JavaScript有个很模糊的印象，它是单线程异步的。本文主要来说说JavaScript到底是怎么运行的。但在这之前，让我们先理一下这些概念（现学现卖）。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/20/JavaScript单线程异步的背后——事件循环机制/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/10/【译】现在是行动的最佳时机/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/10/【译】现在是行动的最佳时机/" itemprop="url">【译】现在是行动的最佳时机</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-10T21:52:26+08:00">
+                2017-05-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>原文链接：<a href="https://medium.com/the-mission/3-reasons-why-you-must-take-ownership-of-your-success-today-947e7403c643" target="_blank" rel="external">3 Reasons Why You Must Take Ownership of Your Success Today</a>   </p>
+<p>作者：<a href="https://themission.co/@jeffgoins" target="_blank" rel="external">Jeff Goins</a> </p>
+<p>翻译：野草</p>
+</blockquote>
+<p>有件事情困扰了我很久，世界上最具天分最有创造力的人并没有得到应有的关注。可能你也注意到了。不论公平与否，事实就是最负盛名的艺术家、企业家或者发明家并不总是那些最有才华或者想法最棒的人。如果你也为此感到困扰，这是很正常的。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/10/【译】现在是行动的最佳时机/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/05/如何搭建Swagger接口文档/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/05/如何搭建Swagger接口文档/" itemprop="url">如何搭建Swagger接口文档</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-05T21:52:26+08:00">
+                2017-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Swagger是规范RESTful API服务的语言或者说工具，不仅可以用来定义接口，还可以测接口，一举两得。</p>
+<p>我不知道这个工具的流行程度如何，至少我知道的是网上的中文资料很少，也没有如何在实际中使用起来的教程。经过一两天的研究，总结一个简单的搭建手册。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/05/如何搭建Swagger接口文档/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/01/【译】谈谈产品视角：你的，还是我的？/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/01/【译】谈谈产品视角：你的，还是我的？/" itemprop="url">【译】谈谈产品视角：你的，还是我的？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-01T21:52:26+08:00">
+                2017-05-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>原文链接：<a href="https://medium.com/@jsaito/is-this-my-interface-or-yours-b09a7a795256" target="_blank" rel="external">Is this my interface or yours?</a>   </p>
+<p>作者：<a href="https://medium.com/@jsaito" target="_blank" rel="external">John Saito</a></p>
+<p>翻译：野草</p>
+<p>本文首发于前端早读课<a href="https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651226456&amp;idx=1&amp;sn=f65ad98f0ee14a761299a5b7eee4729b&amp;chksm=bd4958dc8a3ed1cad3fa9bc6c3b86ce2d44406b9a942d19c4523d40a26ef3c82e693b3601949&amp;mpshare=1&amp;scene=1&amp;srcid=0617yJXO0OvRAOifWXzcHPFU&amp;key=50814c5812fb30a218639b74e0dfb2d27eca41979b330cf571831e17ed2c646e89cc9cbe70984c87a9dc7ff2b1b188dda952fb75742c1e0b9407c2686a9ddb803757bdba848b0aead23d864d80853cef&amp;ascene=0&amp;uin=MTQ2MjQ2MjU4MQ%3D%3D&amp;devicetype=iMac+MacBookPro13%2C2+OSX+OSX+10.12.2+build" target="_blank" rel="external">【第927期】</a></p>
+</blockquote>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*FSoH96S_iF4tHvU9sr-VSw.png" alt=""></p>
+<h2 id="我的电脑图标"><a href="#我的电脑图标" class="headerlink" title="我的电脑图标"></a><strong>我的电脑</strong>图标</h2><p>还记得Windows桌面的<strong>我的电脑</strong>图标吗？这个小图标背后包含了你电脑中所有的资料，包括你所有的代码，所有的工作，所有数字化的你，是不是有点厉害？！<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/01/【译】谈谈产品视角：你的，还是我的？/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/24/【译】Vue框架引入JS库的正确姿势/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/24/【译】Vue框架引入JS库的正确姿势/" itemprop="url">【译】Vue框架引入JS库的正确姿势</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-24T21:52:26+08:00">
+                2017-04-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>原文链接：<a href="http://vuejsdevelopers.com/2017/04/22/vue-js-libraries-plugins/?jsdojo_id=reddit_lip&amp;utm_content=bufferf1f60&amp;utm_medium=social&amp;utm_source=twitter.com&amp;utm_campaign=buffer" target="_blank" rel="external">Use Any Javascript Library With Vue.js</a> </p>
+<p>作者：<a href="">ANTHONY GORE</a></p>
+<p>翻译：野草  </p>
+<p>本文首发于前端早读课<a href="https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651226400&amp;idx=1&amp;sn=8841ec09ac308c6c60c86e5f8641739f&amp;chksm=bd4958a48a3ed1b2c079209ed0748abd602302cfa549b24f822c89670caa248c451a95ad5ab1&amp;scene=21#wechat_redirect" target="_blank" rel="external">【第917期】</a></p>
+</blockquote>
+<p>在Vue.js应用中，可能需要引入Lodash，Moment，Axios，Async等非常好用的JavaScript库。当项目变得复杂庞大，通常会将代码进行模块化拆分。可能还需要跑在不同的环境下，比如浏览器，服务端。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/24/【译】Vue框架引入JS库的正确姿势/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/22/JS模块化简单实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/22/JS模块化简单实现/" itemprop="url">JS模块化简单实现</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-22T21:52:26+08:00">
+                2017-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>曾经花了一段时间去看<code>RequireJS</code>源码，虽然就两千行左右的代码，但原谅我的愚笨，真的有点看不懂。想想，还是自己实现一个再说。</p>
+<h2 id="简单目标"><a href="#简单目标" class="headerlink" title="简单目标"></a>简单目标</h2>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/22/JS模块化简单实现/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/17/【译】JS继承常见误区扫盲（三）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/17/【译】JS继承常见误区扫盲（三）/" itemprop="url">【译】JS继承常见误区扫盲（三）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-17T21:52:26+08:00">
+                2017-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>原文链接：<a href="https://medium.com/javascript-scene/common-misconceptions-about-inheritance-in-javascript-d5d9bab29b0a" target="_blank" rel="external">Common Misconceptions About Inheritance in JavaScript</a> </p>
+<p>作者：<a href="https://medium.com/@_ericelliott" target="_blank" rel="external">Eric Elliott</a></p>
+<p>翻译：野草 </p>
+<p>本文首发于前端早读课<a href="https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651226377&amp;idx=1&amp;sn=e19c16fee8470c266a68df6326f20c61&amp;chksm=bd49588d8a3ed19b0e55cb7c1a43b70e7065802fdcc2546bac4680c100aac62bedcb4a981cb9&amp;scene=21#wechat_redirect" target="_blank" rel="external">【第911期】</a> </p>
+</blockquote>
+<p>往期回顾：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/26252652" target="_blank" rel="external">【译】JS继承常见误区扫盲（一）</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/26382777" target="_blank" rel="external">【译】JS继承常见误区扫盲（二）</a></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/17/【译】JS继承常见误区扫盲（三）/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/14/【译】JS继承常见误区扫盲（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/14/【译】JS继承常见误区扫盲（二）/" itemprop="url">【译】JS继承常见误区扫盲（二）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-14T21:52:26+08:00">
+                2017-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>原文链接：<a href="https://medium.com/javascript-scene/common-misconceptions-about-inheritance-in-javascript-d5d9bab29b0a" target="_blank" rel="external">Common Misconceptions About Inheritance in JavaScript</a> </p>
+<p>作者：<a href="https://medium.com/@_ericelliott" target="_blank" rel="external">Eric Elliott</a></p>
+<p>翻译：野草 </p>
+<p>本文首发于前端早读课<a href="https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651226377&amp;idx=1&amp;sn=e19c16fee8470c266a68df6326f20c61&amp;chksm=bd49588d8a3ed19b0e55cb7c1a43b70e7065802fdcc2546bac4680c100aac62bedcb4a981cb9&amp;scene=21#wechat_redirect" target="_blank" rel="external">【第911期】</a> </p>
+</blockquote>
+<p>往期回顾：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/26252652" target="_blank" rel="external">【译】JS继承常见误区扫盲（一）</a></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/14/【译】JS继承常见误区扫盲（二）/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/12/Vue学习笔记之父子组件通信/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/12/Vue学习笔记之父子组件通信/" itemprop="url">Vue学习笔记之父子组件通信</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-12T21:52:26+08:00">
+                2017-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="父组件向子组件通信"><a href="#父组件向子组件通信" class="headerlink" title="父组件向子组件通信"></a>父组件向子组件通信</h2><ul>
+<li>props属性，在子组件初始化时添加对应的props属性
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/12/Vue学习笔记之父子组件通信/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -395,6 +1467,10 @@
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -437,21 +1513,12 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
 
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              
-                <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">categories</span>
-              
-            </div>
           
 
           

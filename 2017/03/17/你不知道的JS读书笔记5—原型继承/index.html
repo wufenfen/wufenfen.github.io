@@ -1,0 +1,816 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Translate,JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="查阅了挺多资料，也看了很久。网上列了好些继承的方法，各种方法，比如原型式继承，原型链继承，组合继承，寄生式继承，寄生组合式继承等。我挺不喜欢这样的方法的，感觉像是背答案一下，我也不知道这名称是谁取。猜猜应该来源某本权威的书，网上有很多类似的博文。我就说说我能理解的部分，以及整理成我理解的方式。不当之处，欢迎指出！">
+<meta name="keywords" content="Translate,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你不知道的JS读书笔记5—原型继承">
+<meta property="og:url" content="http://yoursite.com/2017/03/17/你不知道的JS读书笔记5—原型继承/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="查阅了挺多资料，也看了很久。网上列了好些继承的方法，各种方法，比如原型式继承，原型链继承，组合继承，寄生式继承，寄生组合式继承等。我挺不喜欢这样的方法的，感觉像是背答案一下，我也不知道这名称是谁取。猜猜应该来源某本权威的书，网上有很多类似的博文。我就说说我能理解的部分，以及整理成我理解的方式。不当之处，欢迎指出！">
+<meta property="og:updated_time" content="2017-06-17T15:24:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="你不知道的JS读书笔记5—原型继承">
+<meta name="twitter:description" content="查阅了挺多资料，也看了很久。网上列了好些继承的方法，各种方法，比如原型式继承，原型链继承，组合继承，寄生式继承，寄生组合式继承等。我挺不喜欢这样的方法的，感觉像是背答案一下，我也不知道这名称是谁取。猜猜应该来源某本权威的书，网上有很多类似的博文。我就说说我能理解的部分，以及整理成我理解的方式。不当之处，欢迎指出！">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/17/你不知道的JS读书笔记5—原型继承/"/>
+
+
+
+
+
+  <title>你不知道的JS读书笔记5—原型继承 | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/17/你不知道的JS读书笔记5—原型继承/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">你不知道的JS读书笔记5—原型继承</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-17T21:52:26+08:00">
+                2017-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>查阅了挺多资料，也看了很久。网上列了好些继承的方法，各种方法，比如原型式继承，原型链继承，组合继承，寄生式继承，寄生组合式继承等。我挺不喜欢这样的方法的，感觉像是背答案一下，我也不知道这名称是谁取。猜猜应该来源某本权威的书，网上有很多类似的博文。我就说说我能理解的部分，以及整理成我理解的方式。不当之处，欢迎指出！</p>
+<a id="more"></a>
+<h2 id="类继承"><a href="#类继承" class="headerlink" title="类继承"></a>类继承</h2><p>面向对象设计语言中比较经典的概念就是继承，那继承是什么？讲个通俗易懂的小故事：</p>
+<p>突然你变成上帝了，跟传说一样，你一个人呆太久呆地太无聊了，你准备造动物了。你拿出一张神纸（类），在纸上写出动物具备的所有特征，然后对着纸一吹，吹（实例化）出了好多活生生的动物（实例）；你看到一只你特别喜欢的动物——比如说它是猫，想多造一些；于是你又拿出来了一张神纸（类） ，写上这只猫区别于一般动物的特别之处，但是你在第一张纸上写的那些特征怎么办呢？如果再全部写一遍会让凡人嘲笑你这个笨上帝的，所以你灵机一动，写上了一句神奇的话：“凡动物有的特征猫也通通有”（继承）。然后有一口气，就出来了很多可爱的小猫咪（实例）。</p>
+<p>这就是我理解的传统面向对象语言的类继承。需要特别指出的是，那张神纸（类）是抽象的存在，相当于动物实例的DNA。</p>
+<h2 id="原型继承"><a href="#原型继承" class="headerlink" title="原型继承"></a>原型继承</h2><p>那JS的原型继承是什么呢？再接着这个故事讲：</p>
+<p>突然我又变成了上帝，感觉你创造动物的方法太笨了，借用了你的一只动物A过来。然后（优雅地）挥一挥衣袖，就按照你的动物样子变出了另一只动物。你一看，大惊：“怎么你的动物只有脸，其他部位都是黑乎乎的一片？”我得意地说：“你仔细看，那部分写着，这里长得跟A一模一样。所以你参照你的A，就知道我的动物长什么样了。反正一模一样，我为什么要费劲再创造一遍呢？”你用异样的眼神看着我，心里想着“我今天怎么遇到奇葩了？”。<br>故事讲完了。你的动物A可以类比看作传统概念中的类，而我从中创造出来的动物可以看作实例，或者类。因为在JavaScript中无论是类，还是实例，本质上都是对象。我们又怎么去区分这个对象是实例，还是类（除了构造函数充当了类的角色）。所以上面第二个小故事，可以比作传统概念中类的实例化，或者类的继承都可以。</p>
+<h2 id="二者区别"><a href="#二者区别" class="headerlink" title="二者区别"></a>二者区别</h2><p>在传统的面向对象语言中，类实例化是一个抽象概念具体化的过程，而类继承是抽象概念继续生成另一个抽象概念的过程。而在JS中，没有抽象的东西，只有具体的对象。所有这些看起来像类，实例，继承的东西，本质上是将不同的对象之间建立关联，这也就是JS特有的原型链。之所以称为原型继承，可能是想向面对对象语言靠近吧，有人提出行为委托的叫法更加合适。</p>
+<p>也许你可能还对我的说法有所疑问，拿出我前一篇博文的例子来说事。你看<code>Animal</code>是个抽象构造函数（类），它不是对象。</p>
+<pre><code>function Animal(name, species, n){
+    this.name = name;
+    this.species = species || &apos;animal&apos;;
+    this.legsNum = n;
+}
+
+Animal.prototype.sayHello = function(){
+    console.log(&apos;Hello, I am a &apos; + this.species + &apos;, my name is &apos; + this.name);
+}
+
+var dog = new Animal(&apos;Belly&apos;, &apos;dog&apos;, 4);
+</code></pre><p>那你是否记得<code>new</code>操作具体做了什么吗？我们再来回顾一下。</p>
+<pre><code>function New( P ){
+     function F(){}
+     F.__proto__ = P.prototype;
+     return function(){
+          P.call(F, arguments);
+          return F;
+     }
+}
+</code></pre><p>它分成了两个步骤，将新创建对象与构造函数的原型对象建立关联，用新创建对象作为this上下文执行一次构造函数内的代码。所以，我们可以看到dog与Animal的联系更像是一种行为的委托。当访问dog上没有的属性或方法时，它会去Animal上查找。这看起来，很像类的继承。其实，它是属于原型继承。</p>
+<h2 id="原型继承实现方法"><a href="#原型继承实现方法" class="headerlink" title="原型继承实现方法"></a>原型继承实现方法</h2><p>了解了类继承与原型继承之间的区别之后，我们还是沿用老的叫法。我们来看一下原型继承有哪些方法。</p>
+<p>对于类来说，重要的是它的原型对象prototype，因为它是被实例多共享的属性。至于怎么建立两个类之间的继承关系呢，将子类的原型对象的原型链指向父类的原型对象 。 从语法实现方式上来说，有以下几种方式</p>
+<ul>
+<li>B.prototype = new A() </li>
+<li>B.prototype = Object.create( A.prototype ) </li>
+<li>Object.setPrototypeOf(B.prototype , A.prototype )，ES6的新方法</li>
+</ul>
+<p>顺便提一句，类的实例化与类的继承其实挺像的，只是将一个实例的原型链指向类的原型对象。</p>
+<ul>
+<li>a = new A()</li>
+<li>a = Object.create( A.prototype )</li>
+<li>Object.setPrototypeOf(a , A.prototype )</li>
+</ul>
+<p>顺便，我们看下Object.create到底做了什么。以下是ES5之前的polyfill版本。</p>
+<pre><code>if(typeof Object.create !== &apos;function&apos;){
+     Object.create = function(o){
+          function F(){}
+          F.prototype = o;
+          return new F();
+     }
+}
+</code></pre><p>下面我们拿具体一点的例子来说明。</p>
+<pre><code>// 父类
+function Animal(){
+     this.type = &apos;animal&apos;; 
+}
+Animal.prototype.sayHello = function(){
+     console.log(&apos;Hi, human!&apos;);
+}
+//子类 
+function Cat( name ){
+     Animal.call(this, arguments);
+     this.name = name;
+}
+Cat.prototype = new Animal();
+// 或者   Cat.prototype = Object.create(Animal.prototype);
+// 或者 Object.setPrototypeOf(Cat.prototype, Animal.prototype);
+Cat.prototype.miao = function(){
+     console.log(&apos;Miao~W~&apos;);
+}
+var cat = new Cat(&apos;kitty&apos;);
+cat.sayHello(); // &apos;Hi, human!&apos;
+</code></pre><p>Cat上没有sayHello的方法，但由于它继承了Animal类，自然有个Animal原型对象上的方法了。当然，没有人会用这种方式<code>Cat.prototype = Animal.prototype;</code>来实现继承吧。</p>
+<h2 id="行为委托出场"><a href="#行为委托出场" class="headerlink" title="行为委托出场"></a>行为委托出场</h2><p>上面的实现方式还是遵守了传统类继承的方式，让我们抛开类啊，继承啊，实例化啊，用JS的建立关联本质来实现一次。</p>
+<pre><code>// 一个对象
+var Animal = {
+     init: function(){
+          this.type = &apos;animal&apos;; 
+     },
+     sayHello: function(){
+          console.log(&apos;Hi, human!&apos;);
+    }
+}
+
+//  另一个对象
+var Cat = Object.create( Animal);
+Cat.setup = function( name ){
+     this.init();
+     this.name = name;
+} 
+Cat.miao = function(){
+     console.log(&apos;Miao~W~&apos;);
+}
+var cat = Object.create(Cat);
+cat.setup();
+cat.sayHello(); // &apos;Hi, human!&apos;
+</code></pre><p>这里不再出现new，prototype，构造函数，是不是整个世界都清净了~~~我们只用了Object.create就搞定了类的实例，类的继承啊这些烦人的概念。</p>
+<p>另外，需要提一下的是，父类的修改对子类的影响。接着上面的代码：</p>
+<pre><code> Animal.sayHello = function(){
+      console.log(&apos;Hi, I changed a way to say Hello!&apos;);
+}
+ cat.sayHello(); //  &apos;Hi, I changed a way to say Hello!&apos;
+
+ Animal = { 
+      sayHello: function(){
+           console.log(&apos;You will never hear me say hello!&apos;);
+     }
+ }
+cat.sayHello(); //  &apos;Hi, I changed a way to say Hello!&apos;
+</code></pre><p>其中的原因，相信聪明的你应该能想得出来吧。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总的来说，JS的原型继承与类继承还是有很大差别的。类继承是抽象类再生成抽象类的过程，而原型继承是具体对象之间建立的一种关联，或者说是行为委托。我们可以用仿造类继承的<strong>原型继承</strong>概念来实现，也可以用JS语言的本质<strong>行为委托</strong>理念来实现相同的东西。</p>
+<p>参考资料：</p>
+<ul>
+<li><a href="https://github.com/getify/You-Dont-Know-JS" target="_blank" rel="external">https://github.com/getify/You-Dont-Know-JS</a> 你不知道的JS（上卷） </li>
+<li><a href="http://www.cnblogs.com/wilber2013/p/4966587.html" target="_blank" rel="external">http://www.cnblogs.com/wilber2013/p/4966587.html</a> 关于JavaScript继承的那些事  </li>
+<li><a href="http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html</a>  Javascript继承机制的设计思想</li>
+<li><a href="http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html</a>  Javascript 面向对象编程（一）：封装</li>
+<li><a href="http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html</a>  Javascript面向对象编程（二）：构造函数的继承 </li>
+<li><a href="http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html</a> Javascript面向对象编程（三）：非构造函数的继承</li>
+<li><a href="http://yijiebuyi.com/blog/bc5a9d2f60b829d6e7d052541f9ae681.html" target="_blank" rel="external">http://yijiebuyi.com/blog/bc5a9d2f60b829d6e7d052541f9ae681.html</a>  javascript 中面向对象实现 如何继承 </li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/instanceof" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/instanceof</a> MDN instanceof </li>
+<li><a href="https://medium.com/javascript-scene/common-misconceptions-about-inheritance-in-javascript-d5d9bab29b0a#.kfk2gyybl" target="_blank" rel="external">https://medium.com/javascript-scene/common-misconceptions-about-inheritance-in-javascript-d5d9bab29b0a#.kfk2gyybl</a>  Common Misconceptions About Inheritance in JavaScript</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Translate/" rel="tag"># Translate</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/13/【译】理解关键渲染路径/" rel="next" title="【译】理解关键渲染路径">
+                <i class="fa fa-chevron-left"></i> 【译】理解关键渲染路径
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/18/《一线大厂如何面试前端工程师》听后感/" rel="prev" title="《一线大厂如何面试前端工程师》听后感">
+                《一线大厂如何面试前端工程师》听后感 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类继承"><span class="nav-number">1.</span> <span class="nav-text">类继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型继承"><span class="nav-number">2.</span> <span class="nav-text">原型继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二者区别"><span class="nav-number">3.</span> <span class="nav-text">二者区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型继承实现方法"><span class="nav-number">4.</span> <span class="nav-text">原型继承实现方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行为委托出场"><span class="nav-number">5.</span> <span class="nav-text">行为委托出场</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

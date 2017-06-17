@@ -1,0 +1,796 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Translate,JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="简介自从Angularjs火起来之后，双向绑定经常被提及。双向绑定概念其实很简单，就是视图（View）的变化能实时让数据模型（Model）发生变化，而数据的变化也能实时更新到视图层。我们所说的单向数据绑定就是从数据到视图这一方向的关系。">
+<meta name="keywords" content="Translate,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据双向绑定的分析和简单实现">
+<meta property="og:url" content="http://yoursite.com/2017/02/27/数据双向绑定的分析和简单实现/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="简介自从Angularjs火起来之后，双向绑定经常被提及。双向绑定概念其实很简单，就是视图（View）的变化能实时让数据模型（Model）发生变化，而数据的变化也能实时更新到视图层。我们所说的单向数据绑定就是从数据到视图这一方向的关系。">
+<meta property="og:updated_time" content="2017-06-17T15:24:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据双向绑定的分析和简单实现">
+<meta name="twitter:description" content="简介自从Angularjs火起来之后，双向绑定经常被提及。双向绑定概念其实很简单，就是视图（View）的变化能实时让数据模型（Model）发生变化，而数据的变化也能实时更新到视图层。我们所说的单向数据绑定就是从数据到视图这一方向的关系。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/27/数据双向绑定的分析和简单实现/"/>
+
+
+
+
+
+  <title>数据双向绑定的分析和简单实现 | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/27/数据双向绑定的分析和简单实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据双向绑定的分析和简单实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T21:52:26+08:00">
+                2017-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>自从Angularjs火起来之后，双向绑定经常被提及。双向绑定概念其实很简单，就是视图（View）的变化能实时让数据模型（Model）发生变化，而数据的变化也能实时更新到视图层。我们所说的单向数据绑定就是从数据到视图这一方向的关系。</p>
+<a id="more"></a>
+<p> <a href="https://wufenfen.github.io/Data-Binding" target="_blank" rel="external">See Demo Here</a></p>
+<p>对于数据双向绑定，我们需要考虑的问题如下：</p>
+<ul>
+<li>如何监听页面View的变化？</li>
+<li>如何将View的变化更新到Model？</li>
+<li>如何监听Model的变化？</li>
+<li>如何将Model的更新到View？<br>视图层的变化主要就是表单控件的用户输入行为造成的，比如input，select，textarea等。那么我们只需要监听一些事件，比如keypress，keydown，keyup，change。然后在事件回调函数中，将变化的值更新到Model中。当然同时，由于Model发生了变化，我们得再次更新一下View。</li>
+</ul>
+<p>而Model的变化监听方式可以有多种，主要有以下几种：  发布订阅模式（Backbone），数据劫持（VueJS，AvalonJS），数据脏检查（Angularjs，RegularJS）， View抽象的脏检查（ReactJS）。最后一个我们暂时不讨论，下面具体对前面的三种类型进行分析。</p>
+<h2 id="发布订阅模式"><a href="#发布订阅模式" class="headerlink" title="发布订阅模式"></a>发布订阅模式</h2><p>发布订阅模式也称为观察者模式。直观地说，就是有一家报社和很多用户，报社就是发布者，用户就是订阅者。每当报社有新的报纸时，由于订阅者订阅了报纸，他们能第一时间收到新的报纸。当然订阅者也可以取消订阅。</p>
+<p>我的理解，原生JS中的事件就是一种观察者模式。比如鼠标的点击事件，只要它点击了，以addEventListener方式订阅它的回调函数就会第一时间收到通知。除了现成的事件，JS的创建自定义事件看起来更直观。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var event = new Event(&apos;build&apos;);</div><div class="line">// 订阅者订阅事件.</div><div class="line">elem.addEventListener(&apos;build&apos;, function (e) &#123; ... &#125;, false);</div><div class="line"></div><div class="line">// 发布事件.</div><div class="line">elem.dispatchEvent(event);</div></pre></td></tr></table></figure></p>
+<p>扯远了，我们回到数据双向绑定的主题上来。在数据发生变化的时候，我们发布一个叫‘model-update’的事件。类似，当视图发生变化的时候，我们发布一个叫‘ui-update’的事件。那么，在这些事件发生时想要做什么动作只要让它去订阅这些事件即可。下面是简单的实现，首先定义一个发布订阅者对象pubSub。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"> // 更新数据 </div><div class="line">function updateData(attr, value)&#123;</div><div class="line">   data[attr] = value;</div><div class="line">   pubSub.publish(&apos;model-update&apos;, attr, value);</div><div class="line">&#125;</div><div class="line">// 订阅ui-update事件 </div><div class="line">pubSub.subscribe(&apos;ui-update&apos;, function(attr, value)&#123;</div><div class="line">   updateData(attr, value);</div><div class="line">&#125;);</div><div class="line">// 订阅model -update事件 </div><div class="line">pubSub.subscribe(&apos;model-update&apos;, function(attr, value)&#123;</div><div class="line">   //更新视图中所有单向绑定的值，用类似ng-bind的形式</div><div class="line">    for(var attr in data)&#123;</div><div class="line">       if( bindingsMap[attr] )&#123;</div><div class="line">           bindingsMap[attr].forEach(function(item, index)&#123;</div><div class="line">               item.innerHTML = data[attr];</div><div class="line">           &#125;)</div><div class="line">       &#125;</div><div class="line">   //更新视图中所有双向绑定的值，用类似ng-model的形式</div><div class="line">     if(modelsMap[attr])&#123;</div><div class="line">           modelsMap[attr].forEach(function(item, index)&#123;</div><div class="line">               item.value = data[attr];</div><div class="line">           &#125;)</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">&#125;);</div><div class="line">//视图数据修改，发布ui-update事件   </div><div class="line">document.addEventListener(&apos;keyup&apos;, function( e )&#123;</div><div class="line">   var ele = e.target;</div><div class="line">   var attr = ele.getAttribute(&apos;yc-model&apos;);</div><div class="line">   pubSub.publish(&apos;ui-update&apos;, attr, ele.value);</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>每次更新数据用updateData函数，这个函数执行了赋值操作之后会发布‘model-update’事件，这样就手动地解决了数据到视图这方向的更新问题了。</p>
+<h2 id="数据劫持"><a href="#数据劫持" class="headerlink" title="数据劫持"></a>数据劫持</h2><p>ES5中对象的属性有了属性描述符，可以用以下的方式去定义对象的属性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Object.defineProperty(obj, key,&#123;</div><div class="line">     value: *** ,</div><div class="line">     writable: true,</div><div class="line">     enumerable: true,</div><div class="line">     configurable: true</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>除此之外，还可以用getter，setter的方式赋值。当存在getter，setter函数时，属性的赋值操作会触发setter函数的执行，获取操作会触发getter函数的执行。按行业上的术语来说，这样的方法称之为数据劫持。举个栗子。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">function defineProperty(obj, attr, value)&#123;</div><div class="line">       var _value;</div><div class="line">       Object.defineProperty(obj, attr, &#123;</div><div class="line">             get:function ()&#123;</div><div class="line">                 console.log(&apos;get&apos;);</div><div class="line">                 return _value;</div><div class="line">             &#125;,</div><div class="line">             set:function (val)&#123;</div><div class="line">                 _value = val;</div><div class="line">                 console.log(&apos;监听到数据发生了变化 &apos;); </div><div class="line">             &#125;</div><div class="line">         &#125;)</div><div class="line">         obj[attr] = value;</div><div class="line"> &#125;</div><div class="line">var data = &#123;&#125;;</div><div class="line">defineProperty(data, &apos;name&apos;, &quot;Claire_Yecao&quot;); // &quot;监听到数据发生了变化&quot;</div><div class="line">data.name; // get Claire_Yecao</div></pre></td></tr></table></figure></p>
+<p>有了以上的方法之后，我们不难知道，当数据（对象）发生变化，只要在setter函数中发布就好。结合发布订阅者模式，将手动更新数据的updateData函数变成赋值操作，对象会自动执行setter函数，然后就能发布‘model-update’事件了。</p>
+<p>想想还有复杂的问题，如果某个属性的值还是对象，怎么办？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//将数据变成对象</div><div class="line">data.name =&#123;</div><div class="line">      &apos;English&apos;:  &apos;Claire_Yecao&apos;</div><div class="line">&#125; ; // &quot;监听到数据发生了变化&quot;</div><div class="line">data.name.English = &apos;小小芬&apos;;  // 此时不会发生数据劫持</div></pre></td></tr></table></figure></p>
+<p>我感觉自己都要被自己傻到了。定义data.name的时候还是规规则则地用上面的方法定义就好了。O(∩_∩)O哈！</p>
+<pre><code>data.name = {};
+defineProperty(data.name, &apos;English &apos;, &quot;Claire_Yecao&quot;);
+data.name.English = &apos;小小芬&apos;;
+</code></pre><p>还有问题，要是数据的类型是数组，而用push，shift等方法去操作数组，怎么办？</p>
+<pre><code>//将数据变成数组
+data.name =[ &apos;Claire_Yecao&apos; ]; // &quot;监听到数据发生了变化&quot;
+data.name.push(&apos;小小芬 &apos;);  // 此时不会发生数据劫持
+</code></pre><p>对于数组，我们针对数组的一些方法进行改写，使得它也能发生劫持。</p>
+<pre><code>var arrProto = Object.create(Array.prototype);
+
+     [&apos;shift&apos;,&apos;unshift&apos;,&apos;push&apos;,&apos;pop&apos;,&apos;slice&apos;,&apos;splice&apos;].forEach(function(method){
+   Object.defineProperty(arrProto, method,{
+         value: function(){
+             var result = Array.prototype[method].apply(this, arguments);
+             console.log(&apos;检测数据发生变化&apos;); 
+             return result;
+         }
+     })
+ })
+
+ var b = [];
+ b.__proto__ = arrProto;
+
+ b.push(1); // 1 &apos;检测数据发生变化&apos;
+</code></pre><h2 id="脏检查"><a href="#脏检查" class="headerlink" title="脏检查"></a>脏检查</h2><p>AngularJS的数据双向绑定是基于数据的脏检查机制的。大体意思上来说，就是记录所有变量的当前值，当发生某些操作之后，通过$apply或者$digest进入脏检查环节。对比最近的一次值和现在的值是否一致，不一致则实现页面的更新，然后再执行一次直到数据不再发生变化。</p>
+<p>以我的理解稍微详细地说，首先angularJS将它自定义的html页面转化为正常的dom，相对来说就是要解析那些angularJS专有的指令。页面上的指令有compile和link阶段，compile的时候搜索匹配，然后执行指令定义时写的compile函数，link阶段将那些变量插入watch队列。触发脏检查时全部遍历一次watch队列，实现视图的更新。</p>
+<p>那么，什么时候会触发脏检查呢？据说有以下几种情况。</p>
+<ul>
+<li>DOM事件，譬如用户输入文本，点击按钮(ng-click)等</li>
+<li>XHR响应事件 ($http)</li>
+<li>浏览器Location变更事件 ($location)</li>
+<li>Timer事件($timeout, $interval)</li>
+<li>执行$digest()或$apply()</li>
+</ul>
+<p>最后一种情况应该是统一的入口，只不过前几种情况会自动调用这个入口而已。其他情况下，用户需要手动进入脏检查的话，就要执行$digest()或$apply()了。</p>
+<p>下面是简单的代码实现。</p>
+<pre><code>var watchList = [];
+ //对于每个需要监听的item
+ watchItem = {
+    last: item.value,
+    get: function(){
+        return data[attr];
+    },
+    callback: function(newVal, oldVal){
+        console.log(&quot;数据发生变化,从 &quot; + oldVal + &quot; 变到 &quot; + newVal);
+    }
+}
+
+watchList.push(watchItem);
+
+//脏检查的入口: Data -&gt; View
+function apply(){
+    var dirty = false;
+
+    do{
+        watchList.forEach(function(item){
+            var newVal = item.get();
+            var oldVal = item.last;
+            if( newVal !== oldVal ){
+                item.callback(newVal, oldVal);
+                item.last = newVal;
+                dirty = true;
+            }
+            else{
+                dirty = false;
+            }
+        })
+    } while(dirty);
+    refreshView();
+}
+</code></pre><p>参考资料： </p>
+<ul>
+<li><a href="https://regularjs.github.io/guide/zh/advanced/dirty.html" target="_blank" rel="external">https://regularjs.github.io/guide/zh/advanced/dirty.html</a>  脏检查: 数据绑定的秘密</li>
+<li><a href="https://segmentfault.com/a/1190000006599500" target="_blank" rel="external">https://segmentfault.com/a/1190000006599500</a>  剖析Vue原理&amp;实现双向绑定MVVM</li>
+<li><a href="https://github.com/xufei/blog/issues/10" target="_blank" rel="external">https://github.com/xufei/blog/issues/10</a>  徐飞 Angular沉思录（一）数据绑定</li>
+<li><a href="http://www.lucaongaro.eu/blog/2012/12/02/easy-two-way-data-binding-in-javascript/" target="_blank" rel="external">http://www.lucaongaro.eu/blog/2012/12/02/easy-two-way-data-binding-in-javascript/</a>  Easy Two-Way Data Binding in JavaScript</li>
+<li><a href="http://www.cnblogs.com/jingwhale/p/5117419.html" target="_blank" rel="external">http://www.cnblogs.com/jingwhale/p/5117419.html</a>  Angular数据双向绑定</li>
+<li><a href="http://www.cnblogs.com/wilber2013/p/5811810.html" target="_blank" rel="external">http://www.cnblogs.com/wilber2013/p/5811810.html</a>  JavaScript实现简单的双向绑定</li>
+<li><a href="http://www.que01.top/2016/05/03/two-way-bind/" target="_blank" rel="external">http://www.que01.top/2016/05/03/two-way-bind/</a>  MVVM基础之双向绑定原理</li>
+<li><a href="http://www.cnblogs.com/TomXu/archive/2012/03/02/2355128.html" target="_blank" rel="external">http://www.cnblogs.com/TomXu/archive/2012/03/02/2355128.html</a>  深入理解JavaScript系列（32）：设计模式之观察者模式</li>
+<li><a href="http://ks.netease.com/blog?id=6679" target="_blank" rel="external">http://ks.netease.com/blog?id=6679</a>   Vue框架核心之数据劫持</li>
+<li><a href="http://ks.netease.com/blog?id=528" target="_blank" rel="external">http://ks.netease.com/blog?id=528</a>   AngularJS 数据双向绑定揭秘</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Translate/" rel="tag"># Translate</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/27/RegularJS资料整理/" rel="next" title="RegularJS资料整理">
+                <i class="fa fa-chevron-left"></i> RegularJS资料整理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/01/JS浅拷贝和深拷贝的小整理/" rel="prev" title="JS浅拷贝和深拷贝的小整理">
+                JS浅拷贝和深拷贝的小整理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布订阅模式"><span class="nav-number">2.</span> <span class="nav-text">发布订阅模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据劫持"><span class="nav-number">3.</span> <span class="nav-text">数据劫持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脏检查"><span class="nav-number">4.</span> <span class="nav-text">脏检查</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

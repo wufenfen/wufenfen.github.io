@@ -1,0 +1,955 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Translate,JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="曾经花了一段时间去看RequireJS源码，虽然就两千行左右的代码，但原谅我的愚笨，真的有点看不懂。想想，还是自己实现一个再说。 简单目标">
+<meta name="keywords" content="Translate,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS模块化简单实现">
+<meta property="og:url" content="http://yoursite.com/2017/04/22/JS模块化简单实现/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="曾经花了一段时间去看RequireJS源码，虽然就两千行左右的代码，但原谅我的愚笨，真的有点看不懂。想想，还是自己实现一个再说。 简单目标">
+<meta property="og:updated_time" content="2017-06-17T15:25:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS模块化简单实现">
+<meta name="twitter:description" content="曾经花了一段时间去看RequireJS源码，虽然就两千行左右的代码，但原谅我的愚笨，真的有点看不懂。想想，还是自己实现一个再说。 简单目标">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/22/JS模块化简单实现/"/>
+
+
+
+
+
+  <title>JS模块化简单实现 | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/22/JS模块化简单实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JS模块化简单实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-22T21:52:26+08:00">
+                2017-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>曾经花了一段时间去看<code>RequireJS</code>源码，虽然就两千行左右的代码，但原谅我的愚笨，真的有点看不懂。想想，还是自己实现一个再说。</p>
+<h2 id="简单目标"><a href="#简单目标" class="headerlink" title="简单目标"></a>简单目标</h2> <a id="more"></a>   
+<p>实现类似requireJS的功能，涉及到的功能</p>
+<pre><code>// 定义模块，三个参数
+define(id, deps, factory)
+
+// 执行模块，两个参数
+require(deps, factory) 
+</code></pre><h2 id="简单分析"><a href="#简单分析" class="headerlink" title="简单分析"></a>简单分析</h2><p>先上一个简单的例子，进行分析：</p>
+<pre><code>require([&apos;main&apos;], function(main) {
+    console.log(&apos;start~~~&apos;);
+    main.hello();
+});
+</code></pre><ol>
+<li>过程分析</li>
+</ol>
+<p>通过<code>deps</code>参数，很容易知道该文件依赖的脚本是<code>main.js</code>，然后去加载依赖的脚本，加载完之后执行一遍并且将执行的结果作为回调函数<code>factory</code>的参数，然后执行该匿名的回调函数即可。</p>
+<ol>
+<li><p>问题分析 </p>
+<ol>
+<li><p>如何加载脚本   </p>
+<p> 这个比较容易想到两个方式，一种用ajax请求，另一种用Dom元素添加让浏览器加载；由于ajax请求会有跨域问题，我们采用Dom加载的方式。</p>
+</li>
+<li><p>如何判断模块加载完毕</p>
+<p> 曾经我想用script的<code>onload</code>事件来判断对应的模块加载，但问题在于<code>onload</code>只是说明了脚本已经加载，但是并没有执行。调整一下思路，定义模块的状态，在加载的时候，将状态标为加载中；记录模块的依赖数，当该模块的所有依赖全部加载完成，将执行回调函数作为该模块的对应输出，模块加载完成。</p>
+</li>
+<li><p>如何暂存和执行回调函数</p>
+<p> 比如上面这个简单的例子，将回调函数作为模块<code>main</code>加载完毕后的回调函数即可；若依赖的模块有多个，每个依赖加载完后进行就判断依赖是否加载完毕，是就执行回调。注意，此时也意味着当前模块加载完毕，可以执行返回结果了。</p>
+</li>
+<li><p>循环依赖问题 </p>
+<p> 这么难的问题，留到后面再说吧！</p>
+</li>
+</ol>
+</li>
+<li><p>数据结构</p>
+<p> 首先需要一个全部的模块缓存对象，记录所有已经加载的&amp;正在加载的模块；将模块的数据结构设计成如下：</p>
+<pre><code>module[name] = {
+    status: String,   // 记录模块的加载状态&apos;loading&apos; or &apos;loaded&apos;
+    export: Object  , // 记录该模块的输出结果
+    onload: Arrray[function]    // 记录模块加载完成后的回调函数
+}
+</code></pre></li>
+</ol>
+<h2 id="简单实现"><a href="#简单实现" class="headerlink" title="简单实现"></a>简单实现</h2><p>小女不才，实现主要参考了叶小钗博客的实现，读懂了他/她（不确定性别）的实现之后，自己实现了一遍。</p>
+<pre><code>// 利用闭包创建局部作用域
+(function(){
+
+    // 缓存所有的模块
+    var moduleMap = {};
+    //主要函数定义
+    function define(id, deps, factory){ 
+        var name;
+
+        //存该模块对应的参数，即factory的参数
+        var params = [];
+
+        if(typeof id == &quot;object&quot; ){ // 对应require(deps, factory)情况
+            factory = deps;
+            deps = id;
+        }
+        else{                       // 对应deine(id，deps, factory)和require(id)情况
+            name = id; 
+        }
+        // 记录模块的依赖数
+        var depCount = deps &amp;&amp; deps.length;
+        // 如果没有依赖，直接保存或执行模块
+        if( !depCount ||  depCount == 0){
+            return saveModule(name, null ,factory)
+        }
+        else{
+            deps.forEach(function(dep, i){
+                // 用闭包解决经典的问题
+                (function(i){
+                    // 加载依赖的模块，加载完之后的回调函数
+                    loadScript(dep, function(param){
+                        // 加载一个，计数器减一
+                        depCount--;
+                        params[i] = param;
+                        //将计数器为0，说明依赖加载完毕，可以保存或执行当前的模块
+                        if(depCount==0){
+                            return saveModule(name, params, factory);
+                        }
+                    })
+                }(i))
+            })
+        }
+    }
+
+    function getURL(name){
+        if( name.indexOf(&apos;.js&apos;) &lt; 0){
+            return name + &apos;.js&apos;;
+        }
+
+        return name;
+    }
+
+    function loadScript(name, callback){
+        var mod = moduleMap[name];
+
+        if( mod ){
+            // 如果加载完毕，直接执行回调
+            if( mod.status == &apos;loaded&apos; ){
+                callback &amp; callback(mod.export);
+            }
+            else{ // 正在加载，将回掉函数存起来
+                mod.onload.push(callback);
+            }
+        }
+        else{
+            // 若该模块从没加载过，定义并且利用Dom加载
+            moduleMap[name] = {
+                status: &apos;loading&apos;,
+                export: null,
+                onload: [callback]
+            }
+
+            var url = getURL(name);
+
+            var el = document.createElement(&apos;script&apos;);
+            el.src = url;
+            el.id = name;
+            document.body.appendChild(el);
+        }
+
+    }
+
+    // 保存或者执行模块
+    function saveModule(name, params, callback){
+        var mod = moduleMap[name];
+        if( mod ){
+            //设置状态为完成加载
+            mod.status = &apos;loaded&apos;;  
+
+            //执行模块的函数，将结果存在export中 
+            mod.export = callback &amp;&amp; callback.apply(this, params); 
+
+            // 执行上一级模块的回调函数
+            while( fn = mod.onload.pop() ){
+                fn &amp;&amp; fn(mod.export);
+            }
+        }
+        else{
+            //若该模块未定义，直接执行返回结果，对应require(deps, factory)的情况
+            callback.apply(this, params)
+        }
+    }
+
+    // 将局部变量暴露出去
+    window.define = define;
+    window.require = define;
+
+})()
+</code></pre><h2 id="测试分析"><a href="#测试分析" class="headerlink" title="测试分析"></a>测试分析</h2><p>  上个简单的例子，源码Demo点击<a href="https://github.com/wufenfen/requireJS-Demo" target="_blank" rel="external">这里</a>。</p>
+<pre><code>&lt;!--index.html--&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt; requireJS Demo -- my version &lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;script src=&quot;./myRequire.js&quot;&gt;&lt;/script&gt; 
+&lt;script src=&quot;./index.js&quot;&gt;&lt;/script&gt; 
+&lt;/body&gt;
+&lt;/html&gt;
+
+// index.js
+require([&apos;main&apos;], function(main) {
+    console.log(&apos;start~~~&apos;);
+    main.hello();
+});
+
+// main.js 
+define(&apos;main&apos;, [], function() { 
+    console.log(&apos;require module: main&apos;); 
+    return {
+        hello: function() {
+            console.log(&apos;hello main&apos;);
+        }
+    };
+}); 
+
+// myRequire.js
+// 见上一部分
+</code></pre><p>下面我们来对照着分析一下执行过程，帮助理解。</p>
+<ol>
+<li>入口函数<code>require</code>，此时<code>name</code>为空， <code>depCount</code>为1；发现依赖<code>main</code>，执行<code>loadScript</code>函数</li>
+<li>由于<code>moduleMap[&#39;main&#39;]</code>未定义，定义它，并且创建Dom元素去加载<code>main.js</code>。此时定义如下：</li>
+</ol>
+<pre><code>moduleMap[&apos;main&apos;] = {
+    status: &apos;loading&apos;,
+    export: null,
+    onload:[function(param){
+        // depCount = 1
+        depCount--;
+        params[i] = param;
+        //将计数器为0，说明依赖加载完毕，可以保存或执行当前的模块
+        if(depCount==0){
+            return saveModule(&apos;&apos;, params, factory);
+        }
+    }] 
+} 
+</code></pre><ol>
+<li><code>main.js</code>加载完毕之后，执行里面的函数<code>define(&#39;main&#39;...)</code>.</li>
+<li>由于该函数没有依赖，直接进入<code>saveModule(&#39;main&#39;...)</code></li>
+<li>因为<code>moduleMap[&#39;main&#39;]</code>已经被定义，将状态改为<code>loaded</code>，执行它的回调函数，并赋值给<code>export</code>属性</li>
+</ol>
+<pre><code>// 回调函数
+function() { 
+    console.log(&apos;require module: main&apos;); 
+    return {
+        hello: function() {
+            console.log(&apos;hello main&apos;);
+        }
+    };
+}
+</code></pre><ol>
+<li>控制台输出<code>&#39;require module: main&#39;</code>，此时的<code>moduleMap[&#39;main&#39;]</code>变成：</li>
+</ol>
+<pre><code>moduleMap[&apos;main&apos;] = {
+    status: &apos;loaded&apos;,
+    export: {
+        hello: function() {
+            console.log(&apos;hello main&apos;);
+        }
+    },
+    onload:[function(param){
+        // 加载一个，计数器减一
+        depCount--;
+        params[i] = param;
+        //将计数器为0，说明依赖加载完毕，可以保存或执行当前的模块
+        if(depCount==0){
+            return saveModule(&apos;&apos;, params, factory);
+        }
+    }] 
+} 
+</code></pre><ol>
+<li>执行上一级模块的回调函数<code>moduleMap[&#39;main&#39;].onload</code>，将<code>moduleMap[&#39;main&#39;].export</code>作为参数</li>
+<li>此时<code>params</code>变<code>成[moduleMap[&#39;main&#39;].export]</code>，<code>depCount</code>刚开始为1，现在为0，正好执行上一级模块的<code>saveModule(&#39;&#39;, params, factory)</code></li>
+<li>由于<code>moduleMap[&#39;&#39;]</code>未定义，直接执行回调函数，即：</li>
+</ol>
+<pre><code>function(main) {
+    console.log(&apos;start~~~&apos;);
+    main.hello();
+}
+
+/* 其中 main =  {
+    hello: function() {
+        console.log(&apos;hello main&apos;);
+    }
+}*/
+</code></pre><p>10.控制台输出<code>&#39;start~~~&#39;</code>，以及<code>&#39;hello main&#39;</code>。</p>
+<p>运行到此结束。</p>
+<h2 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h2><p>很遗憾，这个实现并没解决循环依赖问题。我也看过ES6和CommonJS对循环依赖的处理，ES6使用的是引用的方式，所以不存在问题；CommonJS是只执行已经定义的部分。</p>
+<p>幸运的是，这个实现如果有循环依赖，程序要因为不满足条件而终止执行，不会进行无数次的循环而导致崩溃。</p>
+<p>参考资料：</p>
+<ul>
+<li><a href="http://www.cnblogs.com/yexiaochai/p/3961291.html" target="_blank" rel="external">叶小钗 【模块化编程】理解requireJS-实现一个简单的模块加载器</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2015/11/circular-dependency.html" target="_blank" rel="external">阮一峰 JavaScript 模块的循环加载</a></li>
+<li><a href="http://wwsun.github.io/posts/creating-javascript-modules-loader.html" target="_blank" rel="external">景庄 从零开始构建JavaScript模块化加载器</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Translate/" rel="tag"># Translate</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/17/【译】JS继承常见误区扫盲（三）/" rel="next" title="【译】JS继承常见误区扫盲（三）">
+                <i class="fa fa-chevron-left"></i> 【译】JS继承常见误区扫盲（三）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/24/【译】Vue框架引入JS库的正确姿势/" rel="prev" title="【译】Vue框架引入JS库的正确姿势">
+                【译】Vue框架引入JS库的正确姿势 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单目标"><span class="nav-number">1.</span> <span class="nav-text">简单目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单分析"><span class="nav-number">2.</span> <span class="nav-text">简单分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单实现"><span class="nav-number">3.</span> <span class="nav-text">简单实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试分析"><span class="nav-number">4.</span> <span class="nav-text">测试分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遗留问题"><span class="nav-number">5.</span> <span class="nav-text">遗留问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

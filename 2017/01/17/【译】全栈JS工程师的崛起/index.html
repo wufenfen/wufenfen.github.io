@@ -1,0 +1,791 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Translate,JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="原文链接：The Rise of the Full Stack JavaScript Developer  作者：Dor Tzur 翻译：野草  校对：墨白 本文首发于前端早读课【第827期】  Javascript无处不在。 过去，Javascript工程师的头衔仅仅意味着你是一个前端工程师，永远只和浏览器打交道。 如今，那个时代已经过去。">
+<meta name="keywords" content="Translate,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】全栈JS工程师的崛起">
+<meta property="og:url" content="http://yoursite.com/2017/01/17/【译】全栈JS工程师的崛起/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="原文链接：The Rise of the Full Stack JavaScript Developer  作者：Dor Tzur 翻译：野草  校对：墨白 本文首发于前端早读课【第827期】  Javascript无处不在。 过去，Javascript工程师的头衔仅仅意味着你是一个前端工程师，永远只和浏览器打交道。 如今，那个时代已经过去。">
+<meta property="og:image" content="https://i2.wp.com/thefullstack.xyz/wp-content/uploads/2016/05/CoffeeScript-most-dreaded.jpg?resize=500%2C389">
+<meta property="og:image" content="https://i1.wp.com/thefullstack.xyz/wp-content/uploads/2016/05/13fcit.jpg?resize=500%2C355">
+<meta property="og:updated_time" content="2017-06-17T15:20:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】全栈JS工程师的崛起">
+<meta name="twitter:description" content="原文链接：The Rise of the Full Stack JavaScript Developer  作者：Dor Tzur 翻译：野草  校对：墨白 本文首发于前端早读课【第827期】  Javascript无处不在。 过去，Javascript工程师的头衔仅仅意味着你是一个前端工程师，永远只和浏览器打交道。 如今，那个时代已经过去。">
+<meta name="twitter:image" content="https://i2.wp.com/thefullstack.xyz/wp-content/uploads/2016/05/CoffeeScript-most-dreaded.jpg?resize=500%2C389">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/01/17/【译】全栈JS工程师的崛起/"/>
+
+
+
+
+
+  <title>【译】全栈JS工程师的崛起 | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/17/【译】全栈JS工程师的崛起/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【译】全栈JS工程师的崛起</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-17T21:52:26+08:00">
+                2017-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文链接：<a href="http://thefullstack.xyz/full-stack-javascript-developer/" target="_blank" rel="external">The Rise of the Full Stack JavaScript Developer</a> </p>
+<p>作者：<a href="http://thefullstack.xyz/author/dortzur/" target="_blank" rel="external">Dor Tzur</a></p>
+<p>翻译：野草 </p>
+<p>校对：墨白</p>
+<p>本文首发于前端早读课<a href="https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651225356&amp;idx=1&amp;sn=4740cca7ab89b4449bfe5438e1427729&amp;chksm=bd49a4888a3e2d9e8c625d116fcc42db25c11421ba79d47dff272f0db8f6e5427d1bdbf3fe1b&amp;mpshare=1&amp;scene=1&amp;srcid=0122km8Ss0ukKNo0OYb4vPMc#rd" target="_blank" rel="external">【第827期】</a></p>
+</blockquote>
+<p>Javascript无处不在。</p>
+<p>过去，Javascript工程师的头衔仅仅意味着你是一个前端工程师，永远只和浏览器打交道。</p>
+<p>如今，那个时代已经过去。<br><a id="more"></a></p>
+<p>NodeJS的崛起开辟了一个新的时代，一个Javascript工程师不仅仅是前端工程师的时代。</p>
+<p>现在，作为一个Javascript工程师，相对于其他的高级程序语言，你可以针对更多的平台进行开发。</p>
+<p>不过现在，让我们聚焦于这两个主要的平台： 浏览器和服务器。</p>
+<p>为何我们一定要二者选一呢？</p>
+<h2 id="全栈工程师的挑战"><a href="#全栈工程师的挑战" class="headerlink" title="全栈工程师的挑战"></a>全栈工程师的挑战</h2><p>俗话说： “样样通，样样松”。正如大多数的俗语一样，它还是有些许道理的。</p>
+<p>每当你决定要拓展你的核心竞争力范围的时候，其实你是在变相地占用了提升核心竞争力的时间。</p>
+<blockquote>
+<p>“如果我被困在一个海岛，唯一出去的办法是设计一个漂亮的UI，那么，我会死在那儿。”——  Linus Torvalds, Linux之父</p>
+</blockquote>
+<p>往全栈发展最大的担忧是你可能会在前后端两个领域的能力都很一般，这比起只在一个领域精通要糟糕得多。</p>
+<p>有些工程师经常嘲讽全栈工程师，认为全栈工程师只是那类在软件栈各个领域制造bug的人。</p>
+<p>那是因为技术栈总是在不断变化发展。 我们尝试解决的问题也变得越来越复杂。自然而然 ，我们开发中使用到的技术栈也随之变多了。</p>
+<p>几年前，学习 JavaScript 只意味着学习经典的ES3。如今如果谁要从头开始学 JavaScript，那他不得不同时学习 ES3 和 ES2015（ES6）。</p>
+<p>学习最新最酷的语言特性不能免去你学习最基本的知识的环节。</p>
+<h2 id="两个技术栈的故事"><a href="#两个技术栈的故事" class="headerlink" title="两个技术栈的故事"></a>两个技术栈的故事</h2><p>每个开发技术栈都有自己的一片小天地。</p>
+<p>每个语言有自己的开发框架，比如Python有Django，Ruby有Ruby on Rails。</p>
+<p>而且，每个技术栈都有自己的包管理器，功能库，以及一些独一无二的语言结构。它们背后都有一群热情的追随者，从博主，专业开发者，到开源代码贡献者。</p>
+<p>当然，每个技术栈都各有优缺点。</p>
+<blockquote>
+<p>技术栈之间的对比根本就没有意义。</p>
+</blockquote>
+<p>但当你决定发展成全栈的时候，不可避免地，你要在两个技术栈之间徘徊。</p>
+<p>一个是你选择的、你喜爱的、你充满热情的技术栈。</p>
+<p>另外一个，就是 JavaScript。</p>
+<blockquote>
+<p>为什么有些人那么反感JavaScript，部分原因是JavaScript选择了他们，而不是他们选择了JavaScript。对此，他们无能为力。</p>
+</blockquote>
+<p>当网页开发者不想用那些满是坑的插件去写前端代码时，他们不得不用JavaScript。</p>
+<p>一些人甚至尝试过去创造一个新的语言，唯一目的就是为了取代JavaScript。但这些语言编译成JavaScript后，其最终结果往往不像它的开发者当初想象地那样完美。</p>
+<p>CoffeeScript就是其中之一，但我不会去具体说它。 目前71%的开发者碰也不想碰它。71%！这简直比WordPress还要糟糕。</p>
+<p><img src="https://i2.wp.com/thefullstack.xyz/wp-content/uploads/2016/05/CoffeeScript-most-dreaded.jpg?resize=500%2C389" alt="image"></p>
+<p>最后，无论怎么变化，JavaScript始终主宰着网页开发领域，因为它是唯一一个浏览器愿意与外界沟通交流的语言。</p>
+<p>很多聪明的开发者，都曾经尝试让浏览器学会说另一句语言，但，他（她）们都一一失败了。</p>
+<p>你看多么顽固不化的浏览器啊。</p>
+<p>你懂得，如果你不能打败他们的话…（译者话：那就加入他们）</p>
+<h2 id="JavaScript的优势"><a href="#JavaScript的优势" class="headerlink" title="JavaScript的优势"></a>JavaScript的优势</h2><p>让我们尝试换个角度去看待事物。</p>
+<p>要是，你选择的、你喜爱的、你充满热情的技术栈正好就是JavaScript呢？</p>
+<blockquote>
+<p>要是，你选择了它而不是被逼迫着使用它呢?</p>
+</blockquote>
+<p>如果你选择了Node.js作为你后端的语言，你将会体会到一些其他技术栈不能带来的独特的优势，那就是你能一直使用 JavaScript 。</p>
+<p>你将不需要搞清楚Lodash在Ruby或者Python中相当于什么，你用就行了。</p>
+<p>用pip install或者bundle install你可能用得还挺得心应手的，但是你仍然需要处理JavaScript的依赖。</p>
+<p>如果你选择了Node.js， 只要npm install，你就可以搞定客户端和服务端的所有东西。</p>
+<p><img src="https://i1.wp.com/thefullstack.xyz/wp-content/uploads/2016/05/13fcit.jpg?resize=500%2C355" alt="image"></p>
+<p>代码复用程度将飙升。就算你的代码发生了<a href="https://www.zhihu.com/question/41694868" target="_blank" rel="external">“left-pad”</a>(译者注：大名鼎鼎的left-pad事件，大家都还记得吧？)，你也只需要用一种语言，自己写一次，就可以完美搞定！</p>
+<p>如果你走的是JavaScript“大一统”路线，你可以无缝开发一个同时能在浏览器和服务端渲染的web应用。</p>
+<p>如你所见，选择 JavaScript 全栈有巨大的好处。很多时候，你会发现你自己从事客户端的开发，同时也获取了适用于服务端的知识。反之亦然。</p>
+<p>全栈JavaScript工程师的世界会比其他的全栈工程师轻松很多。但要想成为全栈，不论是客户端还是服务端，需要大量的专业领域知识。</p>
+<p>利用 JavaScript，可以分别进行Node.js开发和浏览器开发。</p>
+<p>但写跑在浏览器的前端代码和跑在服务器的后端代码仍然是两种截然不同的事情。</p>
+<p>那么，成为一个全栈JavaScript工程师是否意味着你必须不断地同时做这两件事情？</p>
+<h2 id="70-30法则"><a href="#70-30法则" class="headerlink" title="70/30法则"></a>70/30法则</h2><p>一些人说没有所谓的全栈工程师，要么是前端为主的，要么就是后端为主的，你必须做个选择。</p>
+<p>我也理解这些看法是怎么来的。</p>
+<p>找一个同时精通前后端技术的人不亚于找传说中的生物——小精灵。</p>
+<p>你以为小精灵能帮你实现所有愿望，给你一堆金币。但是，总有一天你会意识到小精灵是不存在的。你只是喝醉了，正在和一个绿油油的不知名的小东西喃喃自语罢了。真的。</p>
+<blockquote>
+<p>真相就是，所有的全栈工程师要么是以前端为主，要么是以后端为主的。</p>
+</blockquote>
+<p>从你的自身出发，选择一个更适合自己的方向。</p>
+<p>你要意识到精通前端并没有让你离后端更远。 这仅仅意味着你更倾向于前端方向。</p>
+<p>这是为什么我要抛出我的拙见70/30准则：</p>
+<blockquote>
+<p>如果给你一年的时间去实现一些功能，技术栈可以有所选择，你要试图将70%的时间花费在你擅长的领域，而剩余的30%搞点其他的花样。</p>
+</blockquote>
+<p>可能你现在工作的公司并不提倡全栈。比如，如果你发现自己只能做后端相关的东西，那你为什么不自己开发一个前端的JavaScript小项目呢？</p>
+<p>没有什么事情是板上钉钉的。今年你是一个后端工程师，说不定明年你就转到前端开发了呢？</p>
+<p>这仅仅意味着你需要更加努力地提升自己的前端技术，直到你的前端技术变得和后端技术一样厉害。当然，不要忘记花30%的时间保持你对后端技术的精通。</p>
+<p>事实是，你可以并且能够精通前后两端，只要你愿意。</p>
+<h2 id="全栈JavaScript工程师的乐趣"><a href="#全栈JavaScript工程师的乐趣" class="headerlink" title="全栈JavaScript工程师的乐趣"></a>全栈JavaScript工程师的乐趣</h2><p>最近StackOverflow的一个调查显示，大多数工程师把自己定义为全栈工程师。调查也显示85.3%的工程师至少知道一些 JavaScript 。</p>
+<p>但是，为什么成为一个全栈工程师会如此流行呢？</p>
+<p>市场原因吗？不愿意在前后端中做选择吗？还是因为全栈开发者有着不可阻挡的诱惑？</p>
+<p>我想，答案远比上述的简单。</p>
+<blockquote>
+<p>做一个全栈工程师更加有趣。</p>
+</blockquote>
+<p>当开发一个功能的时候，从前端到后端全部包揽所带来的满足感，是成为一个开发者最大的乐趣之一。</p>
+<p>从你亲手创造的UI界面上发送那些小巧可爱的数据，用你亲手创造的API接受这些数据，然后你可以随心所欲地保存或者操作它们。</p>
+<p>看到人们使用你前后端一条龙开发的功能，是一件非常奇妙，无法用言语来描述的感觉。你会情不自禁地想：“这是我开发的，要是在以前根本就不可能，而现在人们因为我的付出而正在使用这些功能”。</p>
+<h2 id="全栈JavaScript工程师的黎明曙光"><a href="#全栈JavaScript工程师的黎明曙光" class="headerlink" title="全栈JavaScript工程师的黎明曙光"></a>全栈JavaScript工程师的黎明曙光</h2><p>JavaScript生态系统一直在不断完善。我们从浏览器扩展到了服务器。如今，我们将深入更多的领域。</p>
+<p>移动应用，机器人框架，物联网设备，3D游戏，甚至虚拟现实都可以用JavaScript来开发了。</p>
+<p>作为全栈JavaScript工程师，我们必须保持在一个领域的精通，使得有那么一件事我们知道自己可以做得非常出色。</p>
+<p>软件开发的大门一直向我们敞开着。用你的JavaScript技术，你可以选择探索各种各样新奇刺激的高科技。</p>
+<p>成为全栈工程师的关键优势在于，你能不断地学习，不断地内化新事物，然后彻底掌握它们。</p>
+<p>JavaScript是你的画布，尽情地用它创造美好的东西吧。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Translate/" rel="tag"># Translate</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/08/应聘者面试的收获-说说工作的正确姿势/" rel="next" title="应聘者面试的收获-说说工作的正确姿势">
+                <i class="fa fa-chevron-left"></i> 应聘者面试的收获-说说工作的正确姿势
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/22/【译】你是“10倍效率”JS开发者吗？/" rel="prev" title="【译】你是“10倍效率”JS开发者吗？">
+                【译】你是“10倍效率”JS开发者吗？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#全栈工程师的挑战"><span class="nav-number">1.</span> <span class="nav-text">全栈工程师的挑战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两个技术栈的故事"><span class="nav-number">2.</span> <span class="nav-text">两个技术栈的故事</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript的优势"><span class="nav-number">3.</span> <span class="nav-text">JavaScript的优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#70-30法则"><span class="nav-number">4.</span> <span class="nav-text">70/30法则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全栈JavaScript工程师的乐趣"><span class="nav-number">5.</span> <span class="nav-text">全栈JavaScript工程师的乐趣</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全栈JavaScript工程师的黎明曙光"><span class="nav-number">6.</span> <span class="nav-text">全栈JavaScript工程师的黎明曙光</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,791 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Translate,JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="原文链接：Common Misconceptions About Inheritance in JavaScript  作者：Eric Elliott 翻译：野草  本文首发于前端早读课【第911期】   什么鬼！！！当程序员遇到违反“最小惊讶原则”，违反他们直觉的时候，他们会不由自主地发出这句感叹！">
+<meta name="keywords" content="Translate,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】JS继承常见误区扫盲（一）">
+<meta property="og:url" content="http://yoursite.com/2017/04/08/【译】JS继承常见误区扫盲（一）/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="原文链接：Common Misconceptions About Inheritance in JavaScript  作者：Eric Elliott 翻译：野草  本文首发于前端早读课【第911期】   什么鬼！！！当程序员遇到违反“最小惊讶原则”，违反他们直觉的时候，他们会不由自主地发出这句感叹！">
+<meta property="og:updated_time" content="2017-06-17T15:22:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】JS继承常见误区扫盲（一）">
+<meta name="twitter:description" content="原文链接：Common Misconceptions About Inheritance in JavaScript  作者：Eric Elliott 翻译：野草  本文首发于前端早读课【第911期】   什么鬼！！！当程序员遇到违反“最小惊讶原则”，违反他们直觉的时候，他们会不由自主地发出这句感叹！">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/08/【译】JS继承常见误区扫盲（一）/"/>
+
+
+
+
+
+  <title>【译】JS继承常见误区扫盲（一） | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/08/【译】JS继承常见误区扫盲（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【译】JS继承常见误区扫盲（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-08T21:52:26+08:00">
+                2017-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文链接：<a href="https://medium.com/javascript-scene/common-misconceptions-about-inheritance-in-javascript-d5d9bab29b0a" target="_blank" rel="external">Common Misconceptions About Inheritance in JavaScript</a> </p>
+<p>作者：<a href="https://medium.com/@_ericelliott" target="_blank" rel="external">Eric Elliott</a></p>
+<p>翻译：野草 </p>
+<p>本文首发于前端早读课<a href="https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651226377&amp;idx=1&amp;sn=e19c16fee8470c266a68df6326f20c61&amp;chksm=bd49588d8a3ed19b0e55cb7c1a43b70e7065802fdcc2546bac4680c100aac62bedcb4a981cb9&amp;scene=21#wechat_redirect" target="_blank" rel="external">【第911期】</a> </p>
+</blockquote>
+<p>什么鬼！！！当程序员遇到违反“最小惊讶原则”，违反他们直觉的时候，他们会不由自主地发出这句感叹！</p>
+<a id="more"></a>
+<p>举个栗子：</p>
+<blockquote>
+<p>.1 + .2<br>0.30000000000000004</p>
+<p>什么鬼！！！(<em>+﹏+</em>)~@</p>
+</blockquote>
+<p>当我遇到一些资深前端开发，却不知道JavaScript原型继承(Prototypal inheritance)的时候，我也情不自禁地发出“什么鬼！！！”的感叹。原型继承可是计算机科学史上最重大的变革之一，也是JavaScript语言两大支柱之一。这对我来说就像，一位专业摄影师却还没学会曝光三角形(Exposure triangle)原理一样不可思议，这可是控制照片风格的基础啊。简而言之：</p>
+<blockquote>
+<p>如果你不懂原型，那你根本就不懂JavaScript。</p>
+</blockquote>
+<p>++<strong>问：类继承和原型继承不是同一回事儿吗，只是风格选择而已？</strong>++</p>
+<p>++<strong>答：不是！</strong>++<br>类继承和原型继承不论从本质上还是从语法上来说，都是两个截然不同的概念。</p>
+<p>二者之间有着区分彼此的本质性特征。要完全看懂本文，你必须牢牢记住以下几点：</p>
+<p>类继承中，实例继承自模版（类），并且创建子类关系。换言之，你不能像使用实例一样使用类。实例由类创建出来，并且能调用类的方法，但是你不能直接在类上调用本身的方法。你必须创建一个实例，然后在实例上应用那些方法。</p>
+<p>原型继承中，实例继承自其他的实例。它们使用的是原型委托（将实例的原型对象指向一个模板对象），这种方式被Kyle Simpson（你不知道的JS系列作者）称为对象关联（OLOO, Objects Linking to Other Objects）。使用这种关联继承，你只是将模板对象的属性拷贝到新的实例中而已。</p>
+<p>理解上述区别至关重要。类继承的机制在创建子类的同时，也不小心创建了类的层级。</p>
+<p>原型继承却可以避免创建类似的层级。建议原型链越短越好，其实很容易将很多原型扁平化为一个单委托原型。</p>
+<p>总结：</p>
+<ul>
+<li><p>类是一个抽象的模版。</p>
+</li>
+<li><p>原型是一个具体的对象实例。</p>
+</li>
+</ul>
+<p>++<strong>问：JavaScript中类不是创建对象的正确方式吗？</strong>++</p>
+<p>++<strong>答：不是！</strong>++</p>
+<p>JavaScript中创建对象有几种方式。最常见的一种是对象字面量方式。看个例子，用ES6语法写的对象：</p>
+<pre><code>// ES6 或称 ES2015, 因为发布于2015.
+
+let mouse = {
+  furColor: &apos;brown&apos;,
+  legs: 4,
+  tail: &apos;long, skinny&apos;,
+  describe () {
+    return `A mouse with ${this.furColor} fur,
+      ${this.legs} legs, and a ${this.tail} tail.`;
+  }
+};
+</code></pre><p>当然，对象字面量方式比ES6出来早多了，但之前的写法缺少对象中函数方法的简写方式，以及定义变量时你只能用<code>var</code>而用不了<code>let</code>。对了，<code>describe()</code>方法中的模板字符串在ES5中也是不能用的。</p>
+<p>我们可以利用ES5中的<code>Object.create()</code>附上对象的委托原型：</p>
+<pre><code>let animal = {
+  animalType: &apos;animal&apos;,
+
+  describe () {
+    return `An ${this.animalType}, with ${this.furColor} fur, 
+      ${this.legs} legs, and a ${this.tail} tail.`;
+  }
+};
+
+let mouse = Object.assign(Object.create(animal), {
+  animalType: &apos;mouse&apos;,
+  furColor: &apos;brown&apos;,
+  legs: 4,
+  tail: &apos;long, skinny&apos;
+});
+</code></pre><p>让我们仔细分析这个例子。<code>animal</code>是委托原型，<code>mouse</code>是实例。当你尝试获取<code>mouse</code>对象上没有的属性时，JavaScript将会在<code>animal</code>（委托对象）上寻找这个属性。</p>
+<p><code>Object.assign()</code>是ES6的新特性，由Rick Waldron提出。其实它早已在一些知名的库中被实现，比如jQuery中的<code>$.extend()</code>，Underscore中的<code>_.extend()</code>，还有Lodash中的<code>assign()</code>。该方法传入一个目标对象，以及任何多个用逗号隔开的源对象，它将会从最后一个源对象开始拷贝所有的可枚举属性到目标对象。若存在属性名冲突，前者会被后者覆盖。</p>
+<p>Douglas Crockford提出了ES5中的<code>Object.create()</code>，它能使我们在不用构造器和<code>new</code>关键词的情况下，设置对象的委托原型。</p>
+<p>本文不涉及到构造函数，因为我非常不推荐这种方式。太多滥用构造函数的例子，以及太多由此引起的麻烦。值得一提的是，很多聪明人并不同意我的看法。没关系，聪明人想怎么做就怎么做。</p>
+<p>总有明智的人会听取Douglas Crockford的意见：</p>
+<blockquote>
+<p>如果某个特性有时会不靠谱，而且存在一个更好的选择，那么还是选择那个更好的方式。</p>
+</blockquote>
+<p>++<strong>问：难道不需要构造函数来定义实例的行为，以及进行实例化吗？</strong>++</p>
+<p>++<strong>答：不需要！</strong>++</p>
+<p>任何函数均可创建并返回对象。当该函数不是用作构造函数来创建时，它被称为工厂函数(factory function)。</p>
+<p><strong>更佳选择</strong></p>
+<pre><code>let animal = {
+  animalType: &apos;animal&apos;,
+
+  describe () {
+    return `An ${this.animalType} with ${this.furColor} fur, 
+      ${this.legs} legs, and a ${this.tail} tail.`;
+  }
+};
+
+let mouseFactory = function mouseFactory () {
+  return Object.assign(Object.create(animal), {
+    animalType: &apos;mouse&apos;,
+    furColor: &apos;brown&apos;,
+    legs: 4,
+    tail: &apos;long, skinny&apos;
+  });
+};
+
+let mickey = mouseFactory();
+</code></pre><p>通常我不会将函数命名为<code>factory</code>，那只是一个形象的比喻。一般我就简单称之为<code>mouse()</code>。</p>
+<p>++<strong>问：不需要用构造函数来创造私有变量或者属性吗？</strong>++</p>
+<p>++<strong>答：不需要</strong>++</p>
+<p>JavaScript中，当你返回一个函数，该函数可以访问外部函数的变量。当你使用这个函数的时候，JS引擎创建了一个闭包。闭包是JavaSript中非常常见的模式，它通常用来创建私有变量。</p>
+<p>闭包并不是构造函数独有的。任何函数均可创建闭包：</p>
+<pre><code>let animal = {
+  animalType: &apos;animal&apos;,
+
+  describe () {
+    return `An ${this.animalType} with ${this.furColor} fur, 
+      ${this.legs} legs, and a ${this.tail} tail.`;
+  }
+};
+
+let mouseFactory = function mouseFactory () {
+  let secret = &apos;secret agent&apos;;
+
+  return Object.assign(Object.create(animal), {
+    animalType: &apos;mouse&apos;,
+    furColor: &apos;brown&apos;,
+    legs: 4,
+    tail: &apos;long, skinny&apos;,
+    profession () {
+      return secret;
+    }
+  });
+};
+
+let james = mouseFactory();
+</code></pre><p>未完待续。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Translate/" rel="tag"># Translate</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/31/【译】用Flow编写更好的JavaScript代码/" rel="next" title="【译】用Flow编写更好的JavaScript代码">
+                <i class="fa fa-chevron-left"></i> 【译】用Flow编写更好的JavaScript代码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/10/Babel简单学习笔记/" rel="prev" title="Babel简单学习笔记">
+                Babel简单学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

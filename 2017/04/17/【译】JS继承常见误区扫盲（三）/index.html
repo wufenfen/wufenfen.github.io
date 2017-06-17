@@ -1,0 +1,769 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Translate,JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="原文链接：Common Misconceptions About Inheritance in JavaScript  作者：Eric Elliott 翻译：野草  本文首发于前端早读课【第911期】   往期回顾： 【译】JS继承常见误区扫盲（一） 【译】JS继承常见误区扫盲（二）">
+<meta name="keywords" content="Translate,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】JS继承常见误区扫盲（三）">
+<meta property="og:url" content="http://yoursite.com/2017/04/17/【译】JS继承常见误区扫盲（三）/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="原文链接：Common Misconceptions About Inheritance in JavaScript  作者：Eric Elliott 翻译：野草  本文首发于前端早读课【第911期】   往期回顾： 【译】JS继承常见误区扫盲（一） 【译】JS继承常见误区扫盲（二）">
+<meta property="og:updated_time" content="2017-06-17T15:22:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】JS继承常见误区扫盲（三）">
+<meta name="twitter:description" content="原文链接：Common Misconceptions About Inheritance in JavaScript  作者：Eric Elliott 翻译：野草  本文首发于前端早读课【第911期】   往期回顾： 【译】JS继承常见误区扫盲（一） 【译】JS继承常见误区扫盲（二）">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/17/【译】JS继承常见误区扫盲（三）/"/>
+
+
+
+
+
+  <title>【译】JS继承常见误区扫盲（三） | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/17/【译】JS继承常见误区扫盲（三）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【译】JS继承常见误区扫盲（三）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-17T21:52:26+08:00">
+                2017-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文链接：<a href="https://medium.com/javascript-scene/common-misconceptions-about-inheritance-in-javascript-d5d9bab29b0a" target="_blank" rel="external">Common Misconceptions About Inheritance in JavaScript</a> </p>
+<p>作者：<a href="https://medium.com/@_ericelliott" target="_blank" rel="external">Eric Elliott</a></p>
+<p>翻译：野草 </p>
+<p>本文首发于前端早读课<a href="https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651226377&amp;idx=1&amp;sn=e19c16fee8470c266a68df6326f20c61&amp;chksm=bd49588d8a3ed19b0e55cb7c1a43b70e7065802fdcc2546bac4680c100aac62bedcb4a981cb9&amp;scene=21#wechat_redirect" target="_blank" rel="external">【第911期】</a> </p>
+</blockquote>
+<p>往期回顾：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/26252652" target="_blank" rel="external">【译】JS继承常见误区扫盲（一）</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/26382777" target="_blank" rel="external">【译】JS继承常见误区扫盲（二）</a></p>
+ <a id="more"></a>   
+<p>++<strong>问：难道类继承不比原型继承更常用吗？</strong>++</p>
+<p>++<strong>答：不是！</strong>++</p>
+<p>每当我听到这种误解，就想忍不住抛下一句：“你到底用过JavaScript没有？！”，然后走人。但，我还是忍住了，仔细跟对方澄清这个问题。</p>
+<p>如果你也有这样的问题，不要沮丧。这不是你的问题，JavaScript培训TMD太差劲了！！！</p>
+<p>答案是一个巨大的</p>
+<p>错，但是。。。<br>原型是JavaScript中的惯用继承模式，而“类”是外来入侵模式。</p>
+<p>我们来回顾JavaScript库的简单发展史：</p>
+<p>最初，开发者各自开发自己的库，也乐于开源出来。此时原型就随之出现了。原型利用链接继承(concatenative inheritance)来扩展内置的原型。</p>
+<p>后来当网上充斥着大量的原生方法覆盖或者库冲突的时候，大家都意识到修改内置原型并不是一个好的模式。不过，那又是另一回事了。</p>
+<p>后来最火的JavaScript库出来了——jQuery。而丰富的jQuery插件是jQuery极具吸引力的原因之一。它们通过链接继承来拓展jQuery的委托原型。</p>
+<blockquote>
+<p>你有感觉到某种设计模式了吗？</p>
+</blockquote>
+<p>至今jQuery一直是最受欢迎的JavaScript，远远超过其他的库。</p>
+<p>然而这是JavaScript混乱的开始，用类拓展的方式开始侵入JavaScript。John Resig写了一篇文章<a href="http://ejohn.org/blog/simple-javascript-inheritance/" target="_blank" rel="external">Simple Class Inheritance in JavaScript</a>，开发者们纷纷开始效仿。即使John Resig本人也觉得jQuery不需要类，因为原型是更佳的选择。</p>
+<p>接着，像ExtJS的类Java框架开始出现并且慢慢流行起来，开启了JavaScript类的非主流使用时代。那是2007年，JavaScript在12年之后因为一个流行库引入了类继承。</p>
+<p>三年后，Backbone大爆发，其中<code>.extend()</code> 方法模仿类继承的实现，带来了很多糟糕的特性。这是JavaScript全面崩塌的开始。</p>
+<blockquote>
+<p>曾经我们用Backbone开发一个百万行代码级别的应用。其中有个bug我花了几个月的时间，代码涉及6层继承关系。我沿着<code>super</code>链一行一行地检查每个构造函数的代码。最终在顶级类中找到bug。然后我又得修复子类中所有依赖这个错误的代码。本来几分钟能搞定的事，我花了几个小时才修复完成。太糟心了！</p>
+</blockquote>
+<p>那代码根本不是JavaScript。我感觉我又回到了Java地狱，那种因为高耦合而带来的牵一发而动全身的恐惧感，无助感，孤独感迎面袭来。</p>
+<p>这些也是重构最怕遇到的问题。</p>
+<p>幸运的是，Backbone还有一片生机。</p>
+<pre><code>var object = {};
+
+_.extend(object, Backbone.Events);
+
+object.on(&quot;alert&quot;, function(msg) {
+  alert(&quot;Triggered &quot; + msg);
+});
+
+object.trigger(&quot;alert&quot;, &quot;an event&quot;); 
+</code></pre><p><code>Backbone.Events</code> 混入的思想其实就是链接继承。</p>
+<p>事实上，如果你仔细思考那些库，你会发现很多使用链接和委托的例子。这些例子太简单常见了，开发者根本没有意识到那就是继承。</p>
+<blockquote>
+<p>JavaScript继承非常简单，大家都认为它应该很难。于是为了达到我们的预期，我们引入了更复杂的类。</p>
+</blockquote>
+<p>那我们是怎么引入类的呢？利用原型继承进行委托原型以及对象链接。这完全就是简单问题复杂化了。</p>
+<p>++<strong>问：难道选择类继承还是原型继承不是决定于实际情况吗？</strong>++</p>
+<p>++<strong>答：不是！</strong>++</p>
+<p>数年来，我一直主张这样的观点：以原型为基础的面向对象更加简单，灵活，更不容易出错。很多人都听取了我的意见。我鼓励大家能举出一个使用类的例子来反驳我。我收到了一些回复，很不幸这些答案都是基于本文提到的一些误区。</p>
+<p>曾经我也很喜欢用类继承，几乎在哪都用，代码中到处都是我创建的对象层级。为了帮助架构师设计对象层级关系，我还开发了一个可视化的快速应用开发工具。也即是说，在使用类继承的企业级应用中，我们需要一个可视化工具来协助我们理解和绘制对象层级关系。</p>
+<p>在我从C++, Java转到JavaScript之后没多久，我不再这样做了。不是因为我开发的应用简单了（相反，我开发的更复杂了），而是因为JavaScript比C++, Java简单好用。从此，我再不没用过可视化工具来设计对象关系。</p>
+<p>别人经常会咨询我软件设计的问题，我通常会建议他彻底重构。为什么呢？因为所有的对象层级在创建新的实例时总会出错。</p>
+<p>我并不是一家之言。现如今，很多新版本开发都会彻底重构，其中大部分都是因为难维护的类层级而遗留下来的历史问题。几乎每个开发者都会有本<a href="https://www.amazon.com/gp/product/0201633612?ie=UTF8&amp;camp=213733&amp;creative=393185&amp;creativeASIN=0201633612&amp;linkCode=shr&amp;tag=eejs-20&amp;linkId=QYF6ABRMZ4O6KML2" target="_blank" rel="external">《设计模式》</a>，整本书都在讲述关系错误的设计模式，以及如何避免或者重构。</p>
+<p>我还是劝告你，在这个问题上，你应该接纳四人帮（设计模式的作者）的意见：</p>
+<blockquote>
+<p>优先使用对象组合，而非类继承。</p>
+</blockquote>
+<p>Java中，这个比使用类继承还难，因为你需要用类来实现（Java所有对象都是通过类生成的）。</p>
+<p>在JavaScript中，我们就没有这个借口了。事实上，比起管理对象层级，使用原型组合的方式来创建对象会简单很多。</p>
+<p>什么？！</p>
+<p>没骗你！如果你需要一个将日期变成<code>megaCalendarWidget</code>的jQuery对象，你不需要新开辟一个类。JavaScript能动态地拓展对象，只要拓展jQuery的原型对象就能做到。</p>
+<pre><code>/*
+如何扩展jQuery原型对象？
+*/
+
+jQuery.fn.megaCalendarWidget = megaCalendarWidget;
+</code></pre><p>你再调用jQuery工厂函数，你会能得到上述你需要的实例。</p>
+<p>同样，你也可以用<code>Object.assign()</code>来组合任意多个对象，以后者优先的顺序。</p>
+<pre><code>import ninja from &apos;ninja&apos;; // ES6 modules
+import mouse from &apos;mouse&apos;;
+
+let ninjamouse = Object.assign({}, mouse, ninja);
+</code></pre><p>真的可以是任意数量的对象：</p>
+<pre><code>// I&apos;m not sure Object.assign() is available (ES6)
+// so this time I&apos;ll use Lodash. It&apos;s like Underscore,
+// with 200% more awesome. You could also use
+// jQuery.extend() or Underscore&apos;s _.extend()
+var assign = require(&apos;lodash/object/assign&apos;);
+
+var skydiving = require(&apos;skydiving&apos;);
+var ninja = require(&apos;ninja&apos;);
+var mouse = require(&apos;mouse&apos;);
+var wingsuit = require(&apos;wingsuit&apos;);
+
+// The amount of awesome in this next bit might be too much
+// for seniors with heart conditions or young children.
+var skydivingNinjaMouseWithWingsuit = assign({}, // create a new object
+  skydiving, ninja, mouse, wingsuit); // copy all the awesome to it.
+</code></pre><p>这就是我之前提到的链接继承，继承的那个原型有时会称为模版原型。区别于委托原型的委托属性，我们直接复制属性。</p>
+<p>++<strong>问：ES6新增class关键词，我们不应该使用吗？</strong>++</p>
+<p>++<strong>答：不应该！</strong>++</p>
+<p>事实上，我们有一万个<a href="https://medium.com/javascript-scene/how-to-fix-the-es6-class-keyword-2d42bb3f4caf" target="_blank" rel="external">避免使用ES6类</a>的<a href="https://medium.com/javascript-scene/the-two-pillars-of-javascript-ee6f3281e7f3" target="_blank" rel="external">理由</a>，更别说类其实是JavaScript中一个尴尬的存在。</p>
+<p>我们已经拥有了JavaScript非常强大富有表现力的对象系统。如今JavaScript中实现的类具有限制性（贬义词，不是指类型修正的限制），并且模糊了语言中内置的原型面向对象系统。</p>
+<p>所以，你知道怎么用JavaScript比较好了吗？作为对原型面向对象设计非常熟悉的过来人告诉你，利用原型进行语法糖和抽象处理最好。</p>
+<p>【译者话】文章到这里终于好了，这真的是又长又有深度又费解的文章。作者的观点比较另类前卫，反正我是远远没到这种觉悟的。我也无法肯定或者否定他的说法，希望这篇文章能带给你一些思考吧。最后附上这个作者的介绍，我就不翻译了，要吐了。。。</p>
+<blockquote>
+<p>Eric Elliott is the author of “Programming JavaScript Applications” (O’Reilly), &amp; host of the documentary film-in-production, “Programming Literacy”. He has contributed to software experiences for Adobe Systems, Zumba Fitness, The Wall Street Journal, ESPN, BBC, and top recording artists including Usher, Frank Ocean, Metallica, and many more.</p>
+<p>He spends most of his time in the San Francisco Bay Area with the most beautiful woman in the world.</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Translate/" rel="tag"># Translate</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/14/【译】JS继承常见误区扫盲（二）/" rel="next" title="【译】JS继承常见误区扫盲（二）">
+                <i class="fa fa-chevron-left"></i> 【译】JS继承常见误区扫盲（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/22/JS模块化简单实现/" rel="prev" title="JS模块化简单实现">
+                JS模块化简单实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

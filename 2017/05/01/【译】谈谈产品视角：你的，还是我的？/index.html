@@ -1,0 +1,745 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Translate,JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="原文链接：Is this my interface or yours?    作者：John Saito 翻译：野草 本文首发于前端早读课【第927期】   我的电脑图标还记得Windows桌面的我的电脑图标吗？这个小图标背后包含了你电脑中所有的资料，包括你所有的代码，所有的工作，所有数字化的你，是不是有点厉害？！">
+<meta name="keywords" content="Translate,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】谈谈产品视角：你的，还是我的？">
+<meta property="og:url" content="http://yoursite.com/2017/05/01/【译】谈谈产品视角：你的，还是我的？/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="原文链接：Is this my interface or yours?    作者：John Saito 翻译：野草 本文首发于前端早读课【第927期】   我的电脑图标还记得Windows桌面的我的电脑图标吗？这个小图标背后包含了你电脑中所有的资料，包括你所有的代码，所有的工作，所有数字化的你，是不是有点厉害？！">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*FSoH96S_iF4tHvU9sr-VSw.png">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*7Pe_Es0h36CSnm8mAwiyKg.png">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*6RGScro3MQWfFOKwMcWdfQ.png">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*CBuJNMWTdjmsAd52_ak-yw.png">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*q38gRqcD-97pTrk6La77Jg.png">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*s-QfnkF03KVaWY4ueufJSw.png">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*8XoJD0AI-3RhRpaOpDnWRw.png">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*vqy--G3cI1dGtSis85bB_Q.png">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*A6IzDFrHX-4OC6mEctAxpg.png">
+<meta property="og:updated_time" content="2017-06-17T15:33:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】谈谈产品视角：你的，还是我的？">
+<meta name="twitter:description" content="原文链接：Is this my interface or yours?    作者：John Saito 翻译：野草 本文首发于前端早读课【第927期】   我的电脑图标还记得Windows桌面的我的电脑图标吗？这个小图标背后包含了你电脑中所有的资料，包括你所有的代码，所有的工作，所有数字化的你，是不是有点厉害？！">
+<meta name="twitter:image" content="https://cdn-images-1.medium.com/max/800/1*FSoH96S_iF4tHvU9sr-VSw.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/01/【译】谈谈产品视角：你的，还是我的？/"/>
+
+
+
+
+
+  <title>【译】谈谈产品视角：你的，还是我的？ | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/01/【译】谈谈产品视角：你的，还是我的？/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【译】谈谈产品视角：你的，还是我的？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-01T21:52:26+08:00">
+                2017-05-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文链接：<a href="https://medium.com/@jsaito/is-this-my-interface-or-yours-b09a7a795256" target="_blank" rel="external">Is this my interface or yours?</a>   </p>
+<p>作者：<a href="https://medium.com/@jsaito" target="_blank" rel="external">John Saito</a></p>
+<p>翻译：野草</p>
+<p>本文首发于前端早读课<a href="https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651226456&amp;idx=1&amp;sn=f65ad98f0ee14a761299a5b7eee4729b&amp;chksm=bd4958dc8a3ed1cad3fa9bc6c3b86ce2d44406b9a942d19c4523d40a26ef3c82e693b3601949&amp;mpshare=1&amp;scene=1&amp;srcid=0617yJXO0OvRAOifWXzcHPFU&amp;key=50814c5812fb30a218639b74e0dfb2d27eca41979b330cf571831e17ed2c646e89cc9cbe70984c87a9dc7ff2b1b188dda952fb75742c1e0b9407c2686a9ddb803757bdba848b0aead23d864d80853cef&amp;ascene=0&amp;uin=MTQ2MjQ2MjU4MQ%3D%3D&amp;devicetype=iMac+MacBookPro13%2C2+OSX+OSX+10.12.2+build" target="_blank" rel="external">【第927期】</a></p>
+</blockquote>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*FSoH96S_iF4tHvU9sr-VSw.png" alt=""></p>
+<h2 id="我的电脑图标"><a href="#我的电脑图标" class="headerlink" title="我的电脑图标"></a><strong>我的电脑</strong>图标</h2><p>还记得Windows桌面的<strong>我的电脑</strong>图标吗？这个小图标背后包含了你电脑中所有的资料，包括你所有的代码，所有的工作，所有数字化的你，是不是有点厉害？！<br><a id="more"></a></p>
+<p>微软在新版的Windows中将图标变成了<strong>计算机</strong>，然后又换成了<strong>此电脑</strong>。他们是因为“我的”一词具有误导性？还是觉得跟实际情况不符？还是觉得这是多余的？</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*7Pe_Es0h36CSnm8mAwiyKg.png" alt=""></p>
+<p>我不知道，但是这个小变化引发了我对一个更具普遍性问题的思考：为什么产品有时用“我的xx”，而有时又用“你的xx”来命名？</p>
+<h2 id="如何命名"><a href="#如何命名" class="headerlink" title="如何命名"></a>如何命名</h2><p>纵观各种应用程序，你会发现用户界面上的命名没有统一标准的方式。有些app标记了“我的xx”，有些标记了“你的xx”。</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*6RGScro3MQWfFOKwMcWdfQ.png" alt=""><br>youTube和谷歌称“我的xx”，而Spotify和亚马逊称“你的xx”</p>
+<p>假设你是用户界面设计者，你是否关心界面上的文案是从用户的视角还是从产品的视角？你觉得有区别吗？我认为二者还是有种微妙的区别，用哪种命名方式取决于你希望用户在使用产品的时候有什么样的感受。</p>
+<h2 id="“我的xx”视角"><a href="#“我的xx”视角" class="headerlink" title="“我的xx”视角"></a>“我的xx”视角</h2><p><strong>“我的”</strong> 暗示着这个产品是用户本身的延伸，好像这个产品帮助用户整理自己的东西。而且，“我的”让人感觉私密，感觉用户可以自定义，可以自我掌控。</p>
+<p>所以，<strong>“我的”</strong> 更适合当你想要强调隐私，个性化服务，或者所有权的时候。也许这也是为什么以前<strong>我的电脑</strong>用得很顺手。过去，一台电脑只属于一个人。人们不会分享电脑里的东西，放在那个小图标下的文件都显得非常安全。</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*CBuJNMWTdjmsAd52_ak-yw.png" alt=""></p>
+<h2 id="“你的xx”视角"><a href="#“你的xx”视角" class="headerlink" title="“你的xx”视角"></a>“你的xx”视角</h2><p><strong>“你的”</strong> 意味着产品在跟你说话，好像是你的私人助理，帮你完成一些事情。比如，“这是你的音乐”，“这是你的菜单”等等。</p>
+<p>如此，当你希望产品更具对话性互动性，用 <strong>“你的”</strong> 会更合适一些，好像它在帮助你完成一些任务。很多产品都帮助人们更方便、更快捷、更智能地完成一些事情，无论是支付账单，制定计划，还是填写税收表单。</p>
+<p>现在，计算机和应用程序甚至虚构出了人物来扮演私人助理的角色，比如Siri，Alexa，Cortana等。他们可以帮你制定备忘录，提醒你买东西，或者为你读邮件。</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*q38gRqcD-97pTrk6La77Jg.png" alt=""></p>
+<p>各种不同类型的应用程序，包括Medium（原文发的网站），会给你推荐各种内容。在我看来，这就像私人助理，每天帮你精心挑选故事。而且，我觉得这种趋避在未来会变得更加流行，我们也会在应用中看到更多的“你的”。</p>
+<h2 id="客观视角"><a href="#客观视角" class="headerlink" title="客观视角"></a>客观视角</h2><p>正如设计中的绝大多数问题，没有一个放之四海而皆准的解决方案。不过，目前有很多产品都会直接删去“我的”，“你的”，不管产品标记的项是否属于用户。</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*s-QfnkF03KVaWY4ueufJSw.png" alt=""></p>
+<p>也许这也是windows从<strong>我的电脑</strong>（My Computer）变成<strong>计算机</strong>（Computer）的方法，去掉“我的”。</p>
+<p>不幸的是，简单粗暴地去除形容词并不能解决所有的问题。有些场合的确需要区别东西的所有者。比如，YouTube中，你不能说“频道”，这样就不知道这个频道是你订阅的，还是YouTube推荐给你的。</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*8XoJD0AI-3RhRpaOpDnWRw.png" alt=""></p>
+<p>也许，我是说也许，这也是为什么Windows最后把<strong>计算机</strong>换成<strong>此电脑</strong>。因为<strong>计算机</strong>一词太大太模糊了，他们需要明确指出他们说的是这台电脑。</p>
+<h2 id="综合视角"><a href="#综合视角" class="headerlink" title="综合视角"></a>综合视角</h2><p>到现在，我们主要讨论了用户界面上属于你的那些东西。而这仅仅是你作为用户会遇到的一小部分内容。那按钮标签，使用说明，界面设置等其他的东西呢?</p>
+<p>不同的人观点可能截然不同，但以下是我遵循的通用准则：</p>
+<ul>
+<li><strong>何时用“我”</strong>：当用户和产品进行交互时，比如点击按钮或者选择多选框，建议使用“我”、“我的”。注意，当且仅当你不得不澄清事物的所有者时才添加这些词。</li>
+<li><strong>何时用“你”</strong>：当产品向用户询问问题，或者给一些使用说明，或者描述事情的时候，使用“你”或者“你的”。想象一下私人助理的说话方式。</li>
+</ul>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*vqy--G3cI1dGtSis85bB_Q.png" alt=""></p>
+<h2 id="“我们的”视角"><a href="#“我们的”视角" class="headerlink" title="“我们的”视角"></a>“我们的”视角</h2><p>结束之前，我再提一个常见的描述视角：我们。就是当产品在用户界面上用“我们”，或者“我们的”的时候。</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*A6IzDFrHX-4OC6mEctAxpg.png" alt=""></p>
+<p>使用“我们”或者“我们的”，实际上是将第三者（产品背后的人）参与进来。这意味着真的有人在背后做一些工作，而不是没有自己想法的机器。</p>
+<p>如果你的产品是提供一些技能型服务，比如下厨，设计，卫生清洁，“我们”增加了与人类交流的真实感。“我们帮你来了~”，“请查看我们为您提供的服务”。让用户知道在这些窗口背后有真实的人提供帮助，他们会安心很多。</p>
+<p>另一方面，如果你的产品就像谷歌搜索一样是个自动化工具，用“我们”就会有误导性，因为并不是人在处理这些搜索。事实上，谷歌的设计者建议在用户界面中绝大多数都不要用“我们”来形容。</p>
+<h2 id="你的看法"><a href="#你的看法" class="headerlink" title="你的看法"></a>你的看法</h2><p>之所以写这篇文章，是因为我发现设计师，开发，作者等不断遇到这个问题。为什么这里用“我们”？为什么那里用“你们”？另一方面，我也很少看到这方面详细的文章。</p>
+<p>在处理用户界面视角上，你是否有自己的准则？如果有，欢迎跟大家一起分享。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Translate/" rel="tag"># Translate</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/24/【译】Vue框架引入JS库的正确姿势/" rel="next" title="【译】Vue框架引入JS库的正确姿势">
+                <i class="fa fa-chevron-left"></i> 【译】Vue框架引入JS库的正确姿势
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/05/如何搭建Swagger接口文档/" rel="prev" title="如何搭建Swagger接口文档">
+                如何搭建Swagger接口文档 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#我的电脑图标"><span class="nav-number">1.</span> <span class="nav-text">我的电脑图标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何命名"><span class="nav-number">2.</span> <span class="nav-text">如何命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“我的xx”视角"><span class="nav-number">3.</span> <span class="nav-text">“我的xx”视角</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“你的xx”视角"><span class="nav-number">4.</span> <span class="nav-text">“你的xx”视角</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客观视角"><span class="nav-number">5.</span> <span class="nav-text">客观视角</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#综合视角"><span class="nav-number">6.</span> <span class="nav-text">综合视角</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“我们的”视角"><span class="nav-number">7.</span> <span class="nav-text">“我们的”视角</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#你的看法"><span class="nav-number">8.</span> <span class="nav-text">你的看法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

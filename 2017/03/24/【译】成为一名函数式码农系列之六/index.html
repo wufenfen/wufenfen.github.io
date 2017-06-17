@@ -1,0 +1,790 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Translate,JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="原文链接：So You Want to be a Functional Programmer (Part 6)  作者：Charles Scalfani 翻译：野草  本文发表于前端早读课【第888期】  往期回顾： 成为一名函数式码农系列之一">
+<meta name="keywords" content="Translate,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】成为一名函数式码农系列之六">
+<meta property="og:url" content="http://yoursite.com/2017/03/24/【译】成为一名函数式码农系列之六/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="原文链接：So You Want to be a Functional Programmer (Part 6)  作者：Charles Scalfani 翻译：野草  本文发表于前端早读课【第888期】  往期回顾： 成为一名函数式码农系列之一">
+<meta property="og:updated_time" content="2017-06-17T15:19:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】成为一名函数式码农系列之六">
+<meta name="twitter:description" content="原文链接：So You Want to be a Functional Programmer (Part 6)  作者：Charles Scalfani 翻译：野草  本文发表于前端早读课【第888期】  往期回顾： 成为一名函数式码农系列之一">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/24/【译】成为一名函数式码农系列之六/"/>
+
+
+
+
+
+  <title>【译】成为一名函数式码农系列之六 | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/24/【译】成为一名函数式码农系列之六/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【译】成为一名函数式码农系列之六</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-24T21:52:26+08:00">
+                2017-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文链接：<a href="https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-6-db502830403#.8wyxyf55g" target="_blank" rel="external">So You Want to be a Functional Programmer (Part 6)</a> </p>
+<p>作者：<a href="https://medium.com/@cscalfani" target="_blank" rel="external">Charles Scalfani</a></p>
+<p>翻译：野草 </p>
+<p>本文发表于前端早读课<a href="http://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651226265&amp;idx=1&amp;sn=3ce94b075bd2553c781ac4aa15143c6b&amp;chksm=bd49591d8a3ed00b89a08adee4e3c9f4994b66c97270e6276a28d7af6e20691a4f7d97ff7451&amp;mpshare=1&amp;scene=1&amp;srcid=0328Ms4qetfE6WuADNJ8L3Lm#rd" target="_blank" rel="external">【第888期】</a></p>
+</blockquote>
+<p>往期回顾：</p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651225912&amp;idx=1&amp;sn=0480641a8159e7d57b5cab7c0b524a7a&amp;chksm=bd49a6bc8a3e2faac1df5c45e04a568445b7db209d2c575866ab388d8f37e1d007c13c103ffb&amp;mpshare=1&amp;scene=1&amp;srcid=03213ZhGX9UngrryBnEQy2h3#rd" target="_blank" rel="external">成为一名函数式码农系列之一</a></p>
+<a id="more"></a>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651225913&amp;idx=1&amp;sn=61e3a679dd2356276a10943bc5ef5f18&amp;chksm=bd49a6bd8a3e2fabdc746a5a97e8d6ee58606c202280156f0190d1b66ab82d3b7a166ca57794&amp;mpshare=1&amp;scene=1&amp;srcid=0315JKNKt4HZQRfnC5JicSP8#rd" target="_blank" rel="external">成为一名函数式码农系列之二</a></p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651226010&amp;idx=1&amp;sn=903e29821020dd7e83f837670f211d75&amp;chksm=bd49a61e8a3e2f080a24ab0e0799628f552ac580f326c8f2a3765955be35a5c9e26d962a38ba&amp;mpshare=1&amp;scene=1&amp;srcid=03150bJQxkg916RYYBQl8G3C#rd" target="_blank" rel="external">成为一名函数式码农系列之三</a></p>
+<p><a href="https://github.com/fezaoduke/TranslationInstitute/blob/master/%E6%88%90%E4%B8%BA%E4%B8%80%E5%90%8D%E5%87%BD%E6%95%B0%E5%BC%8F%E7%A0%81%E5%86%9C%E7%B3%BB%E5%88%97%E4%B9%8B%E5%9B%9B.md" target="_blank" rel="external">成为一名函数式码农系列之四</a></p>
+<p><a href="https://github.com/fezaoduke/TranslationInstitute/blob/master/%E6%88%90%E4%B8%BA%E4%B8%80%E5%90%8D%E5%87%BD%E6%95%B0%E5%BC%8F%E7%A0%81%E5%86%9C%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%94.md" target="_blank" rel="external">成为一名函数式码农系列之五</a></p>
+<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>你已经学了函数式编程相关的所有新知识，你可能开始困惑：“然后呢？我如何才能在我的工作中实践起来？”</p>
+<p>这得具体问题具体分析。如果你工作中用的是像<a href="http://elm-lang.org/" target="_blank" rel="external">Elm</a>或者<a href="https://www.haskell.org/" target="_blank" rel="external">Haskell</a>这类纯函数语言，那这些知识很容易就能运用起来。</p>
+<p>如果你只能用某种命令式语言（这种情况很常见），比如JavaScript，你还是能运用大部分我们之前提到的知识点，不过会有很多的限制。</p>
+<h2 id="函数式JavaScript"><a href="#函数式JavaScript" class="headerlink" title="函数式JavaScript"></a>函数式JavaScript</h2><p>JavaScript拥有很多类函数式的特性。JavaScript没有纯性，但是我们可以设法得到一些不变量和纯函数，甚至可以借助一些库。</p>
+<p>但这并不是理想的解决方法。如果你不得不使用纯特性，为何不直接考虑函数式语言？</p>
+<h3 id="不变性-Immutability"><a href="#不变性-Immutability" class="headerlink" title="不变性(Immutability)"></a>不变性(Immutability)</h3><p>首先要考虑的点就是不变性。ES6新增了一个关键词<code>const</code>，它意味着一旦被赋值，就不能重新设置：</p>
+<pre><code>const a = 1;
+a = 2; // 抛出类型错误的异常 
+</code></pre><p>此处<code>a</code>定义为常量，也就是说一旦被设定就不能再修改了，这就是为什么<code>a = 2</code>会抛出异常错误（除了Safari外）。</p>
+<p><code>const</code>的缺陷在于它不够严格，我们来看个例子：</p>
+<pre><code>const a = {
+    x: 1,
+    y: 2
+};
+a.x = 2; // 没有异常!
+a = {}; // 抛出异常：类型错误
+</code></pre><p>注意到<code>a.x = 2</code>并<strong>没有</strong>抛出异常。用<code>const</code>关键词限制的只有变量<code>a</code>本身，<code>a</code>所指向的对象是可变的。</p>
+<p>这很槽糕。本来以为有了<code>const</code>，JavaScript会更加完善。</p>
+<p>那么问题来了，如何才能在JavaScript中得到不变性。</p>
+<p>不幸的是，只有<a href="https://facebook.github.io/immutable-js/" target="_blank" rel="external">Immutable.js</a>库能做到。虽然它能保证更好的不可变形，但悲剧的是，它以更像Java的方式写我们的JavaScript。</p>
+<h3 id="柯里化与整合-curring-and-composition"><a href="#柯里化与整合-curring-and-composition" class="headerlink" title="柯里化与整合(curring and composition)"></a>柯里化与整合(curring and composition)</h3><p>之前我们已经学会如何将函数柯里化，举一个复杂的例子再回顾一下：</p>
+<pre><code>const f = a =&gt; b =&gt; c =&gt; d =&gt; a + b + c + d
+</code></pre><p>我们得手写上述柯里化的过程。然后用如下的方式调用：</p>
+<pre><code>console.log(f(1)(2)(3)(4)); // 打印出 10
+</code></pre><p>括号之多，连写Lisp的程序员都要hold不住了。</p>
+<p>简化上述过程的库很多，我最喜欢用的库是<a href="http://ramdajs.com/" target="_blank" rel="external">Ramda</a>。</p>
+<p>我们用Ramda去改写上面的例子：</p>
+<pre><code>const f = R.curry((a, b, c, d) =&gt; a + b + c + d);
+console.log(f(1, 2, 3, 4)); // 打印出 10
+console.log(f(1, 2)(3, 4)); // 打印出 10
+console.log(f(1)(2)(3, 4)); // 打印出 10
+</code></pre><p>函数定义的方法并没有改进多少，但在调用的时候可以避免写那么多括号了。调用<code>f</code>的时候，你想任意指定参数的个数。</p>
+<p>我们重写一下之前的<code>mult5AfterAdd10</code>函数：</p>
+<pre><code>const add = R.curry((x, y) =&gt; x + y);
+const mult5 = value =&gt; value * 5;
+const mult5AfterAdd10 = R.compose(mult5, add(10));
+</code></pre><p>事实上Ramda提供了很多辅助函数来做些简单常见的运算，比如<code>R.add</code>以及<code>R.multiply</code>。以上代码我们还可以简化：</p>
+<pre><code>const mult5AfterAdd10 = R.compose(R.multiply(5), R.add(10));
+</code></pre><h3 id="Map，Filter和Reduce"><a href="#Map，Filter和Reduce" class="headerlink" title="Map，Filter和Reduce"></a>Map，Filter和Reduce</h3><p>Ramda也有对应的<code>mao</code>，<code>Filter</code>以及<code>reduce</code>函数。在原生JavaScript中，这几个函数是在<code>Array.prototype</code>对象中的，而在Ramda中它们是柯里化的：</p>
+<pre><code>const isOdd = R.flip(R.modulo)(2);
+const onlyOdd = R.filter(isOdd);
+const isEven = R.complement(isOdd);
+const onlyEven = R.filter(isEven);
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8];
+console.log(onlyEven(numbers)); // 打印出 [2, 4, 6, 8]
+console.log(onlyOdd(numbers)); //  打印出 [1, 3, 5, 7]
+</code></pre><p><code>R.modulo</code>接受2个参数，被除数和除数。</p>
+<p><code>isOdd</code>函数表示一个数除2的余数。若余数为0，则返回false，即不是奇数；若余数为1，则返回true，是奇数。用<code>R.filp</code>置换一下<code>R.modulo</code>函数两个参数顺序，使得2作为除数。</p>
+<p><code>isEven</code>函数是<code>isOdd</code>函数的补集。</p>
+<p><code>onlyOdd</code>函数是由<code>isOdd</code>函数进行断言的过滤函数。当它传入最后一个参数，一个数组，它就会被执行。</p>
+<p>同理，<code>onlyEven</code>函数是由<code>isEven</code>函数进行断言的过滤函数。</p>
+<p>当我们给函数<code>onlyEven</code>和<code>onlyOdd</code>传入<code>numbers</code>，<code>isEven</code>和<code>isOdd</code>获得了最后的参数，然后执行最终返回我们期望的数字。</p>
+<h2 id="JavaScript缺陷"><a href="#JavaScript缺陷" class="headerlink" title="JavaScript缺陷"></a>JavaScript缺陷</h2><p>借用了库和语言增强工具，JavaScript已经能做那么多事情了，但它仍然有个致命的缺陷——它是命令式语言，却想什么都做。</p>
+<p>绝大多数的前端开发不得不使用JavaScript，因为它是浏览器唯一接受的语言。不过，也有很多开发者绕过了这个坑——他们用另一种语言编写，然后编译成JavaScript。</p>
+<p>CoffeeScript是这类语言中最早的一批。目前，TypeScript已经被Angular2采用。Babel可以将这类语言编译成JavaScript。</p>
+<p>越来越多的开发者在项目中采用这种方式。</p>
+<p>但这些语言本质上还是JavaScript，并未有明显改善。为何我们大胆尝试直接使用一门纯函数语言，然后转译成JavaScript？</p>
+<h3 id="Elm"><a href="#Elm" class="headerlink" title="Elm"></a>Elm</h3><p>这系列文章，我们已经借用Elm来帮助我们理解函数式编程。</p>
+<p><strong>那Elm是什么？怎么用？</strong></p>
+<p>Elm是一种能编译成JavaScript的纯函数语言，你可以用<a href="https://guide.elm-lang.org/architecture/" target="_blank" rel="external">Elm脚手架</a>搭建一个Web应用。Elm脚手架，全称为The Elm Architecture，简称TEA，它是Redux的启蒙者。</p>
+<p>Elm程序在运行时不会报错。</p>
+<p>Elm在一些公司中已经投入了应用，比如<a href="https://www.noredink.com/" target="_blank" rel="external">NoRedLink</a>。Evan Czapliki大神，Elm的作者，目前在这家公司工作（准确地说，他在<a href="https://prezi.com/" target="_blank" rel="external">Prezi</a>工作）。</p>
+<p>更多信息参见<a href="https://www.youtube.com/watch?v=R2FtMbb-nLs" target="_blank" rel="external">6 Months of Elm in Production</a>，NoRedInk的Richard Feldman关于Elm的分享。</p>
+<p><strong>我要用Elm取代所有JavaScript吗？</strong></p>
+<p>不用，你可以逐步地取代。具体可参考教程<a href="http://elm-lang.org/blog/how-to-use-elm-at-work" target="_blank" rel="external">How to use Elm at Work</a>。</p>
+<p><strong>为什么要学Elm？</strong></p>
+<ul>
+<li>纯函数式编程具有约束和释放双重特性，它约束你的行为（通常是避免了给自己挖坑）同时让你远离bug和槽糕的设计。因为所有的Elm程序都要遵循Elm脚手架的规范。</li>
+<li>学习函数式编程能让你成为更好的程序员。本文涉及到的只是函数式编程的冰山一角。你应该去实践一下，感受它的魅力，感受它是如何减少你的代码量以及增加稳定性。</li>
+<li>JavaScript最初是在10天内仓促地完成的，然后在过去的20多年里一直在打补丁，直到现在变成了一门有一点点函数式，一些些面向对象，完完全全的命令式编程语言。Elm学习了Haskell社区过去30多年的精华，而Haskell社区也有数十年的数学和计算机工作的沉淀。并且Elm脚手架的设计是Evan在函数响应式编程方面发表的论文结果实现，这几年来一直不断改善优化。（<a href="https://www.youtube.com/watch?v=Agu6jipKfYw" target="_blank" rel="external">Controlling Time and Space </a>提到了它的设计理念）</li>
+<li>Elm是为前端开发人员而生，旨在简化开发工作。（<a href="https://www.youtube.com/watch?v=oYk8CKH7OhE" target="_blank" rel="external">Let’s Be Mainstream</a>深刻地说明了这一点）</li>
+</ul>
+<h2 id="未来展望"><a href="#未来展望" class="headerlink" title="未来展望"></a>未来展望</h2><p>我们无法预知未来的趋势，但至少我们可以做有根据的猜测。以下是我的一些拙见：</p>
+<blockquote>
+<p>能转译成JavaScript的这类语言将会有大进展；</p>
+<p>存在40多年的函数式编程思想将重新被挖掘出来，用来解决我们目前遇到的复杂问题；</p>
+<p>目前的硬件，比如廉价的内存，快速的处理器，使得函数式技术普及成为可能；</p>
+<p>CPU不会变快，但是内核的数量会持续增加；</p>
+<p>在复杂项目系统中可变性将成为最大要害之一。</p>
+</blockquote>
+<p>我之所以写这系列文章，是因为我相信函数式编程是未来趋势，而且过去几年我学得挺费劲，当然我现在也还在学习中。</p>
+<p>我希望我能帮助你们更容易更快地学会这些概念，帮助你们提升技能，然后未来有更好的出路。</p>
+<p>即使我预言Elm将会普及的观点是错误的，我敢说函数式编程和Elm语言是未来中的一部分。</p>
+<p>我希望你读完这个系列之后，你对这些概念有了清晰的掌握，对自己也更有信心。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Translate/" rel="tag"># Translate</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/22/前端开发中的地理定位问题小总结/" rel="next" title="前端开发中的地理定位问题小总结">
+                <i class="fa fa-chevron-left"></i> 前端开发中的地理定位问题小总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/29/小记ES5和ES6的类/" rel="prev" title="小记ES5和ES6的类">
+                小记ES5和ES6的类 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下一步"><span class="nav-number">1.</span> <span class="nav-text">下一步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数式JavaScript"><span class="nav-number">2.</span> <span class="nav-text">函数式JavaScript</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不变性-Immutability"><span class="nav-number">2.1.</span> <span class="nav-text">不变性(Immutability)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#柯里化与整合-curring-and-composition"><span class="nav-number">2.2.</span> <span class="nav-text">柯里化与整合(curring and composition)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map，Filter和Reduce"><span class="nav-number">2.3.</span> <span class="nav-text">Map，Filter和Reduce</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript缺陷"><span class="nav-number">3.</span> <span class="nav-text">JavaScript缺陷</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Elm"><span class="nav-number">3.1.</span> <span class="nav-text">Elm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#未来展望"><span class="nav-number">4.</span> <span class="nav-text">未来展望</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
