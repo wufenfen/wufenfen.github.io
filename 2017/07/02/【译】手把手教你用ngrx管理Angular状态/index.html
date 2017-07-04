@@ -1,0 +1,1412 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Framework,TypeScript,ngrx/store," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="原文链接：Managing State in Angular with ngrx/store  作者：Kim Maida 翻译：野草 PS 由于知乎的编辑器不太友好，文中代码格式没有缩进。可以点击这里阅读。  本文将与你一起探讨如何用不可变数据储存的方式进行Angular应用的状态管理 ：ngrx/store——Angular的响应式Redux。本文将会完成一个小型简单的Angular应用，最终">
+<meta name="keywords" content="Framework,TypeScript,ngrx&#x2F;store">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】手把手教你用ngrx管理Angular状态">
+<meta property="og:url" content="http://yoursite.com/2017/07/02/【译】手把手教你用ngrx管理Angular状态/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="原文链接：Managing State in Angular with ngrx/store  作者：Kim Maida 翻译：野草 PS 由于知乎的编辑器不太友好，文中代码格式没有缩进。可以点击这里阅读。  本文将与你一起探讨如何用不可变数据储存的方式进行Angular应用的状态管理 ：ngrx/store——Angular的响应式Redux。本文将会完成一个小型简单的Angular应用，最终">
+<meta property="og:image" content="https://cdn.auth0.com/blog/ngrx/ngrx-app.jpg">
+<meta property="og:image" content="https://cdn.auth0.com/blog/ngrx/ngrx-boilerplate.jpg">
+<meta property="og:image" content="https://cdn.auth0.com/blog/ngrx/ngrx-routing.jpg">
+<meta property="og:image" content="https://cdn.auth0.com/blog/ngrx/ngrx-home.jpg">
+<meta property="og:image" content="https://cdn.auth0.com/blog/ngrx/ngrx-tagShape.jpg">
+<meta property="og:image" content="https://cdn.auth0.com/blog/ngrx/ngrx-text.jpg">
+<meta property="og:image" content="https://cdn.auth0.com/blog/ngrx/ngrx-tagExtras.jpg">
+<meta property="og:image" content="https://cdn.auth0.com/blog/ngrx/ngrx-preview.jpg">
+<meta property="og:image" content="https://cdn.auth0.com/blog/ngrx/ngrx-preview-animated.gif">
+<meta property="og:image" content="https://cdn.auth0.com/blog/ngrx/ngrx-tagDone.jpg">
+<meta property="og:image" content="https://cdn.auth0.com/blog/ngrx/ngrx-complete.jpg">
+<meta property="og:image" content="https://cdn.auth0.com/blog/ngrx/ngrx-completeError.jpg">
+<meta property="og:updated_time" content="2017-07-04T13:13:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】手把手教你用ngrx管理Angular状态">
+<meta name="twitter:description" content="原文链接：Managing State in Angular with ngrx/store  作者：Kim Maida 翻译：野草 PS 由于知乎的编辑器不太友好，文中代码格式没有缩进。可以点击这里阅读。  本文将与你一起探讨如何用不可变数据储存的方式进行Angular应用的状态管理 ：ngrx/store——Angular的响应式Redux。本文将会完成一个小型简单的Angular应用，最终">
+<meta name="twitter:image" content="https://cdn.auth0.com/blog/ngrx/ngrx-app.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/02/【译】手把手教你用ngrx管理Angular状态/"/>
+
+
+
+
+
+  <title>【译】手把手教你用ngrx管理Angular状态 | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/02/【译】手把手教你用ngrx管理Angular状态/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【译】手把手教你用ngrx管理Angular状态</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-02T21:52:26+08:00">
+                2017-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Angular/" itemprop="url" rel="index">
+                    <span itemprop="name">Angular</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文链接：<a href="https://auth0.com/blog/managing-state-in-angular-with-ngrx-store/" target="_blank" rel="external">Managing State in Angular with ngrx/store</a> </p>
+<p>作者：<a href="https://twitter.com/KimMaida" target="_blank" rel="external">Kim Maida</a></p>
+<p>翻译：野草</p>
+<p>PS 由于知乎的编辑器不太友好，文中代码格式没有缩进。可以点击<a href="https://github.com/fezaoduke/TranslationInstitute/blob/master/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E7%94%A8ngrx%E7%AE%A1%E7%90%86Angular%E7%8A%B6%E6%80%81.md" target="_blank" rel="external">这里</a>阅读。</p>
+</blockquote>
+<p>本文将与你一起探讨如何用不可变数据储存的方式进行Angular应用的状态管理 ：<a href="https://github.com/ngrx/store" target="_blank" rel="external">ngrx/store</a>——Angular的响应式Redux。本文将会完成一个小型简单的Angular应用，最终代码可以在<a href="https://github.com/auth0-blog/pet-tags-ngrx" target="_blank" rel="external">这里</a>下载。 <a id="more"></a></p>
+<h2 id="Angular应用中的状态管理"><a href="#Angular应用中的状态管理" class="headerlink" title="Angular应用中的状态管理"></a>Angular应用中的状态管理</h2><p> 近几年，大型复杂Angular/AngularJS项目的状态管理一直是个让人头疼的问题。在<a href="https://angularjs.org/" target="_blank" rel="external">AngularJS</a>（1.x版本）中，状态管理通常由服务，事件，<code>$rootScope</code>混合处理。在<a href="https://angular.io/" target="_blank" rel="external">Angular</a>中（2+版本），<a href="https://angular.io/guide/component-interaction" target="_blank" rel="external">组件通信</a>让状态管理变得清晰一些，但还是有点复杂，根据数据流向不同会用到<a href="https://scotch.io/tutorials/get-angular-1-features-in-angular-2" target="_blank" rel="external">很多方法</a>。</p>
+<blockquote>
+<p>注意：本文中，AngularJS特指1.x版本，Angular对应2.0版本及其以上。</p>
+</blockquote>
+<p> 有人用<a href="https://github.com/reactjs/redux" target="_blank" rel="external">Redux</a>来管理AngularJS或者Angular的状态。Redux是<a href="http://redux.js.org/" target="_blank" rel="external">JavaScript应用的可预测状态容器</a>，支持单一不可变数据储存。Redux最有名的就是结合React的使用，当然它可以用于任意的视图层框架。Egghead.io发布了一份非常优质的<a href="https://egghead.io/courses/getting-started-with-redux" target="_blank" rel="external">Redux免费视频教程</a>，视频由Redux作者Dan Abramov本人讲解。</p>
+<h2 id="初识ngrx-store"><a href="#初识ngrx-store" class="headerlink" title="初识ngrx/store"></a>初识ngrx/store</h2><p> 本文将采用ngrx/store管理我们的Angular应用。那么，ngrx/store和Redux什么关系呢？为什么不用Redux呢？</p>
+<h2 id="与Redux的关系"><a href="#与Redux的关系" class="headerlink" title="与Redux的关系"></a>与Redux的关系</h2><p> ngrx/store的灵感来源于Redux，是一款集成RxJS的Angular状态管理库，由Angular的布道者Rob Wormald开发。它和Redux的核心思想相同，但使用<a href="http://reactivex.io/rxjs/" target="_blank" rel="external">RxJS</a>实现观察者模式。它遵循Redux核心原则，但专门为Angular而设计。</p>
+<h2 id="ngrx-store中的基本原则"><a href="#ngrx-store中的基本原则" class="headerlink" title="ngrx/store中的基本原则"></a>ngrx/store中的基本原则</h2><ul>
+<li><em>State（状态）</em> 是指单一不可变数据</li>
+<li><em>Action（行为）</em> 描述状态的变化</li>
+<li><em>Reducer（归约器/归约函数）</em> 根据先前状态以及当前行为来计算出新的状态</li>
+<li><p>状态用State的可观察对象，Action的观察者——<code>Store</code>来访问</p>
+<p>我们会详细解释说明。先快速过一遍基础，然后在实战的过程中慢慢深入解释。</p>
+</li>
+</ul>
+<h2 id="Actions（行为）"><a href="#Actions（行为）" class="headerlink" title="Actions（行为）"></a>Actions（行为）</h2><p>Actions是信息的载体，它发送数据到reducer，然后reducer更新store。<a href="https://egghead.io/lessons/javascript-redux-describing-state-changes-with-actions" target="_blank" rel="external">Actions</a>是store能接受数据的唯一方式。</p>
+<p>在ngrx/store里，Action的<a href="https://www.typescriptlang.org/docs/handbook/interfaces.html" target="_blank" rel="external">接口</a>是这样的：</p>
+<pre><code>// actions包括行为类型和对应的数据载体
+export interface Action {
+  type: string;
+  payload?: any;
+}
+</code></pre><p><code>type</code>描述我们期待的状态变化类型。比如，添加待办<code>&#39;ADD_TODO&#39;</code>，增加<code>&#39;DECREMENT&#39;</code>等。<code>payload</code>是发送到待更新store中的数据。store派发action的代码类似如下：</p>
+<pre><code>// 派发action，从而更新store
+store.dispatch({
+  type: &apos;ADD_TODO&apos;,
+  payload: &apos;Buy milk&apos;
+});
+</code></pre><h2 id="Reducers（归约器）"><a href="#Reducers（归约器）" class="headerlink" title="Reducers（归约器）"></a>Reducers（归约器）</h2><p>Reducers规定了行为对应的具体状态变化。它是纯函数，通过接收前一个状态和派发行为返回新对象作为下一个状态的方式来改变状态，新对象通常用<code>Object.assign</code>和扩展语法来实现。</p>
+<pre><code>// reducer定义了action被派发时state的具体改变方式
+export const todoReducer = (state = [], action) =&gt; {
+  switch(action.type) {
+    case &apos;ADD_TODO&apos;:
+      return [...state, action.payload];
+    default:
+      return state;
+  }
+}
+</code></pre><p>开发时特别要注意函数的纯性。因为纯函数：</p>
+<ul>
+<li>不会改变它作用域外的状态</li>
+<li>输出只决定于输入</li>
+<li>相同输入，总是得到相同输出</li>
+</ul>
+<p>关于函数的纯性，可以点击<a href="https://auth0.com/blog/glossary-of-modern-javascript-concepts/#purity" target="_blank" rel="external">这里</a>进一步了解。开发时，要确保函数的纯性和状态不可变性，所以写reducers的时候要多加小心。</p>
+<h2 id="Store（存储"><a href="#Store（存储" class="headerlink" title="Store（存储)"></a>Store（存储)</h2><p>store中储存了应用中所有的不可变状态。ngrx/store中的store是RxJS状态的<a href="https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/observable.md" target="_blank" rel="external">可观察对象</a>，以及行为的<a href="https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/observer.md" target="_blank" rel="external">观察者</a>。</p>
+<p>我们可以利用<code>Store</code>来派发行为。当然，我们也可以用<code>Store</code>的<code>select()</code>方法获取可观察对象，然后订阅观察，在状态变化之后做出反应。</p>
+<h2 id="ngrx-store实战：个性宠物标签"><a href="#ngrx-store实战：个性宠物标签" class="headerlink" title="ngrx/store实战：个性宠物标签"></a>ngrx/store实战：个性宠物标签</h2><p>目前我们熟悉了ngrx/store的基本工作原理，接下来我们来开发一个能让用户自定义宠物名称标签的应用。该应用将会有以下功能：</p>
+<ul>
+<li>用户可以选择标签形状，字体，文案，以及附加特性</li>
+<li>创建过程可以预览标签效果</li>
+<li>完成后，可以继续创建</li>
+</ul>
+<p>我们需要创建几个组件来组合成标签生成器和标签预览，还会添加登录，创建标签，完成创建的组件和路由。这个小应用的状态将会用ngrx/store来管理。</p>
+<p>完成后的个性宠物标签app效果如下：</p>
+<p><img src="https://cdn.auth0.com/blog/ngrx/ngrx-app.jpg" alt=""></p>
+<p>让我们开始吧！</p>
+<h2 id="Angular应用设置"><a href="#Angular应用设置" class="headerlink" title="Angular应用设置"></a>Angular应用设置</h2><h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><p>确保你已经安装了<a href="https://nodejs.org/en/" target="_blank" rel="external">NodeJS</a>，推荐LTS版本。</p>
+<p>用npm安装<a href="https://cli.angular.io/" target="_blank" rel="external">Angular CLI</a>包，方便一键生成项目手脚架。运行以下命令来全局安装angular-cli。</p>
+<pre><code>$ npm install -g @angular/cli
+</code></pre><h3 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h3><p>选好项目所在的文件夹，打开命令行，输入以下命令来创建一个新的Angular项目：</p>
+<pre><code>$ ng new pet-tags-ngrx
+</code></pre><p>进入新创建的文件夹，安装必要的包：</p>
+<pre><code>$ cd pet-tags-ngrx
+$ npm install @ngrx/core @ngrx/store --save
+</code></pre><p>一切准备就绪，可以开始开发了。</p>
+<h2 id="定制你的项目模板"><a href="#定制你的项目模板" class="headerlink" title="定制你的项目模板"></a>定制你的项目模板</h2><p>让我们根据这个项目的需求，稍微改造一下项目模板。</p>
+<h3 id="创建src-app-core文件夹"><a href="#创建src-app-core文件夹" class="headerlink" title="创建src/app/core文件夹"></a>创建<code>src/app/core</code>文件夹</h3><p>首先，创建文件夹<code>src/app/core</code>。应用的根组件和核心文件都会放在这个文件夹下。将所有的<code>app.component.*</code>文件移动到这里。</p>
+<blockquote>
+<p>注意：简洁起见，该教程不会包含测试。我们会忽略所有的<code>*.spec.ts</code>文件。如果你想写测试的话，可以自己写。所以，文中不会再提到这些文件。同样，出于清晰简洁性的考虑，github仓库的最终版代码删除了所有测试相关的文件。</p>
+</blockquote>
+<h3 id="更新App模块"><a href="#更新App模块" class="headerlink" title="更新App模块"></a>更新App模块</h3><p>接着，打开<code>src/app/app.module.ts</code>文件，更新<code>app.component</code>的路径：</p>
+<pre><code>// src/app/app.module.ts
+...
+import { AppComponent } from &apos;./core/app.component&apos;;
+...
+</code></pre><h3 id="静态资源整理"><a href="#静态资源整理" class="headerlink" title="静态资源整理"></a>静态资源整理</h3><p>定位到<code>src/assets</code>文件夹。</p>
+<p>在<code>assets</code>文件夹下新建一个<code>images</code>的文件夹，稍后我们会添加一些图片。然后，将根目录下的<code>src/styles.css</code>移动到<code>src/assets</code>下。</p>
+<p><code>styles.css</code>的移动需要我们修改<code>.angular-cli.json</code>的配置。打开这个文件，把<code>styles</code>属性改成如下：</p>
+<pre><code>// .angular-cli.json
+...
+&quot;styles&quot;: [
+  &quot;assets/styles.css&quot;
+],
+...
+</code></pre><h3 id="集成Bootstrap"><a href="#集成Bootstrap" class="headerlink" title="集成Bootstrap"></a>集成Bootstrap</h3><p>最后，在<code>index.html</code>中添加Bootstrap样式。在<code>&lt;link&gt;</code>标签上加上CDN地址。这里我们只用到样式，不需要脚本文件。顺便，更新一下标题，变成<code>Custom Pet Tags</code>：</p>
+<pre><code>&lt;!-- index.html --&gt;
+...
+  &lt;title&gt;Custom Pet Tags&lt;/title&gt;
+  ...
+  &lt;!-- Bootstrap CDN --&gt;
+  &lt;link
+    rel=&quot;stylesheet&quot;
+    href=&quot;https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css&quot;
+    integrity=&quot;sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ&quot;
+    crossorigin=&quot;anonymous&quot;&gt;
+&lt;/head&gt;
+</code></pre><h2 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h2><p>我们可以在本地起个服务，然后监听文件变化实时更新：</p>
+<pre><code>$ ng serve
+</code></pre><p>在浏览器中输入<a href="http://localhost:4200，程序成功运行。" target="_blank" rel="external">http://localhost:4200，程序成功运行。</a></p>
+<p><img src="https://cdn.auth0.com/blog/ngrx/ngrx-boilerplate.jpg" alt=""></p>
+<h2 id="App组件"><a href="#App组件" class="headerlink" title="App组件"></a>App组件</h2><p>现在开始创建新功能。从根组件<code>app.component.*</code>入手。不要担心，变化很小。</p>
+<h3 id="删除样式文件"><a href="#删除样式文件" class="headerlink" title="删除样式文件"></a>删除样式文件</h3><p>删除<code>app.component.css</code>文件。该组件只用Bootstrap来定义样式，所以不需要额外样式。</p>
+<h3 id="根组件脚本"><a href="#根组件脚本" class="headerlink" title="根组件脚本"></a>根组件脚本</h3><p>在<code>app.component.ts</code>文件中删除对上述样式文件的引用。我们也可以删除<code>AppComponent</code>类中的<code>title</code>属性。</p>
+<pre><code>// src/app/core/app.component.ts
+import { Component } from &apos;@angular/core&apos;;
+
+@Component({
+  selector: &apos;app-root&apos;,
+  templateUrl: &apos;./app.component.html&apos;
+})
+export class AppComponent {
+
+}
+</code></pre><h3 id="根组件模版"><a href="#根组件模版" class="headerlink" title="根组件模版"></a>根组件模版</h3><p>在<code>app.component.html</code>中添加一些内容，变成如下：</p>
+<pre><code>&lt;!-- src/app/core/app.component.html --&gt;
+&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;div class=&quot;col-sm-12&quot;&gt;
+      &lt;h1 class=&quot;text-center&quot;&gt;Custom Pet Tags&lt;/h1&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;router-outlet&gt;&lt;/router-outlet&gt;
+&lt;/div&gt;
+</code></pre><p>我们用Bootstrap来添加珊格系统和标题。然后添加一个<code>&lt;router-outlet&gt;</code>指令，这是当这个单页面应用中添加路由后，视图会渲染的地方。到现在为止，程序会报错。等我们建好了路由和page组件的时候，就好了。</p>
+<h2 id="创建页面组件"><a href="#创建页面组件" class="headerlink" title="创建页面组件"></a>创建页面组件</h2><p>如上所述，应用会包含三个路由：登录主页，创建预览页，以及完成页。</p>
+<p>我们先创建好各页面手脚架，以便搭建路由。然后再回来完善各个组件。</p>
+<p>在根目录下运行如下指令创建页面组件：</p>
+<pre><code>$ ng g component pages/home
+$ ng g component pages/create
+$ ng g component pages/complete
+</code></pre><p><code>ng g</code>命令可以快速生成组件，指令，过滤器和服务，同时也会自动把生成的文件导入到<code>app.module.ts</code>中。现在，我们有三个页面组件的脚手架，可以开始搭建路由了。</p>
+<h2 id="搭建路由"><a href="#搭建路由" class="headerlink" title="搭建路由"></a>搭建路由</h2><p>新建一个路由模块，在<code>src/app/core</code>文件夹下创建一个<code>app-routing.module.ts</code>文件：</p>
+<pre><code>// src/app/core/routing-module.ts
+import { NgModule } from &apos;@angular/core&apos;;
+import { RouterModule } from &apos;@angular/router&apos;;
+
+import { HomeComponent } from &apos;../pages/home/home.component&apos;;
+import { CreateComponent } from &apos;./../pages/create/create.component&apos;;
+import { CompleteComponent } from &apos;./../pages/complete/complete.component&apos;;
+
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot([
+      {
+        path: &apos;&apos;,
+        component: HomeComponent
+      },
+      {
+        path: &apos;create&apos;,
+        component: CreateComponent
+      },
+      {
+        path: &apos;complete&apos;,
+        component: CompleteComponent
+      },
+      {
+        path: &apos;**&apos;,
+        redirectTo: &apos;&apos;,
+        pathMatch: &apos;full&apos;
+      }
+    ])
+  ],
+  providers: [],
+  exports: [
+    RouterModule
+  ]
+})
+export class AppRoutingModule {}
+</code></pre><p>现在有三个路由<code>／</code>，<code>／create</code>，<code>／complete</code>，未知路由会重定向到首页。</p>
+<p>打开根模块文件<code>app.module.ts</code>，添加新增路由模块<code>AppRoutingModule</code>至<code>imports</code>属性。</p>
+<pre><code>// src/app/app.module.ts
+...
+import { AppRoutingModule } from &apos;./core/app-routing.module&apos;;
+
+@NgModule({
+  ...,
+  imports: [
+    ...,
+    AppRoutingModule
+  ],
+  ...
+</code></pre><p>到此，路由设置完毕。我们可以通过路由来访问不同页面，访问首页的时候，<code>HomeComponent</code>就会渲染在<code>&lt;router-outlet&gt;</code>所在的位置，如下图所示：</p>
+<p><img src="https://cdn.auth0.com/blog/ngrx/ngrx-routing.jpg" alt=""></p>
+<h2 id="“Home”页面组件"><a href="#“Home”页面组件" class="headerlink" title="“Home”页面组件"></a>“Home”页面组件</h2><p><code>HomeComponent</code>会有简单的信息提示，以及登录按钮。点击登录按钮，直接跳转到<code>/create</code>页面。</p>
+<p>现在，让我们添加提示信息和跳转到<code>/create</code>页面的按钮。打开<code>home.component.html</code>，替换内容如下：</p>
+<pre><code>&lt;!-- src/app/pages/home/home.component.html --&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-sm-12 text-center&quot;&gt;
+    &lt;p class=&quot;lead&quot;&gt;
+      Please sign up or log in to create a custom name tag for your beloved pet!
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;button
+        class=&quot;btn btn-lg btn-primary&quot;
+        routerLink=&quot;/create&quot;&gt;Log In&lt;/button&gt;
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p>现在，首页效果如下：</p>
+<p><img src="https://cdn.auth0.com/blog/ngrx/ngrx-home.jpg" alt="image"></p>
+<h2 id="宠物标签模型"><a href="#宠物标签模型" class="headerlink" title="宠物标签模型"></a>宠物标签模型</h2><p>开始实现个性宠物标签生成器功能和状态管理的工作了。首先，为我们的状态创建一个数据模型，该模型描述了当前的宠物标签。</p>
+<p>新建文件<code>src/app/core/pet-tag.model.ts</code>：</p>
+<pre><code>// src/app/core/pet-tag.model.ts
+export class PetTag {
+  constructor(
+    public shape: string,
+    public font: string,
+    public text: string,
+    public clip: boolean,
+    public gems: boolean,
+    public complete: boolean
+  ) { }
+}
+
+export const initialTag: PetTag = {
+  shape: &apos;&apos;,
+  font: &apos;sans-serif&apos;,
+  text: &apos;&apos;,
+  clip: false,
+  gems: false,
+  complete: false
+};
+</code></pre><p><code>PetTag</code>类声明了宠物标签的属性和类型，接着我们定义一个常量<code>initialTag</code>作为默认初始值，在初始化和重置状态时需要用到。</p>
+<h2 id="宠物标签行为"><a href="#宠物标签行为" class="headerlink" title="宠物标签行为"></a>宠物标签行为</h2><p>现在可以创建行为类型了。回顾之前说的，action被派发到reducer中，从而更新store。现在为我们想要的每种行为定义名字。</p>
+<p>创建文件<code>src/app/core/pet-tag.actions.ts</code></p>
+<pre><code>// src/app/core/pet-tag.actions.ts
+export const SELECT_SHAPE = &apos;SELECT_SHAPE&apos;;
+export const SELECT_FONT = &apos;SELECT_FONT&apos;;
+export const ADD_TEXT = &apos;ADD_TEXT&apos;;
+export const TOGGLE_CLIP = &apos;TOGGLE_CLIP&apos;;
+export const TOGGLE_GEMS = &apos;TOGGLE_GEMS&apos;;
+export const COMPLETE = &apos;COMPLETE&apos;;
+export const RESET = &apos;RESET&apos;;
+</code></pre><p>将行为定义为常量。我们也可以构造可注入的行为类，就像<a href="https://github.com/ngrx/example-app/tree/master/src/app/actions" target="_blank" rel="external">ngrx/example-app</a>中那样。但我们这个例子很简单，用这种方法反而会增加复杂度。</p>
+<h2 id="宠物标签归约器"><a href="#宠物标签归约器" class="headerlink" title="宠物标签归约器"></a>宠物标签归约器</h2><p>现在可以创建我们的归约函数了，这个函数接受action，更新store。</p>
+<p>新建文件<code>src/app/core/pet-tag.reducer.ts</code>：</p>
+<pre><code>// src/app/core/pet-tag.reducer.ts
+import { Action } from &apos;@ngrx/store&apos;;
+import { PetTag, initialTag } from &apos;./../core/pet-tag.model&apos;;
+import { SELECT_SHAPE, SELECT_FONT, ADD_TEXT, TOGGLE_CLIP, TOGGLE_GEMS, COMPLETE, RESET } from &apos;./pet-tag.actions&apos;;
+
+export function petTagReducer(state: PetTag = initialTag, action: Action) {
+  switch (action.type) {
+    case SELECT_SHAPE:
+      return Object.assign({}, state, {
+        shape: action.payload
+      });
+    case SELECT_FONT:
+      return Object.assign({}, state, {
+        font: action.payload
+      });
+    case ADD_TEXT:
+      return Object.assign({}, state, {
+        text: action.payload
+      });
+    case TOGGLE_CLIP:
+      return Object.assign({}, state, {
+        clip: !state.clip
+      });
+    case TOGGLE_GEMS:
+      return Object.assign({}, state, {
+        gems: !state.gems
+      });
+    case COMPLETE:
+      return Object.assign({}, state, {
+        complete: action.payload
+      });
+    case RESET:
+      return Object.assign({}, state, initialTag);
+    default:
+      return state;
+  }
+}
+</code></pre><p>首先从ngrx/store导入<code>Action</code>。同时也需要<code>PetTag</code>数据模型以及它的初始状态<code>initialTag</code>。还有上一步中创建的行为类型也需要导入。</p>
+<p>然后创建<code>petTagReducer()</code>函数，该函数接收两个参数：上一个状态<code>state</code>和被派发的行为<code>action</code>。注意它是输入决定输出的纯函数，函数不会改变全局的状态。这就是说，从归约器返回的数据要么是新对象，要么是未修改的输入，比如<code>default</code>情况。</p>
+<p>通常，我们可以借用<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="external"><code>Object.assign()</code></a>从输入数据中得到全新的对象。输入数据是上一个状态以及包含行为载体（payload）的对象。</p>
+<p><code>TOGGLE_CLIP</code>和<code>TOGGLE_GEMS</code>切换<code>initialTag</code>状态中的布尔值，所以当我们派发这两种行为的时候，不需要行为载体，我们只需要简单取反即可。</p>
+<p><code>COMPLETE</code>行为需要一个载体，因为我们明确要将其设置为<code>true</code>，而且每个标签只能操作一次。我们也可以切换布尔值，但明确起见，我们还是会派发一个具体的值作为行为载体。</p>
+<blockquote>
+<p>注意：注意<code>RESET</code>行为用到导入的<code>initialTag</code>。因为它是个不变量，所以在这里使用并不会违背归约函数的纯性。</p>
+</blockquote>
+<h2 id="根模块导入Store"><a href="#根模块导入Store" class="headerlink" title="根模块导入Store"></a>根模块导入Store</h2><p>完成了行为和归约函数的定义之后，我们要告诉应用程序有这些的存在。打开<code>app.module.ts</code>文件，更新如下：</p>
+<pre><code>// src/app/app.module.ts
+...
+import { StoreModule } from &apos;@ngrx/store&apos;;
+import { petTagReducer } from &apos;./core/pet-tag.reducer&apos;;
+
+@NgModule({
+  ...,
+  imports: [
+    ...,
+    StoreModule.provideStore({ petTag: petTagReducer })
+  ],
+  ...
+</code></pre><p> 现在，我们可以用<code>Store</code>来实现状态管理了。</p>
+<h2 id="创建“Create”页面"><a href="#创建“Create”页面" class="headerlink" title="创建“Create”页面"></a>创建“Create”页面</h2><p>之前创建的<code>CreateComponent</code>是个智能组件（Smart Component），它会有几个木偶子组件（Dumb Component）。</p>
+<h3 id="智能组件／木偶组件"><a href="#智能组件／木偶组件" class="headerlink" title="智能组件／木偶组件"></a>智能组件／木偶组件</h3><p><strong>智能组件</strong>也称容器组件，通常作为根级组件，包含业务逻辑，状态管理，订阅，处理事件。在这个例子中，就是那些可路由的页面组件。<code>CreateComponent</code>是智能组件，它将为标签生成器制定业务逻辑。同时，它会处理木偶子组件触发的事件，而这些子组件是标签生成器的一部分。</p>
+<p><strong>木偶组件</strong>又名展示组件，它只决定于父组件传递的数据。它可以触发事件，然后在父组件中处理，但它不会直接影响订阅或者store。木偶组件是可复用的模块化组件。比如，我们会同时在Create页面和Complete页面使用标签预览这个木偶组件（<code>CreateComponent</code>和<code>CompleteComponent</code>是智能组件）。</p>
+<h3 id="“Create”页面功能点"><a href="#“Create”页面功能点" class="headerlink" title="“Create”页面功能点"></a>“Create”页面功能点</h3><p>Create页面将会有以下几个功能：</p>
+<ul>
+<li>标签形状选择</li>
+<li>标签字体选择和文案输入</li>
+<li>是否添加clip和gems</li>
+<li>标签形状和文案的预览</li>
+<li>结束操作的完成按钮</li>
+</ul>
+<h3 id="“Create”组件脚本"><a href="#“Create”组件脚本" class="headerlink" title="“Create”组件脚本"></a>“Create”组件脚本</h3><p>我们先从<code>CreateComponent</code>开始，打开文件<code>create.component.ts</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line">// src/app/pages/create/create.component.ts</div><div class="line">import &#123; Component, OnInit, OnDestroy &#125; from &apos;@angular/core&apos;;</div><div class="line">import &#123; Observable &#125; from &apos;rxjs/Observable&apos;;</div><div class="line">import &#123; Subscription &#125; from &apos;rxjs/Subscription&apos;;</div><div class="line">import &#123; Store &#125; from &apos;@ngrx/store&apos;;</div><div class="line">import &#123; SELECT_SHAPE, SELECT_FONT, ADD_TEXT, TOGGLE_CLIP, TOGGLE_GEMS, COMPLETE &#125; from &apos;./../../core/pet-tag.actions&apos;;</div><div class="line">import &#123; PetTag &#125; from &apos;./../../core/pet-tag.model&apos;;</div><div class="line"></div><div class="line">@Component(&#123;</div><div class="line">  selector: &apos;app-create&apos;,</div><div class="line">  templateUrl: &apos;./create.component.html&apos;</div><div class="line">&#125;)</div><div class="line">export class CreateComponent implements OnInit, OnDestroy &#123;</div><div class="line">  tagState$: Observable&lt;PetTag&gt;;</div><div class="line">  private tagStateSubscription: Subscription;</div><div class="line">  petTag: PetTag;</div><div class="line">  done = false;</div><div class="line"></div><div class="line">  constructor(private store: Store&lt;PetTag&gt;) &#123;</div><div class="line">    this.tagState$ = store.select(&apos;petTag&apos;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  ngOnInit() &#123;</div><div class="line">    this.tagStateSubscription = this.tagState$.subscribe((state) =&gt; &#123;</div><div class="line">      this.petTag = state;</div><div class="line">      this.done = !!(this.petTag.shape &amp;&amp; this.petTag.text);</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  ngOnDestroy() &#123;</div><div class="line">    this.tagStateSubscription.unsubscribe();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  selectShapeHandler(shape: string) &#123;</div><div class="line">    this.store.dispatch(&#123;</div><div class="line">      type: SELECT_SHAPE,</div><div class="line">      payload: shape</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  selectFontHandler(fontType: string) &#123;</div><div class="line">    this.store.dispatch(&#123;</div><div class="line">      type: SELECT_FONT,</div><div class="line">      payload: fontType</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  addTextHandler(text: string) &#123;</div><div class="line">    this.store.dispatch(&#123;</div><div class="line">      type: ADD_TEXT,</div><div class="line">      payload: text</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  toggleClipHandler() &#123;</div><div class="line">    this.store.dispatch(&#123;</div><div class="line">      type: TOGGLE_CLIP</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  toggleGemsHandler() &#123;</div><div class="line">    this.store.dispatch(&#123;</div><div class="line">      type: TOGGLE_GEMS</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  submit() &#123;</div><div class="line">    this.store.dispatch(&#123;</div><div class="line">      type: COMPLETE,</div><div class="line">      payload: true</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个智能组件主要作用为自定义宠物标签。</p>
+<p>引入<code>OnInit</code>以及<code>OnDestroy</code>，分别用于初始化和销毁订阅。同时，需要从RxJS中引入<code>Observable</code>和<code>Subscription</code>，从ngrx/store引入<code>Store</code>对象。由于行为基本都在这个组件中派发，所以需要引入之前定义好的所有行为（除RESET外）。最后，引入<code>PetTag</code>数据模型。</p>
+<p>该组件不需要额外的样式，所以删除CSS文件以及对它的引用。</p>
+<p>该类中，<code>tagState$</code>定义为<code>PetTag</code>数据类型的可观察对象，通过构造器中用store的<code>select()</code>方法赋值实现。</p>
+<p>在<code>ngOnInit()</code>钩子函数中，将subscription（订阅）设置为对<code>tagState$</code>可观察对象的订阅。每当有新状态生成时，订阅就会把<code>petTag</code>设置为可观察对象流返回的新状态<code>state</code>。<code>done</code>属性用来检查<code>shape</code>和<code>text</code>是否已经填写。这两个属性是标签完成的必填项。当组件销毁的时候，<code>ngOnDestroy()</code>钩子函数被触发，执行销毁订阅。</p>
+<p>最后，创建派发行为至store的事件处理函数。当子木偶组件触发事件来更新状态时，这些事件处理函数就会执行。每个函数都用<code>store.dispatch()</code>派发期望的行为类型<code>type</code>和行为载体<code>payload</code>至归约函数。</p>
+<blockquote>
+<p>注意： 在更复杂的应用中，你可能希望在单独的服务中派发行为，然后注入到组件中。不过，现在我们这个仅仅为学习而创建的小应用，没有必要这么做。直接在智能组价中派发行为就行了。</p>
+</blockquote>
+<h2 id="形状组件"><a href="#形状组件" class="headerlink" title="形状组件"></a>形状组件</h2><p>开始创建我们的第一个展示组件：<code>TagShapeComponent</code>。当该组件完成时，创建页面预期效果如下：</p>
+<p><img src="https://cdn.auth0.com/blog/ngrx/ngrx-tagShape.jpg" alt="image"></p>
+<p>用Angular CLI命令一键生成这个子组件的脚手架：</p>
+<pre><code>$ ng g component pages/create/tag-shape
+</code></pre><p>标签形状组件将会展示四种不同的形状图片：骨头形，方形，圆形，心形。用户可以从中选择喜欢的形状。</p>
+<p>从<a href="https://github.com/auth0-blog/pet-tags-ngrx/tree/master/src/assets/images" target="_blank" rel="external">git仓库</a>下载图片，放置在<code>pet-tags-ngrx/src/assets/images</code>目录下。</p>
+<h3 id="形状组件脚本"><a href="#形状组件脚本" class="headerlink" title="形状组件脚本"></a>形状组件脚本</h3><p>打开<code>tag-shape.component.ts</code>文件：</p>
+<pre><code>// src/app/pages/create/tag-shape/tag-shape.component.ts
+import { Component, Output, EventEmitter } from &apos;@angular/core&apos;;
+
+@Component({
+  selector: &apos;app-tag-shape&apos;,
+  templateUrl: &apos;./tag-shape.component.html&apos;,
+  styleUrls: [&apos;./tag-shape.component.css&apos;]
+})
+export class TagShapeComponent {
+  tagShape: string;
+  @Output() selectShapeEvent = new EventEmitter();
+
+  constructor() { }
+
+  selectShape(shape: string) {
+    this.selectShapeEvent.emit(shape);
+  }
+
+}
+</code></pre><p>从<code>@angular/core</code>引入<code>Output</code>和<code>EventEmitter</code>。</p>
+<p>形状选择用radio按钮表示，所以需要一个属性来储存形状。由于形状是用字符串来描述的，我们将<code>tagShape</code>的类型设置为<code>string</code>。</p>
+<p>当用户选择某个形状之后，我们需要装饰器<code>@Output</code>来触发事件。并且发送信息至父组件<code>CreateComponent</code>。<code>selectShape(shape)</code>函数会触发携带形状信息的事件，然后父组件用先前在<code>CreateComponent</code>定义的<code>selectShapeHandler()</code>去处理。稍后我们就可以看到父子组件共同工作的效果。</p>
+<h3 id="形状组件模版"><a href="#形状组件模版" class="headerlink" title="形状组件模版"></a>形状组件模版</h3><p>在那之前，先让我们来修改一下<code>TagShapeComponent</code>的模版内容。打开文件<code>tag-shape.component.html</code>，修改如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">&lt;!-- src/app/pages/create/tag-shape/tag-shape.component.html --&gt;</div><div class="line">&lt;div class=&quot;row&quot;&gt;</div><div class="line">  &lt;div class=&quot;col-sm-12 text-center&quot;&gt;</div><div class="line">    &lt;h3&gt;Shape&lt;/h3&gt;</div><div class="line">    &lt;p class=&quot;form-text text-muted&quot;&gt;Choose a tag shape to get started!&lt;/p&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;div class=&quot;row&quot;&gt;</div><div class="line">  &lt;label class=&quot;tagShape col-sm-3&quot;&gt;</div><div class="line">    &lt;img src=&quot;/assets/images/bone.svg&quot;&gt;</div><div class="line">    &lt;input</div><div class="line">      type=&quot;radio&quot;</div><div class="line">      name=&quot;shape&quot;</div><div class="line">      [(ngModel)]=&quot;tagShape&quot;</div><div class="line">      (change)=&quot;selectShape(tagShape)&quot;</div><div class="line">      value=&quot;bone&quot;&gt;</div><div class="line">  &lt;/label&gt;</div><div class="line"></div><div class="line">  &lt;label class=&quot;tagShape col-sm-3&quot;&gt;</div><div class="line">    &lt;img src=&quot;/assets/images/rectangle.svg&quot;&gt;</div><div class="line">    &lt;input</div><div class="line">      type=&quot;radio&quot;</div><div class="line">      name=&quot;shape&quot;</div><div class="line">      [(ngModel)]=&quot;tagShape&quot;</div><div class="line">      (change)=&quot;selectShape(tagShape)&quot;</div><div class="line">      value=&quot;rectangle&quot;&gt;</div><div class="line">  &lt;/label&gt;</div><div class="line"></div><div class="line">  &lt;label class=&quot;tagShape col-sm-3&quot;&gt;</div><div class="line">    &lt;img src=&quot;/assets/images/circle.svg&quot;&gt;</div><div class="line">    &lt;input</div><div class="line">      type=&quot;radio&quot;</div><div class="line">      name=&quot;shape&quot;</div><div class="line">      [(ngModel)]=&quot;tagShape&quot;</div><div class="line">      (change)=&quot;selectShape(tagShape)&quot;</div><div class="line">      value=&quot;circle&quot;&gt;</div><div class="line">  &lt;/label&gt;</div><div class="line"></div><div class="line">  &lt;label class=&quot;tagShape col-sm-3&quot;&gt;</div><div class="line">    &lt;img src=&quot;/assets/images/heart.svg&quot;&gt;</div><div class="line">    &lt;input</div><div class="line">      type=&quot;radio&quot;</div><div class="line">      name=&quot;shape&quot;</div><div class="line">      [(ngModel)]=&quot;tagShape&quot;</div><div class="line">      (change)=&quot;selectShape(tagShape)&quot;</div><div class="line">      value=&quot;heart&quot;&gt;</div><div class="line">  &lt;/label&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
+<p>创建四个radio按钮分别对应四个形状的图片。无论选择哪个，都会触发<code>(change)</code>事件，然后触发携带<code>tagShape</code>参数的<code>selectShapeEvent</code>事件。</p>
+<h3 id="形状组件样式"><a href="#形状组件样式" class="headerlink" title="形状组件样式"></a>形状组件样式</h3><p>打开<code>tag-shape.component.css</code>文件， 添加样式如下：</p>
+<pre><code>/* src/app/pages/create/tag-shape/tag-shape.component.css */
+:host {
+  display: block;
+  margin: 20px 0;
+}
+.tagShape {
+  padding: 10px;
+  text-align: center;
+}
+img {
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  max-height: 50px;
+  max-width: 100%;
+  width: auto;
+}
+</code></pre><blockquote>
+<p>注意：<code>:host</code>伪类选择器是用来获取组件的宿主元素，也就是<code>&lt;app-tag-shape&gt;</code>。</p>
+</blockquote>
+<h3 id="添加形状组件至Create页面"><a href="#添加形状组件至Create页面" class="headerlink" title="添加形状组件至Create页面"></a>添加形状组件至Create页面</h3><p>最后，将<code>TagShapeComponent</code>添加至智能组件<code>CreateComponent</code>模版中，我们就算完成了。打开<code>create.component.html</code>文件，替换如下：</p>
+<pre><code>&lt;!-- src/app/pages/create/create.component.html --&gt;
+&lt;p class=&quot;col-sm-12 text-center lead&quot;&gt;
+  Hello! Create a customized tag for your pet.
+&lt;/p&gt;
+
+&lt;app-tag-shape
+  (selectShapeEvent)=&quot;selectShapeHandler($event)&quot;&gt;&lt;/app-tag-shape&gt;
+</code></pre><p>父组件现在能监听到来自子组件的<code>selectShapeEvent</code>事件，同时通过执行之前在<code>CreateComponent</code>中定义的<code>selectShapeHandler()</code>函数来处理该事件。回忆一下，这个函数派发了<code>SELECT_SHAPE</code>行为至store：</p>
+<pre><code>selectShapeHandler(shape: string) {
+  this.store.dispatch({
+    type: SELECT_SHAPE,
+    payload: shape
+  });
+}
+</code></pre><p>现在，应用可以在用户选择形状的时候更新状态了。</p>
+<h2 id="文字组件"><a href="#文字组件" class="headerlink" title="文字组件"></a>文字组件</h2><p>现在我们来创建用户输入字体和文字的组件。完成后，页面期待效果如下：</p>
+<p><img src="https://cdn.auth0.com/blog/ngrx/ngrx-text.jpg" alt="image"></p>
+<p>用命令行来创建该组件的手脚架：</p>
+<pre><code>$ ng g component pages/create/tag-text
+</code></pre><h3 id="文字组件脚本"><a href="#文字组件脚本" class="headerlink" title="文字组件脚本"></a>文字组件脚本</h3><p>打开<code>tag-text.component.ts</code>文件，修改如下：</p>
+<pre><code>// src/app/pages/create/tag-text/tag-text.component.ts
+import { Component, Output, EventEmitter } from &apos;@angular/core&apos;;
+
+@Component({
+  selector: &apos;app-tag-text&apos;,
+  templateUrl: &apos;./tag-text.component.html&apos;,
+  styleUrls: [&apos;./tag-text.component.css&apos;]
+})
+export class TagTextComponent {
+  tagTextInput = &apos;&apos;;
+  fontType = &apos;sans-serif&apos;;
+  @Output() selectFontEvent = new EventEmitter;
+  @Output() addTextEvent = new EventEmitter;
+
+  constructor() { }
+
+  selectFont(fontType: string) {
+    this.selectFontEvent.emit(fontType);
+  }
+
+  addText(text: string) {
+    this.addTextEvent.emit(text);
+  }
+
+}
+</code></pre><p>该组件跟上一个组件<code>TagShapeComponent</code>工作方式相同，所以代码也差不多。引入<code>Output</code>和<code>EventEmitter</code>，并且创建<code>tagTextInput</code>和<code>fontType</code>属性来记录用户的输入。</p>
+<blockquote>
+<p>注意：这里我们不需要声明<code>string</code>类型，因为初始值默认定义了变量的类型。</p>
+</blockquote>
+<p>当用户修改字体或者文字时，组件就会触发事件让父组件捕获。</p>
+<h3 id="文字组件模板"><a href="#文字组件模板" class="headerlink" title="文字组件模板"></a>文字组件模板</h3><p>标签文字组件模板<code>tag-text.component.html</code>代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">&lt;!-- src/app/pages/create/tag-text/tag-text.component.html --&gt;</div><div class="line">&lt;div class=&quot;row&quot;&gt;</div><div class="line">  &lt;div class=&quot;col-sm-12 text-center&quot;&gt;</div><div class="line">    &lt;h3&gt;Text&lt;/h3&gt;</div><div class="line">    &lt;p class=&quot;form-text text-muted&quot;&gt;</div><div class="line">      Select your desired font style and enter your pet&apos;s name.&lt;br&gt;</div><div class="line">      You can see what your tag will look like in the preview below.</div><div class="line">    &lt;/p&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;div class=&quot;form-group row&quot;&gt;</div><div class="line">  &lt;label for=&quot;font&quot; class=&quot;col-sm-2 offset-sm-2 col-form-label&quot;&gt;Font:&lt;/label&gt;</div><div class="line">  &lt;select</div><div class="line">    id=&quot;font&quot;</div><div class="line">    name=&quot;font&quot;</div><div class="line">    class=&quot;form-control col-sm-6&quot;</div><div class="line">    [(ngModel)]=&quot;fontType&quot;</div><div class="line">    (change)=&quot;selectFont(fontType)&quot;&gt;</div><div class="line">      &lt;option value=&quot;sans-serif&quot;&gt;Sans-serif&lt;/option&gt;</div><div class="line">      &lt;option value=&quot;serif&quot;&gt;Serif&lt;/option&gt;</div><div class="line">  &lt;/select&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;div class=&quot;form-group row&quot;&gt;</div><div class="line">  &lt;label for=&quot;tagText&quot; class=&quot;col-sm-2 offset-sm-2 col-form-label&quot;&gt;Text:&lt;/label&gt;</div><div class="line">  &lt;input</div><div class="line">    id=&quot;tagText&quot;</div><div class="line">    type=&quot;text&quot;</div><div class="line">    class=&quot;form-control col-sm-6&quot;</div><div class="line">    [(ngModel)]=&quot;tagTextInput&quot;</div><div class="line">    (input)=&quot;addText(tagTextInput)&quot;</div><div class="line">    maxlength=&quot;8&quot; /&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
+<p>我们用<code>&lt;select&gt;</code>元素和文本输入框让用户操作选择自己喜欢的效果。用户输入时，<code>ngModel</code>保证了数据的双向一致性，<code>(change)</code>使得该组件触发事件到父组件。</p>
+<h3 id="文字组件样式"><a href="#文字组件样式" class="headerlink" title="文字组件样式"></a>文字组件样式</h3><p>我们只需在<code>tag-text.component.css</code>中添加一个样式：</p>
+<pre><code>/* src/app/pages/create/tag-text/tag-text.component.css */
+:host {
+  display: block;
+  margin: 20px 0;
+}
+</code></pre><h3 id="添加文字组件至Create页面"><a href="#添加文字组件至Create页面" class="headerlink" title="添加文字组件至Create页面"></a>添加文字组件至Create页面</h3><p>最后将<code>TagTextComponent</code>组件添加到Create页面：</p>
+<pre><code>&lt;!-- src/app/pages/create/create.component.html --&gt;
+...
+&lt;app-tag-text
+  *ngIf=&quot;petTag.shape&quot;
+  (selectFontEvent)=&quot;selectFontHandler($event)&quot;
+  (addTextEvent)=&quot;addTextHandler($event)&quot;&gt;&lt;/app-tag-text&gt;
+</code></pre><p>注意我们在<code>&lt;app-tag-text&gt;</code>元素上加了<code>*ngIf</code>结构指令，我们希望用户在选择了标签形状之后才显示该组件。我们即将创建标签预览组件，没有标签形状的预览没有什么意义，<code>*ngIf</code>保证了这点。</p>
+<p>在父组件中监听<code>TagTextComponent</code>的<code>selectFontEvent</code>和<code>addTextEvent</code>事件，然后用之前在<code>CreateComponent</code>定义好的方法去处理。处理方式分别为派发<code>SELECT_FONT</code>和<code>ADD_TEXT</code>以及对应的行为载体（payload）至归约器（reducer）：</p>
+<pre><code>selectFontHandler(fontType: string) {
+  this.store.dispatch({
+    type: SELECT_FONT,
+    payload: fontType
+  });
+}
+
+addTextHandler(text: string) {
+  this.store.dispatch({
+    type: ADD_TEXT,
+    payload: text
+  });
+}
+</code></pre><h2 id="附加特性组件"><a href="#附加特性组件" class="headerlink" title="附加特性组件"></a>附加特性组件</h2><p>现在，我们来添加能让用户额外选择的几个特性。完成之后，创建页面预期效果如下：</p>
+<p><img src="https://cdn.auth0.com/blog/ngrx/ngrx-tagExtras.jpg" alt="image"></p>
+<p>同样用命令来创建<code>TagExtrasComponent</code>组件的手脚架：</p>
+<pre><code>$ ng g component pages/create/tag-extras
+</code></pre><h3 id="附加特性组件脚本"><a href="#附加特性组件脚本" class="headerlink" title="附加特性组件脚本"></a>附加特性组件脚本</h3><p>打开<code>tag-extras.component.ts</code>，修改如下：</p>
+<pre><code>// src/app/pages/create/tag-extras/tag-extras.component.ts
+import { Component, Output, EventEmitter } from &apos;@angular/core&apos;;
+
+@Component({
+  selector: &apos;app-tag-extras&apos;,
+  templateUrl: &apos;./tag-extras.component.html&apos;,
+  styleUrls: [&apos;./tag-extras.component.css&apos;]
+})
+export class TagExtrasComponent {
+  tagClip: boolean;
+  gems: boolean;
+  @Output() toggleClipEvent = new EventEmitter;
+  @Output() toggleGemsEvent = new EventEmitter;
+
+  constructor() { }
+
+  toggleClip() {
+    this.toggleClipEvent.emit();
+  }
+
+  toggleGems() {
+    this.toggleGemsEvent.emit();
+  }
+}
+</code></pre><p>代码看起来应该很熟悉了吧？！ 额外选项包括是否添加clip和gems，所以这两个参数是<code>boolean</code>类型。</p>
+<h3 id="附加特性组件模板"><a href="#附加特性组件模板" class="headerlink" title="附加特性组件模板"></a>附加特性组件模板</h3><p>打开<code>tag-extras.component.html</code>，添加代码如下：</p>
+<pre><code>&lt;!-- src/app/pages/create/tag-extras/tag-extras.component.html --&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-sm-12 text-center&quot;&gt;
+    &lt;h3&gt;Extras&lt;/h3&gt;
+    &lt;p class=&quot;form-text text-muted&quot;&gt;Select any extras you would like to add.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-sm-4 offset-sm-2&quot;&gt;
+    &lt;label&gt;
+      &lt;input
+        type=&quot;checkbox&quot;
+        [(ngModel)]=&quot;tagClip&quot;
+        (change)=&quot;toggleClip()&quot;&gt; Include tag clip
+    &lt;/label&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;col-sm-4&quot;&gt;
+    &lt;label&gt;
+      &lt;input
+        type=&quot;checkbox&quot;
+        [(ngModel)]=&quot;gems&quot;
+        (change)=&quot;toggleGems()&quot;&gt; Add gems
+    &lt;/label&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p>用checkbox让用户来勾选是否要添加额外特性。</p>
+<h3 id="附加特性组件样式"><a href="#附加特性组件样式" class="headerlink" title="附加特性组件样式"></a>附加特性组件样式</h3><p>由于该组件是最后一个标签编辑组件，我们希望在底部添加边界线，打开<code>tag-extras.component.css</code>文件，添加如下:</p>
+<pre><code>/* src/app/pages/create/tag-extras/tag-extras.component.css */
+:host {
+  border-bottom: 1px solid #ccc;
+  display: block;
+  margin: 20px 0;
+  padding-bottom: 20px;
+}
+</code></pre><h3 id="添加附加特性组件至Create页面"><a href="#添加附加特性组件至Create页面" class="headerlink" title="添加附加特性组件至Create页面"></a>添加附加特性组件至Create页面</h3><p>在<code>create.component.html</code>文件中添加如下代码：</p>
+<pre><code>&lt;!-- src/app/pages/create/create.component.html --&gt;
+...
+&lt;app-tag-extras
+  *ngIf=&quot;petTag.shape&quot;
+  (toggleClipEvent)=&quot;toggleClipHandler()&quot;
+  (toggleGemsEvent)=&quot;toggleGemsHandler()&quot;&gt;&lt;/app-tag-extras&gt;
+</code></pre><p>跟标签文字组件一样，我们只在用户选择了标签形状之后才显示附加特性选项。<code>toggleClipEvent</code>和<code>toggleGemsEvent</code>事件被之前在<code>CreateComponent</code>定义好的方法处理，处理方式分别为派发<code>TOGGLE_CLIP</code>和<code>TOGGLE_GEMS</code>行为至归约器：</p>
+<pre><code>toggleClipHandler() {
+  this.store.dispatch({
+    type: TOGGLE_CLIP
+  }); 
+}
+
+toggleGemsHandler() {
+  this.store.dispatch({
+    type: TOGGLE_GEMS
+  });
+}
+</code></pre><p>由于选择的切换是布尔值，不需要行为载体。这种情况，我们只需要在归约器中使用上一个状态来决定下一个状态。</p>
+<h2 id="预览组件"><a href="#预览组件" class="headerlink" title="预览组件"></a>预览组件</h2><p>现在让我们来创建标签预览组件，预期效果如下：</p>
+<p><img src="https://cdn.auth0.com/blog/ngrx/ngrx-preview.jpg" alt="image"></p>
+<p>用命令行来创建<code>TagPreviewComponent</code>组件的手脚架，它将是Create页面和Complete页面的子组件，所以把这个组件放在<code>app</code>文件夹下：</p>
+<pre><code>$ ng g component tag-preview
+</code></pre><h3 id="预览组件脚本"><a href="#预览组件脚本" class="headerlink" title="预览组件脚本"></a>预览组件脚本</h3><p>打开<code>tag-preview.component.ts</code>文件，修改如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">// src/app/tag-preview/tag-preview.component.ts</div><div class="line">import &#123; Component, OnChanges, Input &#125; from &apos;@angular/core&apos;;</div><div class="line">import &#123; PetTag &#125; from &apos;./../core/pet-tag.model&apos;;</div><div class="line"></div><div class="line">@Component(&#123;</div><div class="line">  selector: &apos;app-tag-preview&apos;,</div><div class="line">  templateUrl: &apos;./tag-preview.component.html&apos;,</div><div class="line">  styleUrls: [&apos;./tag-preview.component.css&apos;]</div><div class="line">&#125;)</div><div class="line">export class TagPreviewComponent implements OnChanges &#123;</div><div class="line">  @Input() petTag: PetTag;</div><div class="line">  imgSrc = &apos;&apos;;</div><div class="line">  tagClipText: string;</div><div class="line">  gemsText: string;</div><div class="line"></div><div class="line">  constructor() &#123; &#125;</div><div class="line"></div><div class="line">  ngOnChanges() &#123;</div><div class="line">    this.imgSrc = `/assets/images/$&#123;this.petTag.shape&#125;.svg`;</div><div class="line">    this.tagClipText = this.boolToText(this.petTag.clip);</div><div class="line">    this.gemsText = this.boolToText(this.petTag.gems);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  private boolToText(bool: boolean) &#123;</div><div class="line">    return bool ? &apos;Yes&apos; : &apos;No&apos;;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>TagPreviewComponent</code>是接受父组件<code>CreateComponent</code>输入的木偶子组件，它并不向父组件传递数据。引入<code>Input</code>装饰器以及<code>OnChanges</code>生命周期函数钩子，同时需要引入<code>PetTag</code>表明输入的类型。</p>
+<p><code>TagPreviewComponent</code>类需要实现<code>OnChanges</code>接口，也就是在该类中调用<code>ngOnChanges</code>方法。每当组件的输入参数发生变化时，<code>ngOnChanges</code>就会执行。这样才能实现在用户编辑修改的时候实时预览效果。</p>
+<p>从父组件中接受的数据<code>@Input() petTag</code>是个状态对象，数据类型是之前定义的<code>PetTag</code>。比如，一个<code>petTag</code>对象可能是这样的：</p>
+<pre><code>{
+  shape: &apos;bone&apos;,
+  font: &apos;serif&apos;,
+  text: &apos;Fawkes&apos;,
+  clip: true,
+  gems: false,
+  complete: false
+}
+</code></pre><p>我们希望友好直观地展示数据，所以我们将会显示标签的形状图片，文案，以及是否包含了clip和gems。</p>
+<p>当用户进行操作时，需要专门设置一下图片的路径以及clip和gems的文案（Yes或者No）。输入是由<code>CreateComponent</code>对<code>tagState$</code>这个可观察对象的订阅提供。</p>
+<h3 id="预览组件模版"><a href="#预览组件模版" class="headerlink" title="预览组件模版"></a>预览组件模版</h3><p>打开<code>tag-preview.component.html</code>文件，添加代码如下：</p>
+<pre><code>&lt;!-- src/app/tag-preview/tag-preview.component.html --&gt;
+&lt;div *ngIf=&quot;petTag.shape&quot; class=&quot;row tagView-wrapper&quot;&gt;
+
+  &lt;div class=&quot;col-sm-12&quot;&gt;
+    &lt;div class=&quot;tagView {{petTag.shape}}&quot;&gt;
+      &lt;img [src]=&quot;imgSrc&quot; /&gt;
+      &lt;div class=&quot;text {{petTag.font}}&quot;&gt;
+        {{petTag.text}}
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;p class=&quot;text-center&quot;&gt;
+      &lt;strong&gt;Tag clip:&lt;/strong&gt; {{tagClipText}}&lt;br&gt;
+      &lt;strong&gt;Gems:&lt;/strong&gt; {{gemsText}}
+    &lt;/p&gt;
+  &lt;/div&gt;
+
+&lt;/div&gt;
+</code></pre><p>预览将会在用户选择标签形状之后显示。用一个<code>shape</code>样式类来控制显示正确的形状图片，同时也会显示标签的文字，字体是用<code>font</code>样式类来控制的。最后，直接标注出用户是否选择了包含clip，gems两个特性。</p>
+<h3 id="预览组件样式"><a href="#预览组件样式" class="headerlink" title="预览组件样式"></a>预览组件样式</h3><p>之前我们定义4个标签形状：骨头形，方形，圆形，心形。为了优雅地展示预览效果，我们需要额外的样式。打开<code>tag-preview.component.css</code>样式，添加如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">/* src/app/tag-preview/tag-preview.component.css */</div><div class="line">.tagView-wrapper &#123;</div><div class="line">  padding-top: 20px;</div><div class="line">&#125;</div><div class="line">.tagView &#123;</div><div class="line">  height: 284px;</div><div class="line">  position: relative;</div><div class="line">  width: 100%;</div><div class="line">&#125;</div><div class="line">img &#123;</div><div class="line">  display: block;</div><div class="line">  height: 100%;</div><div class="line">  margin: 0 auto;</div><div class="line">  width: auto;</div><div class="line">&#125;</div><div class="line">.text &#123;</div><div class="line">  font-size: 48px;</div><div class="line">  position: absolute;</div><div class="line">  text-align: center;</div><div class="line">  text-shadow: 1px 1px 0 rgba(255,255,255,.8);</div><div class="line">  top: 99px;</div><div class="line">  width: 100%;</div><div class="line">&#125;</div><div class="line">.bone .text,</div><div class="line">.rectangle .text &#123;</div><div class="line">  font-size: 74px;</div><div class="line">  top: 85px;</div><div class="line">&#125;</div><div class="line">.sans-serif &#123;</div><div class="line">  font-family: Arial, Helvetica, sans-serif;</div><div class="line">&#125;</div><div class="line">.serif &#123;</div><div class="line">  font-family: Georgia, &apos;Times New Roman&apos;, Times, serif;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>除了一些定位之外，我们根据不同形状设置了不同的字体大小，根据用户选择设置不同字体。</p>
+<p>现在，我们可以添加<code>&lt;app-tag-preview&gt;</code>到Create页面了。</p>
+<h3 id="将预览组件添加至Create页面"><a href="#将预览组件添加至Create页面" class="headerlink" title="将预览组件添加至Create页面"></a>将预览组件添加至Create页面</h3><p>打开<code>create.component.htm</code>，将该组件添加至最底部：</p>
+<pre><code>&lt;!-- src/app/pages/create/create.component.html --&gt;
+...
+&lt;app-tag-preview
+  [petTag]=&quot;petTag&quot;&gt;&lt;/app-tag-preview&gt;
+</code></pre><p>方括号<code>[...]</code>单向绑定属性，我们在<code>CreateComponen</code>组件的订阅<code>tagStateSubscription</code>中已经创建了<code>petTag</code>，现在将其传递给预览组件。</p>
+<p>现在，我们应该可以看到标签的实时预览效果了：</p>
+<p><img src="https://cdn.auth0.com/blog/ngrx/ngrx-preview-animated.gif" alt="image"></p>
+<h3 id="提交完成标签"><a href="#提交完成标签" class="headerlink" title="提交完成标签"></a>提交完成标签</h3><p>有了标签生成器和标签预览之后，添加一个Done按钮来提交创建好的标签到Complete页面。完成之后，页面如下：</p>
+<p><img src="https://cdn.auth0.com/blog/ngrx/ngrx-tagDone.jpg" alt="image"></p>
+<p>我们已经在<code>CreateComponent</code>中创建了<code>submit()</code>方法，该方法派发带有载体的<code>COMPLETE</code>行为至归约器。我们只需要在<code>create.component.html</code>页面创建一个调用该方法的按钮即可：</p>
+<pre><code>&lt;!-- src/app/pages/create/create.component.html --&gt;
+...
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-sm-12 text-center&quot;&gt;
+    &lt;p class=&quot;form-text text-muted&quot; *ngIf=&quot;petTag.shape&quot;&gt;
+      Preview your customized tag above.&lt;br&gt;
+      If you&apos;re happy with the results,&lt;br&gt;
+      click the button below to finish!
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;button
+        class=&quot;btn btn-success btn-lg&quot;
+        *ngIf=&quot;petTag.shape&quot;
+        [disabled]=&quot;!done&quot;
+        (click)=&quot;submit()&quot;
+        routerLink=&quot;/complete&quot;&gt;Done&lt;/button&gt;
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p>我们之前在<code>CreateComponent</code>的<code>tagStateSubscription</code>对象中定义了<code>done</code>属性。 当<code>done</code>属性是false的时候，我们禁用提交按钮。</p>
+<pre><code>this.done = !!(this.petTag.shape &amp;&amp; this.petTag.text);
+</code></pre><p>当标签有形状和文字时，我们就认为该标签已经可以提交了。如果用户已经添加了这些，他们就可以点击提交按钮完成标签的创建。同时，我们将用户导航至Complete页面。</p>
+<h2 id="“Complete”页面组件"><a href="#“Complete”页面组件" class="headerlink" title="“Complete”页面组件"></a>“Complete”页面组件</h2><p>在设置路由的时候，我们就搭建好了Complete页面的手脚架。当这个页面创建好之后，页面效果如下（前提是用户创建了一个标签）：</p>
+<p><img src="https://cdn.auth0.com/blog/ngrx/ngrx-complete.jpg" alt="image"></p>
+<h3 id="“Complete”页面组件脚本"><a href="#“Complete”页面组件脚本" class="headerlink" title="“Complete”页面组件脚本"></a>“Complete”页面组件脚本</h3><p>打开智能组件<code>complete.component.ts</code>，添加代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">// src/app/pages/complete/complete.component.ts</div><div class="line">import &#123; Component, OnInit, OnDestroy &#125; from &apos;@angular/core&apos;;</div><div class="line">import &#123; Observable &#125; from &apos;rxjs/Observable&apos;;</div><div class="line">import &#123; Subscription &#125; from &apos;rxjs/Subscription&apos;;</div><div class="line">import &#123; Store &#125; from &apos;@ngrx/store&apos;;</div><div class="line">import &#123; RESET &#125; from &apos;./../../core/pet-tag.actions&apos;;</div><div class="line">import &#123; PetTag &#125; from &apos;./../../core/pet-tag.model&apos;;</div><div class="line"></div><div class="line">@Component(&#123;</div><div class="line">  selector: &apos;app-complete&apos;,</div><div class="line">  templateUrl: &apos;./complete.component.html&apos;</div><div class="line">&#125;)</div><div class="line">export class CompleteComponent implements OnInit, OnDestroy &#123;</div><div class="line">  tagState$: Observable&lt;PetTag&gt;;</div><div class="line">  private tagStateSubscription: Subscription;</div><div class="line">  petTag: PetTag;</div><div class="line"></div><div class="line">  constructor(private store: Store&lt;PetTag&gt;) &#123;</div><div class="line">    this.tagState$ = store.select(&apos;petTag&apos;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  ngOnInit() &#123;</div><div class="line">    this.tagStateSubscription = this.tagState$.subscribe((state) =&gt; &#123;</div><div class="line">      this.petTag = state;</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  ngOnDestroy() &#123;</div><div class="line">    this.tagStateSubscription.unsubscribe();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  newTag() &#123;</div><div class="line">    this.store.dispatch(&#123;</div><div class="line">      type: RESET</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>CompleteComponent</code>组件是可路由的容器组件。需要导入<code>OnInit</code>, <code>OnDestroy</code>, <code>Observable</code>, <code>Subscription</code>以及<code>Store</code>管理store订阅。同时，有个重置按钮，用户点击之后可以重新创建标签。store中的状态也会跟着重置，所以需要导入<code>RESET</code>行为， <code>PetTag</code>数据类型以及默认初始值<code>initialTag</code>。</p>
+<p>这个组件不需要Bootstrap以外的样式，所以我们可以把样式文件<code>complete.component.css</code>以及相应的引用删掉。</p>
+<p>类似<code>CreateComponent</code>组件，我们需要创建<code>tagState$</code>的可观察对象<code>tagStateSubscription</code>，以及局部变量<code>petTag</code>。同时，我们需要创建<code>PetTag</code>数据类型的<code>emptyTag</code>变量，然后将其赋值为<code>initialTag</code>。</p>
+<p>在构造函数中，将<code>tagState$</code>设为store可观察对象。然后在<code>ngOnInit()</code>函数中，订阅这个可观察对象，并且设置<code>petTag</code>属性。在<code>ngOnDestroy()</code>函数中，通过退订来销毁订阅。最后，<code>newTag()</code>函数派发<code>RESET</code>行为，使得应用的状态重置，用户可以继续定制他们的下一个标签了。</p>
+<h3 id="“Complete”页面组件模板"><a href="#“Complete”页面组件模板" class="headerlink" title="“Complete”页面组件模板"></a>“Complete”页面组件模板</h3><p><code>CompleteComponent</code>组件的模板代码如下：</p>
+<pre><code>&lt;!-- src/app/pages/complete/complete.component.html --&gt;
+&lt;div *ngIf=&quot;petTag.complete&quot;&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;p class=&quot;col-sm-12 alert alert-success&quot;&gt;
+      &lt;strong&gt;Congratulations!&lt;/strong&gt; You&apos;ve completed a pet ID tag for &lt;strong&gt;{{petTag.text}}&lt;/strong&gt;. Would you like to &lt;a (click)=&quot;newTag()&quot; routerLink=&quot;/create&quot; class=&quot;alert-link&quot;&gt;create another?&lt;/a&gt;
+    &lt;/p&gt;
+  &lt;/div&gt;
+  &lt;app-tag-preview [petTag]=&quot;petTag&quot;&gt;&lt;/app-tag-preview&gt;
+&lt;/div&gt;
+
+&lt;div *ngIf=&quot;!petTag.complete&quot; class=&quot;row&quot;&gt;
+  &lt;p class=&quot;col-sm-12 alert alert-danger&quot;&gt;
+    &lt;strong&gt;Oops!&lt;/strong&gt; You haven&apos;t customized a tag yet. &lt;a routerLink=&quot;/create&quot; class=&quot;alert-link&quot;&gt;Click here to create one now.&lt;/a&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+</code></pre><p>首先展示恭喜用户成功为他们的宠物创建个性标签的提示，名字也会从<code>petTag</code>状态对象中取过来。同时，提供一个能重新创建新标签的链接，点击之后执行<code>newTag()</code>方法，该方法会将路由导航到创建页面重新开始。</p>
+<p>接着，展示带有<code>petTag</code>的标签预览组件： <code>&lt;app-tag-preview [petTag]=&quot;petTag&quot;&gt;</code>。</p>
+<p>最后，如果用户在没有完成标签的定制下手动导航到<code>/complete</code>页面的话，我们就会显示一个错误信息。同样有个链接，可以让用户回到创建页面。错误页面效果如下：</p>
+<p><img src="https://cdn.auth0.com/blog/ngrx/ngrx-completeError.jpg" alt="image"></p>
+<p>至此，我们简单的Angular + ngrx/store应用完成了。</p>
+<h2 id="题外话：你可能不需要ngrx-store"><a href="#题外话：你可能不需要ngrx-store" class="headerlink" title="题外话：你可能不需要ngrx/store"></a>题外话：你可能不需要ngrx/store</h2><p>状态管理库很棒，但请你确保在正式投入实际项目前你已经读过了这篇文章<a href="https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367" target="_blank" rel="external">You Might Not Need Redux</a>。</p>
+<p>这个例子很简单，因为我们是用ngrx/store来教学。当你想用来投入实际项目时，你需要权衡一下必要性以及它的利弊。Angular（吸纳了RxJS）已经可以很方便地<a href="https://scotch.io/tutorials/get-angular-1-features-in-angular-2#global-communication-with-services" target="_blank" rel="external">用service管理全局状态</a>。因此，小型简单应用用局部变量就能很好地维护了。这种场景下，如果引入非必要的ngrx/store，可能会带来困扰和麻烦。</p>
+<p>而在管理大型复杂项目的状态时，ngrx/store及其同类库是非常出色的工具。希望你现在已经有能力判断Redux和ngrx/store使用的原理。这样你就能知道如何以及何时应该使用状态管理库了。</p>
+<h2 id="附状态管理相关资源"><a href="#附状态管理相关资源" class="headerlink" title="附状态管理相关资源"></a>附状态管理相关资源</h2><p>附上一些学习状态管理的好资源：</p>
+<ul>
+<li><a href="https://github.com/ngrx/store" target="_blank" rel="external">ngrx/store on GitHub</a></li>
+<li><a href="https://egghead.io/lessons/angular-2-ngrx-store-in-10-minutes" target="_blank" rel="external">@ngrx/store in 10 minutes</a></li>
+<li><a href="https://gist.github.com/btroncone/a6e4347326749f938510" target="_blank" rel="external">Comprehensive Introduction to @ngrx/store</a></li>
+<li><a href="https://www.youtube.com/watch?v=mhA7zZ23Odw&amp;feature=youtu.be" target="_blank" rel="external">ng-conf: Reactive Angular 2 with ngrx - Rob Womald</a></li>
+<li><a href="http://blog.angular-university.io/angular-2-redux-ngrx-rxjs/" target="_blank" rel="external">Angular 2 Service Layers: Redux, RxJS and Ngrx Store - When to Use a Store and Why?</a></li>
+<li><a href="https://egghead.io/courses/getting-started-with-redux" target="_blank" rel="external">Getting Started with Redux - Dan Abramov on Egghead.io</a></li>
+</ul>
+<p>Angular的服务和组件通信在小型应用中的数据传递变得相当简单，但在复杂应用中仍是个棘手的问题。类似ngrx/store的全局store在组织状态管理中起到了很大的辅助作用。希望你现在已经准备好用ngrx/store构建自己的Angular应用了！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Framework/" rel="tag"># Framework</a>
+          
+            <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
+          
+            <a href="/tags/ngrx-store/" rel="tag"># ngrx/store</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/30/【译】webpack正式发布v3.0.0/" rel="next" title="【译】webpack正式发布v3.0.0">
+                <i class="fa fa-chevron-left"></i> 【译】webpack正式发布v3.0.0
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/03/Angular4简单入门笔记/" rel="prev" title="Angular 4 简单入门笔记">
+                Angular 4 简单入门笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Angular应用中的状态管理"><span class="nav-number">1.</span> <span class="nav-text">Angular应用中的状态管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初识ngrx-store"><span class="nav-number">2.</span> <span class="nav-text">初识ngrx/store</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与Redux的关系"><span class="nav-number">3.</span> <span class="nav-text">与Redux的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ngrx-store中的基本原则"><span class="nav-number">4.</span> <span class="nav-text">ngrx/store中的基本原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Actions（行为）"><span class="nav-number">5.</span> <span class="nav-text">Actions（行为）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reducers（归约器）"><span class="nav-number">6.</span> <span class="nav-text">Reducers（归约器）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Store（存储"><span class="nav-number">7.</span> <span class="nav-text">Store（存储)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ngrx-store实战：个性宠物标签"><span class="nav-number">8.</span> <span class="nav-text">ngrx/store实战：个性宠物标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Angular应用设置"><span class="nav-number">9.</span> <span class="nav-text">Angular应用设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装依赖"><span class="nav-number">9.1.</span> <span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建项目"><span class="nav-number">9.2.</span> <span class="nav-text">创建项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定制你的项目模板"><span class="nav-number">10.</span> <span class="nav-text">定制你的项目模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建src-app-core文件夹"><span class="nav-number">10.1.</span> <span class="nav-text">创建src/app/core文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新App模块"><span class="nav-number">10.2.</span> <span class="nav-text">更新App模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态资源整理"><span class="nav-number">10.3.</span> <span class="nav-text">静态资源整理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集成Bootstrap"><span class="nav-number">10.4.</span> <span class="nav-text">集成Bootstrap</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动服务"><span class="nav-number">11.</span> <span class="nav-text">启动服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#App组件"><span class="nav-number">12.</span> <span class="nav-text">App组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#删除样式文件"><span class="nav-number">12.1.</span> <span class="nav-text">删除样式文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根组件脚本"><span class="nav-number">12.2.</span> <span class="nav-text">根组件脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根组件模版"><span class="nav-number">12.3.</span> <span class="nav-text">根组件模版</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建页面组件"><span class="nav-number">13.</span> <span class="nav-text">创建页面组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建路由"><span class="nav-number">14.</span> <span class="nav-text">搭建路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“Home”页面组件"><span class="nav-number">15.</span> <span class="nav-text">“Home”页面组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宠物标签模型"><span class="nav-number">16.</span> <span class="nav-text">宠物标签模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宠物标签行为"><span class="nav-number">17.</span> <span class="nav-text">宠物标签行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宠物标签归约器"><span class="nav-number">18.</span> <span class="nav-text">宠物标签归约器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#根模块导入Store"><span class="nav-number">19.</span> <span class="nav-text">根模块导入Store</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建“Create”页面"><span class="nav-number">20.</span> <span class="nav-text">创建“Create”页面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#智能组件／木偶组件"><span class="nav-number">20.1.</span> <span class="nav-text">智能组件／木偶组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“Create”页面功能点"><span class="nav-number">20.2.</span> <span class="nav-text">“Create”页面功能点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“Create”组件脚本"><span class="nav-number">20.3.</span> <span class="nav-text">“Create”组件脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#形状组件"><span class="nav-number">21.</span> <span class="nav-text">形状组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#形状组件脚本"><span class="nav-number">21.1.</span> <span class="nav-text">形状组件脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#形状组件模版"><span class="nav-number">21.2.</span> <span class="nav-text">形状组件模版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#形状组件样式"><span class="nav-number">21.3.</span> <span class="nav-text">形状组件样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加形状组件至Create页面"><span class="nav-number">21.4.</span> <span class="nav-text">添加形状组件至Create页面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文字组件"><span class="nav-number">22.</span> <span class="nav-text">文字组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文字组件脚本"><span class="nav-number">22.1.</span> <span class="nav-text">文字组件脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文字组件模板"><span class="nav-number">22.2.</span> <span class="nav-text">文字组件模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文字组件样式"><span class="nav-number">22.3.</span> <span class="nav-text">文字组件样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加文字组件至Create页面"><span class="nav-number">22.4.</span> <span class="nav-text">添加文字组件至Create页面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附加特性组件"><span class="nav-number">23.</span> <span class="nav-text">附加特性组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#附加特性组件脚本"><span class="nav-number">23.1.</span> <span class="nav-text">附加特性组件脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附加特性组件模板"><span class="nav-number">23.2.</span> <span class="nav-text">附加特性组件模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附加特性组件样式"><span class="nav-number">23.3.</span> <span class="nav-text">附加特性组件样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加附加特性组件至Create页面"><span class="nav-number">23.4.</span> <span class="nav-text">添加附加特性组件至Create页面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预览组件"><span class="nav-number">24.</span> <span class="nav-text">预览组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#预览组件脚本"><span class="nav-number">24.1.</span> <span class="nav-text">预览组件脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预览组件模版"><span class="nav-number">24.2.</span> <span class="nav-text">预览组件模版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预览组件样式"><span class="nav-number">24.3.</span> <span class="nav-text">预览组件样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将预览组件添加至Create页面"><span class="nav-number">24.4.</span> <span class="nav-text">将预览组件添加至Create页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提交完成标签"><span class="nav-number">24.5.</span> <span class="nav-text">提交完成标签</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“Complete”页面组件"><span class="nav-number">25.</span> <span class="nav-text">“Complete”页面组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#“Complete”页面组件脚本"><span class="nav-number">25.1.</span> <span class="nav-text">“Complete”页面组件脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“Complete”页面组件模板"><span class="nav-number">25.2.</span> <span class="nav-text">“Complete”页面组件模板</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题外话：你可能不需要ngrx-store"><span class="nav-number">26.</span> <span class="nav-text">题外话：你可能不需要ngrx/store</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附状态管理相关资源"><span class="nav-number">27.</span> <span class="nav-text">附状态管理相关资源</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

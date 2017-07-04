@@ -1,0 +1,1469 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Framework,TypeScript,Component," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="刚实习的时候用过Angular1，那时候真的是连原生JavaScript都不会写，依样画葫芦做了几个管理后台。然后突然换项目了，Angular就不写了，感觉前前后后接触了一年多的Angular1，结果只懂点皮毛。 最近又有个管理后台的需求，决定再拾起Angular，但现在是升级版的Angular2了。终于，有机会好好再看一眼Angular了，这次希望能深入一点了解。 本文是笔者在学习开发过程中的总">
+<meta name="keywords" content="Framework,TypeScript,Component">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular 4 简单入门笔记">
+<meta property="og:url" content="http://yoursite.com/2017/07/03/Angular4简单入门笔记/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="刚实习的时候用过Angular1，那时候真的是连原生JavaScript都不会写，依样画葫芦做了几个管理后台。然后突然换项目了，Angular就不写了，感觉前前后后接触了一年多的Angular1，结果只懂点皮毛。 最近又有个管理后台的需求，决定再拾起Angular，但现在是升级版的Angular2了。终于，有机会好好再看一眼Angular了，这次希望能深入一点了解。 本文是笔者在学习开发过程中的总">
+<meta property="og:image" content="https://cli.angular.io/images/cli-logo.svg">
+<meta property="og:image" content="https://angular.io/generated/images/guide/lifecycle-hooks/hooks-in-sequence.png">
+<meta property="og:image" content="http://v1-cn.vuejs.org/images/components.png">
+<meta property="og:updated_time" content="2017-07-04T13:28:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular 4 简单入门笔记">
+<meta name="twitter:description" content="刚实习的时候用过Angular1，那时候真的是连原生JavaScript都不会写，依样画葫芦做了几个管理后台。然后突然换项目了，Angular就不写了，感觉前前后后接触了一年多的Angular1，结果只懂点皮毛。 最近又有个管理后台的需求，决定再拾起Angular，但现在是升级版的Angular2了。终于，有机会好好再看一眼Angular了，这次希望能深入一点了解。 本文是笔者在学习开发过程中的总">
+<meta name="twitter:image" content="https://cli.angular.io/images/cli-logo.svg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/03/Angular4简单入门笔记/"/>
+
+
+
+
+
+  <title>Angular 4 简单入门笔记 | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/03/Angular4简单入门笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Angular 4 简单入门笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-03T21:52:26+08:00">
+                2017-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Angular/" itemprop="url" rel="index">
+                    <span itemprop="name">Angular</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>刚实习的时候用过Angular1，那时候真的是连原生JavaScript都不会写，依样画葫芦做了几个管理后台。然后突然换项目了，Angular就不写了，感觉前前后后接触了一年多的Angular1，结果只懂点皮毛。</p>
+<p>最近又有个管理后台的需求，决定再拾起Angular，但现在是升级版的Angular2了。终于，有机会好好再看一眼Angular了，这次希望能深入一点了解。</p>
+<p>本文是笔者在学习开发过程中的总结输出，目的在于让初次接触Angular2的开发者对该框架也有整体清晰的认识，并且能快速上手开发工作。  <a id="more"></a></p>
+<h2 id="AngularJS-VS-Angular"><a href="#AngularJS-VS-Angular" class="headerlink" title="AngularJS VS Angular"></a>AngularJS VS Angular</h2><p>官方把Angular1叫做AngularJS，Angular2叫做Angular，所以由名字来看就知道Angular2并不是对Angular1的版本升级而已。回忆一下Angular1被人念念不忘的特性，比如双向数据绑定，MVC，指令，服务，过滤器，模块化，脏检查机制，依赖注入，Scope，路由，表单校验等等。</p>
+<p>看下升级到Angular2的过程中，Angular1中的哪些概念被保留下来，哪些被剔除了（所谓的取其精华，去其糟粕）。</p>
+<p>剔除的部分：</p>
+<ul>
+<li>ng-ontroller指令：控制器主要是业务逻辑的控制部分</li>
+<li>$scope概念：很强大又很复杂</li>
+<li>脏检查机制：一直被诟病性能问题</li>
+</ul>
+<p>保留/改善的部分：</p>
+<ul>
+<li>路由嵌套：AngularJS自带的路由系统是不能嵌套路由的，到了Angular你想怎么嵌套就怎么嵌套</li>
+<li>过滤器（Filter）变成管道（Pipe），概念的变化</li>
+<li>依赖注入机制：直接在构造器中注入，还有分层依赖注入的概念</li>
+<li>指令写法：<ul>
+<li>(事件) ng-click变成(click)</li>
+<li>[属性] href = “{ { } }”可以写成 [href]</li>
+<li>[(ngModel)]代替以前的ng-model</li>
+<li>*ngFor 代替 ng-repeat，只能适用数组</li>
+<li>*ngIf 代替 ng-if，去掉ng-show，ng-hide</li>
+</ul>
+</li>
+<li>对移动端的支持</li>
+<li>模版，数据绑定，服务，模块等</li>
+</ul>
+<p>新增的部分：</p>
+<ul>
+<li>组件化：Angular的核心所在</li>
+<li>Typescript作为默认的开发语言</li>
+<li>ZoneJS负责监测数据的变化</li>
+<li>支持服务端渲染 </li>
+</ul>
+<h2 id="Angular-Cli"><a href="#Angular-Cli" class="headerlink" title="Angular Cli"></a>Angular Cli</h2><p>Angular团队为开发者提供了一个开箱即用（out of the box）的脚手架工具：Angular Cli。我们再也不用担心在项目初始化时，要搭建配置一系列的工具，比如webpack，karma，tslint，protractor等。</p>
+<p>操作很简单，只要运行如下命令行就搞定了。</p>
+<p><img src="https://cli.angular.io/images/cli-logo.svg" alt=""></p>
+<p>具体的语法教程可参考<a href="https://github.com/angular/angular-cli/wiki" target="_blank" rel="external">这里</a>。</p>
+<p>安装之后，文件目录如下：</p>
+<pre><code>my-dream-app
+    e2e                      // 端到端测试
+        app.e2e-spec.ts
+        app.po.ts
+        tsconfig.e2e.json
+    node_modules/...         // npm包
+    src/...                  // 源码
+    angular-cli.json         // 配置项
+    .editorconfig            // 编辑器配置
+    .gitignore               // git忽略文件配置
+    karma.conf.js            // karma配置
+    package.json             // npm配置
+    protractor.conf.js       // 测试配置项
+    README.md                // 项目说明
+    tsconfig.json            // ts编辑器的配置
+    tslint.json              // tslint配置项
+</code></pre><p>我们需要关注的是<code>src</code>文件夹，这里存放我们所有的源代码，开发的时候基本都在<code>src</code>中。</p>
+<pre><code>src
+    app                      // 代码的主要文件夹
+        app.component.css    // 根组件样式
+        app.component.html   // 根组件模版
+        app.component.spec.ts// 根组件测试
+        app.component.ts     // 根组件脚本
+        app.module.ts        // 根模块
+    assets                   // 静态资源
+        .gitkeep             // 保存空文件夹
+    environments             // 环境配置
+        environment.prod.ts
+        environment.ts
+    favicon.ico              // 图标
+    index.html               // 页面主入口
+    main.ts                  // 脚本主入口
+    polyfills.ts             // 兼容浏览器
+    styles.css               // 全局css样式
+    test.ts                  // 单元测试主入口
+</code></pre><h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><p>Angular很重要的概念之一仍然是模块。Angular整个框架就是由很多个模块组成的，而不同的模块需要从不同的地方导入。打开<code>package.json</code>文件，可以看到依赖的angular包可能是这样的：</p>
+<pre><code>&quot;@angular/common&quot;: &quot;^2.3.1&quot;,
+&quot;@angular/compiler&quot;: &quot;^2.3.1&quot;,
+&quot;@angular/core&quot;: &quot;^2.3.1&quot;,
+&quot;@angular/forms&quot;: &quot;^2.3.1&quot;,
+&quot;@angular/http&quot;: &quot;^2.3.1&quot;,
+&quot;@angular/platform-browser&quot;: &quot;^2.3.1&quot;,
+&quot;@angular/platform-browser-dynamic&quot;: &quot;^2.3.1&quot;,
+&quot;@angular/router&quot;: &quot;^3.3.1&quot;,
+</code></pre><p>来简单看下这些angular包中包含了哪些常用的模块（至少目前为止，我觉得常用的）。</p>
+<ul>
+<li>@angular/core：这里包含了很多常用的模块<ul>
+<li>NgModule：模块定义装饰器 </li>
+<li>Component：组件定义装饰器</li>
+<li>Directive：指令定义装饰器  </li>
+<li>Pipe ：管道定义装饰器</li>
+<li>PipeTransform：管道基类</li>
+<li>Injectable：服务定义装饰器</li>
+<li>ElmentRef：元素引用</li>
+<li>ViewChild：获取子元素</li>
+<li>Render：渲染 </li>
+<li>Input：接受参数输入 </li>
+<li>Output：事件输出 </li>
+<li>EventEmitter：触发自定义事件</li>
+</ul>
+</li>
+<li>@angular/common <ul>
+<li>CommonModule：通用模块，包含内置指令ngIf，ngFor</li>
+</ul>
+</li>
+<li>@angular/forms<ul>
+<li>FormsModule：定义模版驱动表单</li>
+<li>ReactiveFormsModule：定义响应式表单</li>
+<li>FormGroup, FormArray, FormControl, FormBuilder：响应式表单元素</li>
+<li>Validators：表单校验</li>
+</ul>
+</li>
+<li>@angular/http <ul>
+<li>HttpModule：http请求模块</li>
+</ul>
+</li>
+<li>@angular/router<ul>
+<li>RouterModule 路由模块</li>
+<li>Routes 路由数据结构</li>
+</ul>
+</li>
+<li>@angular/platform-browser <ul>
+<li>platformBrowser：AoT编译</li>
+<li>BrowserModule：浏览器支持，注意该模块导入了CommonModule，然后导出去，所以引用了这个模块也就引用了CommonModule</li>
+</ul>
+</li>
+<li>@angular/platform-browser-dynamic <ul>
+<li>platformBrowserDynamic：JIT编译</li>
+</ul>
+</li>
+</ul>
+<p>以上模块都是Angular框架中的自带模块，而我们开发的完整单元也是模块。<strong>一个应用中至少要有一个模块，也就是根模块。</strong> 一些共享的功能属性我们可以抽象出来，成为共享模块。然后就是一些特性模块了。</p>
+<p>模块的组成由组件，服务，指令，管道等等组成，这些概念会在下面讲到。定义模块的语法如下：  </p>
+<pre><code>@NgModuel({
+    declarations: [],   // 用到的组件，指令，管道
+    providers: [],      // 依赖注入服务，注入的服务是全局的
+    imports: [],        // 导入需要的模块
+    exports: [],        // 导出的模块，跨模块交流
+    entryComponents: [] // 需提前编译好的模块
+    bootstrap: []       // 设置根组件
+
+})
+export class AppModule { }
+</code></pre><blockquote>
+<p>所有用到的组件，指令，管道，服务，模块都需要事先在模块中声明好，才能在具体组件中使用。</p>
+</blockquote>
+<p>一个模块中，至少要有一个根组件。在根模块中，需要设置启动的组件，也就是根组件。</p>
+<p>那如何启动根模块呢？</p>
+<p>在入口脚本中，也就是Angular Cli项目中的<code>main.ts</code>中，启动如下：</p>
+<pre><code>// 导入需要模块
+import { platformBrowserDynamic } from &apos;@angular/platform-browser-dynamic&apos;;
+
+// 根模块
+import { AppModule } from &apos;./app/app.module&apos;;
+
+// 编译启动模块
+platformBrowserDynamic().bootstrapModule(AppModule);
+</code></pre><p>至此，我们对模块有所了解，也知道了模块的定义。</p>
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><p>自从React开创性地提出了组件化之后，目前市面上炙手可热的框架全都采用了组件化的理念，Angular当然也不能落后了。可以说，组件化是Angular的核心理念。</p>
+<p>组件通常都是由模版和业务逻辑组成，看一下如何用Angular写一个很简单的组件：</p>
+<pre><code>// hello.component.ts
+
+import { Component } from &apos;@angular/core&apos;;
+
+@Component({              
+    selector: &apos;hello&apos;,
+    template: &apos;&lt;p&gt; {{greeting}} &lt;/p&gt;&apos;,
+    styles: [`p { color: red;}`]
+})
+export class HelloComponent{
+    private greeting: string;
+    constructor(){
+        this.greeting = &apos;Hello, Angular2!&apos;;
+    }
+}
+
+// 使用
+&lt;hello&gt;&lt;/hello&gt;
+
+// 渲染结果
+&lt;hello&gt;
+    &lt;p&gt; Hello, Angular2! &lt;/p&gt; 
+&lt;/hello&gt;
+</code></pre><p>定义类<code>HelloComponent</code>的时候，加上装饰器<code>@Component</code>（ES6语法），告诉Angular这个类是组件类。里面的数据称之为元数据（metadata），<code>selector</code>属性说明了该组件对外的使用标记，<code>template</code>就是组件的模版，<code>styles</code>是组件的样式。而<code>HelloComponent</code>中定义的就是该组件的业务逻辑了。 </p>
+<p>如果模版内容太多，可以单独写在一个html文件中，用<code>templateUrl</code>属性引入；同理，样式文件用<code>styleUrls</code>引入。</p>
+<h2 id="组件生命周期"><a href="#组件生命周期" class="headerlink" title="组件生命周期"></a>组件生命周期</h2><p>正如其他框架的组件，Angular的组件也是有生命周期这个概念。在不同的阶段不同的场景下，可以调用不同的生命周期函数钩子（hook）。</p>
+<p><img src="https://angular.io/generated/images/guide/lifecycle-hooks/hooks-in-sequence.png" alt=""></p>
+<ul>
+<li>constructor：构造器函数，一般用于注入服务</li>
+<li>ngOnChanges：检测到输入数据变化，首次触发发生在ngOnInit前。注意对象的属性发生变化时监听不到</li>
+<li>ngOnInit：组件初始化，通常会设置一些初始值</li>
+<li>ngDoCheck：手动触发更新检查<ul>
+<li>ngAfterContentInit：内容初始化到组件之后</li>
+<li>ngAfterContentChecked：内容变更检测之后</li>
+<li>ngAfterViewInit：视图 初始化之后</li>
+<li>ngAfterViewChecked：视图发生变化检测之后，这个可以用来保证用户视图的及时更新</li>
+</ul>
+</li>
+<li>ngOnDestroy：组件注销时的清理工作，通常用于移除事件监听，退订可观察对象等</li>
+</ul>
+<p>具体说明可以参考<a href="https://angular.io/guide/lifecycle-hooks" target="_blank" rel="external">这里</a>。</p>
+<h2 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h2><p>可以想像得到，组件化的页面结构最终会形成一颗组件树。盗一张Vue的图：</p>
+<p><img src="http://v1-cn.vuejs.org/images/components.png" alt="组件树"></p>
+<p>不可避免，我们需要考虑父子组件之间的参数传递问题。Anuglar提供的通信方式有如下几种：</p>
+<ul>
+<li>父组件到子组件：父组件用属性绑定将值传入，子组件通过@Input来接收。</li>
+</ul>
+<pre><code>// 父组件
+import { Component } from &apos;@angular/core&apos;; 
+
+@Component({
+  selector: &apos;hero-parent&apos;,
+  template: `&lt;h2&gt; heroes &lt;/h2&gt;
+    &lt;hero-child *ngFor=&quot;let hero of heroes&quot;
+      [hero]=&quot;hero&quot; &gt;
+    &lt;/hero-child&gt;
+  `
+})
+export class HeroParentComponent {
+  heroes = [{
+    name: &apos;John&apos;
+  }, {
+    name: &apos;Lily&apos;
+  }]; 
+}
+
+// 子组件
+import { Component, Input } from &apos;@angular/core&apos;;
+
+import { Hero } from &apos;./hero&apos;;
+
+@Component({
+  selector: &apos;hero-child&apos;,
+  template: `
+    &lt;h3&gt;{{hero.name}}&lt;/h3&gt; 
+  `
+})
+export class HeroChildComponent {
+  @Input() hero: Hero; 
+}
+</code></pre><ul>
+<li>子组件到父组件：子组件自定义事件用@Output传出，父组件用事件绑定获取。</li>
+</ul>
+<pre><code>// 子组件
+import { Component, EventEmitter, Output } from &apos;@angular/core&apos;;
+
+@Component({
+  selector: &apos;my-voter&apos;,
+  template: `
+    &lt;h4&gt;{{name}}&lt;/h4&gt;
+    &lt;button (click)=&quot;vote(true)&quot;&gt;Agree&lt;/button&gt; 
+  `
+})
+export class VoterComponent { 
+  @Output() onVoted = new EventEmitter&lt;boolean&gt;(); 
+
+  vote(agreed: boolean) {
+    this.onVoted.emit(agreed); 
+  }
+}
+
+// 父组件
+import { Component } from &apos;@angular/core&apos;;
+
+@Component({
+  selector: &apos;vote-taker&apos;,
+  template: `
+    &lt;h2&gt;Should mankind colonize the Universe?&lt;/h2&gt;
+    &lt;h3&gt;Agree: {{agreed}}, Disagree: {{disagreed}}&lt;/h3&gt;
+    &lt;my-voter *ngFor=&quot;let voter of voters&quot;
+      [name]=&quot;voter&quot;
+      (onVoted)=&quot;onVoted($event)&quot;&gt;
+    &lt;/my-voter&gt;
+  `
+})
+export class VoteTakerComponent {
+  agreed = 0;
+  disagreed = 0;
+  voters = [&apos;Mr. IQ&apos;, &apos;Ms. Universe&apos;, &apos;Bombasto&apos;];
+
+  onVoted(agreed: boolean) {
+    agreed ? this.agreed++ : this.disagreed++;
+  }
+}
+</code></pre><ul>
+<li>子组件引用：在父组件模版中添加对子组件的引用，即可通过该子组件去访问子组件的方法。</li>
+</ul>
+<pre><code>&lt;h3&gt;Countdown to Liftoff (via local variable)&lt;/h3&gt;
+&lt;button (click)=&quot;timer.start()&quot;&gt;Start&lt;/button&gt;
+&lt;button (click)=&quot;timer.stop()&quot;&gt;Stop&lt;/button&gt;
+&lt;div class=&quot;seconds&quot;&gt;{{timer.seconds}}&lt;/div&gt;
+&lt;countdown-timer #timer&gt;&lt;/countdown-timer&gt;
+</code></pre><ul>
+<li>@ViewChild()：类似的，也可以在脚本中用@ViewChild()来获取子组件</li>
+</ul>
+<pre><code>import { AfterViewInit, ViewChild } from &apos;@angular/core&apos;;
+import { Component }                from &apos;@angular/core&apos;;
+import { CountdownTimerComponent }  from &apos;./countdown-timer.component&apos;;
+
+@Component({
+  selector: &apos;countdown-parent-vc&apos;,
+  template: `
+  &lt;h3&gt;Countdown to Liftoff (via ViewChild)&lt;/h3&gt;
+  &lt;button (click)=&quot;start()&quot;&gt;Start&lt;/button&gt;
+  &lt;button (click)=&quot;stop()&quot;&gt;Stop&lt;/button&gt;
+  &lt;div class=&quot;seconds&quot;&gt;{{ seconds() }}&lt;/div&gt;
+  &lt;countdown-timer&gt;&lt;/countdown-timer&gt;
+  `
+})
+export class CountdownViewChildParentComponent implements AfterViewInit {
+
+  @ViewChild(CountdownTimerComponent)
+  private timerComponent: CountdownTimerComponent;
+
+  seconds() { return 0; }
+
+  ngAfterViewInit() { 
+    setTimeout(() =&gt; this.seconds = () =&gt; this.timerComponent.seconds, 0);
+  }
+
+  start() { this.timerComponent.start(); }
+  stop() { this.timerComponent.stop(); }
+}
+</code></pre><ul>
+<li>将数据保存在服务中</li>
+<li>@ngrx/store：这个我们下次细说  </li>
+</ul>
+<h2 id="模板与数据绑定"><a href="#模板与数据绑定" class="headerlink" title="模板与数据绑定"></a>模板与数据绑定</h2><p>模版说白了就是html的内容，常规的html基本都是静态内容，而模版结合了框架中的新语法使得html动态化。来看看Angular中的模版有什么便利的语法：</p>
+<ul>
+<li>插值绑定：双花括号</li>
+</ul>
+<p>我们可以看到上一节组件例子中的<code></code>就是插值绑定。不仅可以获取变量的值，还可以直接写表达式。</p>
+<ul>
+<li>属性（Property）绑定  </li>
+</ul>
+<pre><code>&lt;input [value]=&apos;myData&apos;&gt;
+// 等同于
+&lt;input value=&apos;{{myData}}&apos;&gt;
+</code></pre><p>还有其他的，比如样式绑定：</p>
+<pre><code>&lt;div [ngClass]=&quot;{special: isSpecial}&quot;&gt;&lt;/div&gt;
+</code></pre><blockquote>
+<p>注意点：property和attribute不一样，想要绑定attribute，你需要写成property。比如：</p>
+</blockquote>
+<pre><code>&lt;tr&gt;&lt;td colspan=&quot;{{1 + 1}}&quot;&gt;Three-Four&lt;/td&gt;&lt;/tr&gt;
+</code></pre><p>你将会得到如下错误信息：</p>
+<pre><code>Template parse errors:
+Can&apos;t bind to &apos;colspan&apos; since it isn&apos;t a known native property
+</code></pre><p>你需要改写成这样：</p>
+<pre><code>&lt;tr&gt;&lt;td [attr.colspan]=&quot;1 + 1&quot;&gt;One-Two&lt;/td&gt;&lt;/tr&gt;
+// 或者
+&lt;tr&gt;&lt;td attr.colspan=&quot;{{1 + 1}}&quot;&gt;One-Two&lt;/td&gt;&lt;/tr&gt;
+</code></pre><ul>
+<li>事件绑定 </li>
+</ul>
+<pre><code>&lt;input (keyup)=&apos;handle($event)&apos; &gt;
+</code></pre><p>可以是原生的事件：click，change，keydown，mousemove等，也可以是自定义事件，也可以是指令事件，比如<code>ngSubmit</code>。</p>
+<ul>
+<li>双向绑定</li>
+</ul>
+<pre><code>&lt;input [(ngModel)] = &apos;data&apos;&gt;
+// 双向绑定的背后其实是单向绑定和事件触发，等价于下面
+&lt;input [ngModel]=&quot;data&quot; (ngModelChange)=&quot;data=$event&quot;&gt;
+</code></pre><blockquote>
+<p>注意点：使用ngModel，需要引入FormsModule模块。</p>
+</blockquote>
+<p>还有些内置的指令：</p>
+<ul>
+<li>模版引用变量（# ／ ref-）</li>
+</ul>
+<p>可以在元素上用#或者ref-前缀来标记这个元素，然后在其他地方引用。</p>
+<pre><code>&lt;input #fax placeholder=&quot;fax number&quot;&gt;
+( &lt;input ref-fax placeholder=&quot;fax number&quot;&gt; )
+&lt;button (click)=&quot;callFax(fax.value)&quot;&gt;Fax&lt;/button&gt;
+</code></pre><ul>
+<li>*ngIf：控制内容的有无</li>
+</ul>
+<pre><code>&lt;div *ngIf=&quot;show&quot;&gt; Can you see this? &lt;/div&gt;
+</code></pre><p>如果还有else部分，可以如下操作：</p>
+<pre><code>&lt;div *ngIf=&quot;show; else elseBlock&quot;&gt; Can you see this? &lt;/div&gt;
+&lt;ng-template #elseBlock&gt;  else block   &lt;/ng-template&gt;
+</code></pre><ul>
+<li>*ngFor：循环某个数组</li>
+</ul>
+<pre><code>&lt;div *ngFor=&quot;let hero of heroes; let i=index&gt; {{i}}： {{hero.name}}&lt;/div&gt;
+</code></pre><p>具体的模版语法可以参考<a href="https://angular.io/guide/template-syntax" target="_blank" rel="external">这里</a>。</p>
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>一个模块有了多个组件之后，需要用路由来配置哪个url呈现哪个组件。</p>
+<p>首先，我们需要在入口页面的index.html中配置根路径：</p>
+<pre><code>...
+&lt;head&gt;
+&lt;base href=&quot;/&quot;&gt;
+...
+&lt;/head&gt;
+...
+</code></pre><p>然后创建一个路由模块：</p>
+<pre><code>import { NgModule }              from &apos;@angular/core&apos;;
+import { RouterModule, Routes }  from &apos;@angular/router&apos;;
+
+...
+
+// 路由配置
+const appRoutes: Routes = [
+  { path: &apos;home&apos;, component: HomeComponent },
+  { path: &apos;heroes&apos;, component: HeroesComponent },
+  { path: &apos;&apos;,   redirectTo: &apos;/home&apos;, pathMatch: &apos;full&apos; },
+  { path: &apos;**&apos;, component: PageNotFoundComponent }
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot(appRoutes)
+  ],
+  exports: [
+    RouterModule
+  ]
+})
+export class AppRoutingModule {}
+</code></pre><p>在主模块中导入配置好的路由模块：</p>
+<pre><code>import { NgModule }       from &apos;@angular/core&apos;;
+import { BrowserModule }  from &apos;@angular/platform-browser&apos;;
+import { FormsModule }    from &apos;@angular/forms&apos;;
+
+...
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule
+  ],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    HeroesComponent,
+    PageNotFoundComponent
+  ],
+  bootstrap: [ AppComponent ]
+})
+export class AppModule { }
+</code></pre><p>而在页面中需要一个容器<code>&lt;router-outlet&gt;&lt;/router-outlet&gt;</code>去承载：</p>
+<pre><code>import { Component } from &apos;@angular/core&apos;;
+
+@Component({
+  selector: &apos;my-app&apos;,
+  template: `
+    &lt;h1&gt;Angular Router&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;a routerLink=&quot;/home&quot; routerLinkActive=&quot;active&quot;&gt;Home&lt;/a&gt;
+      &lt;a routerLink=&quot;/heroes&quot; routerLinkActive=&quot;active&quot;&gt;Heroes&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;router-outlet&gt;&lt;/router-outlet&gt;
+  `
+})
+export class AppComponent { }
+</code></pre><p>上面代码中的<code>routerLink</code>定义了用户点击后的路由跳转，<code>routerLinkActive</code>定义该路由激活时的样式类。</p>
+<p>路由上还可以带上一些索引参数：</p>
+<pre><code>{ path: &apos;heroes/:id&apos;, component: HeroesComponent },
+</code></pre><p>获取的方式：</p>
+<pre><code>import { ActivatedRoute, Params }   from &apos;@angular/router&apos;;
+
+...
+export class a {
+    constructor( 
+      private route: ActivatedRoute 
+    ) {}
+
+    // 路由参数
+    this.route.params
+}
+</code></pre><p>当模块很多，路由也很多的时候，我们可以使用模块懒加载的方式。懒加载的方式也很简单，在配置路由的时候修改如下即可：</p>
+<pre><code>const routes: Routes = [
+    {    // 默认转到订单管理
+        path: &apos;&apos;,
+        redirectTo: &apos;/order&apos;,
+        pathMatch: &apos;full&apos;
+     },
+    {
+        path: &apos;order&apos;,
+        loadChildren: &apos;./order/order.module#OrderModule&apos;
+    },
+    {
+        path: &apos;warehouse&apos;,
+        loadChildren: &apos;./warehouse/warehouse.module#WarehouseModule&apos; 
+    },
+    {
+        path: &apos;statistics/sales&apos;,
+        component: SalesComponent
+    }
+];
+
+// 在子模块中用RouterModule.forChild
+
+import { NgModule } from &apos;@angular/core&apos;;
+import { RouterModule } from &apos;@angular/router&apos;; 
+import { OrderComponent } from &apos;./order.component&apos;;
+
+
+const orderRoutes = [
+    {
+        path:&apos;&apos;,
+        component: OrderComponent
+    }
+];
+
+@NgModule({
+    imports: [RouterModule.forChild(orderRoutes)],
+    exports: [RouterModule]
+})
+
+export class OrderRoutingModule {
+}
+</code></pre><h2 id="服务与依赖注入"><a href="#服务与依赖注入" class="headerlink" title="服务与依赖注入"></a>服务与依赖注入</h2><p>服务是什么概念？可以简单地认为它是一个功能模块，重要在于它是单例对象，并且可以注入到其他的地方使用。</p>
+<p> 依赖注入是来自后端的概念，其实就是自动创建一个实例，省去每次需要手动创建的麻烦。</p>
+<p>在Angular中定义一个服务很简单，主要在类之前加上<code>@Injectable</code>装饰器的功能。只有添加了<code>@Injectable</code>的类，才能在其他地方被注入。</p>
+<pre><code>import { Injectable } from &apos;@angular/core&apos;;  
+
+@Injectable() 
+export class Service {
+    counter: number = 0;
+
+    getData(){
+        return this.counter++;
+    }
+}
+</code></pre><p>然后在模块的<code>providers</code>中声明：</p>
+<pre><code>import { Service } from &apos;./service&apos;;
+...
+
+@NgModule({
+    imports: [
+        ...
+    ],
+    declarations: [
+        ...
+    ],
+    providers: [ Service ],  // 注入服务
+    bootstrap: [...]
+})
+export class AppModule {
+} 
+</code></pre><p>使用的时候需要在构造器中建立关联：</p>
+<pre><code>import { Component } from &apos;@angular/core&apos;; 
+import { Service } from &apos;./service&apos;;
+...
+
+@Component({
+    selector: &apos;my-app&apos;,
+    templateUrl: &apos;./app.component.html&apos;,
+    styleUrls: [&apos;./app.component.css&apos;]
+})
+export class AppComponent {
+    constructor(public service: Service) {
+        // this.service被成功注入
+        // 相当于 this.service = new Service(); 
+        // 然后可以调用服务
+        this.service.getData();
+    }
+}
+</code></pre><p>由于该服务是在模块中注入，所以该模块中的所有组件使用这个服务时，使用的都是同一个实例。    </p>
+<p>除了在模块中声明，还可以在组件中声明。假设<code>AppComponent</code>下还有组件<code>HomeComponent</code>，此时我们在<code>AppComponent</code>中注入这个服务：</p>
+<pre><code>import { Component } from &apos;@angular/core&apos;; 
+import { Service } from &apos;./service&apos;;
+...
+
+@Component({
+    selector: &apos;my-app&apos;,
+    templateUrl: &apos;./app.component.html&apos;,
+    styleUrls: [&apos;./app.component.css&apos;],
+    providers: [ Service ],  // 注入服务
+})
+export class AppComponent {
+    constructor(public service: Service) {
+        // this.service被成功注入
+        // 相当于 this.service = new Service(); 
+        // 然后可以调用服务
+        this.service.getData();
+    }
+}
+</code></pre><p>如果<code>HomeComponent</code>也使用了这个服务，那它使用的将是同一个实例。这个可以从Service中的数据变化来看出。</p>
+<p>Angular还有个分层依赖注入的概念，也就是说，你可以为任一组件创建自己独立的服务。就像上面的例子，如果想要<code>HomeComponent</code>不和它的父组件同使用一个服务实例的话，只要在该组件中重新注入即可：</p>
+<pre><code>...
+@Component({
+    selector: &apos;home&apos;,
+    templateUrl: &apos;./home.component.html&apos;,
+    styleUrls: [&apos;./home.component.css&apos;],
+    providers: [ Service ],  // 重新注入服务
+})
+export class HomeComponent {
+    ...
+}
+</code></pre><p>对于前后端的接口，通常会写成服务。下面说下请求后端数据这块应该怎么写。在模块这节中提过，http有专门的<code>HttpModule</code>模块处理请求。首先要在模块中导入<code>HttpModule</code>，然后引入http服务，调用相应的请求方法即可。</p>
+<pre><code>import { Injectable } from &apos;@angular/core&apos;;
+import { Http }       from &apos;@angular/http&apos;;
+
+import &apos;rxjs/add/operator/toPromise&apos;;
+
+
+@Injectable()
+export class HttpService {
+
+  constructor(private http: Http) {}
+
+  getFromServer():any {
+    return this.http.get(`/data`)
+        .toPromise()
+        .then(res =&gt; res.json())
+        .catch();
+  }
+}
+</code></pre><p>由于请求返回的对象是个可观察对象，可以转成Promise对象处理。这里需要用到RxJS的<code>toPromise</code>操作符，然后用<code>then</code>去处理返回成功结果，<code>catch</code>处理失败情况。这样就搞定了后端数据的请求了。</p>
+<p>RxJS又是另外一个比较高深的话题了，有机会深入学习一下再聊。 </p>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>Angular的指令概念跟AngularJS的指令差不多，最重要的区别在于Angular中的组件继承指令，算是特殊的指令。我们看下用指令的方式去写组件的简单例子：</p>
+<pre><code>import { Directive,Input,ElementRef } from &apos;@angular/core&apos;;
+
+@Directive({
+    selector: &apos;hello&apos;
+})
+export class HelloDirective { 
+    @Input() name: string;
+
+    constructor(private el: ElementRef) {}
+
+    public ngOnInit(): void {
+
+        this.el.nativeElement.innerText = `hello ${this.name}!`;
+    }
+}
+
+// 使用组件指令
+&lt;hello name=&quot;Yecao&quot;&gt;&lt;/hello&gt;
+
+// 渲染结果
+&lt;hello&gt; hello, Yecao! &lt;/hello&gt;
+</code></pre><p>不要忘记在使用前先在模块中声明哦，我觉得这是Angular最烦人的一点。</p>
+<p>除此之外，还有属性指令和结构指令，属性指令只改变元素的样式或者行为。要写成属性指令，需要在<code>selector</code>属性中用<code>[]</code>包裹起来。来看简单地例子：</p>
+<pre><code>import { Directive, ElementRef, Renderer2 } from &apos;@angular/core&apos;;  
+
+@Directive({   
+  selector: &apos;[highLight]&apos;  
+})  
+
+export class HighLightDirective {    
+  constructor(private el: ElementRef, private renderer2: Renderer2) { }    
+
+  ngAfterViewInit() {   
+    this.renderer2.addClass(this.el.nativeElement, &apos;highlight&apos;);   
+  }  
+}
+
+// 使用属性指令
+&lt;p highLight&gt; 这一段会高亮显示 &lt;/p&gt;
+</code></pre><p>结构指令就是模板中提到的<em>ngIf，</em>ngFor等指令，它修改了DOM结构。举个例子，重写*ngIf：</p>
+<pre><code>import { Directive, Input, ViewContainerRef, TemplateRef } from &apos;@angular/core&apos;;   
+
+@Directive({   
+  selector: &apos;[myIf]&apos;  
+})  
+
+export class MyIfDirective {    
+
+  constructor(private templateRef: TemplateRef&lt;any&gt;,   
+      private viewContainer: ViewContainerRef) { }   
+
+  @Input() set appMyIf(condition: boolean) {   
+    if (condition) {   
+      this.viewContainer.createEmbeddedView(this.templateRef);   
+    } else {   
+      this.viewContainer.clear();   
+    }   
+  }  
+}  
+
+// 使用结构指令
+&lt;p *myIf=&quot;false&quot;&gt; 这一段不会显示 &lt;/p&gt; 
+</code></pre><h2 id="管道（过滤器）"><a href="#管道（过滤器）" class="headerlink" title="管道（过滤器）"></a>管道（过滤器）</h2><p>管道其实就是过滤器，就是叫法不一致而已。主要用于格式化源数据，而不改变源数据。定义和使用的方式也很简单：</p>
+<pre><code>import { Pipe, PipeTransform } from &apos;@angular/core&apos;; 
+
+/*
+ * 订单取消状态：默认为ALL表示全部，CANCEL表示已取消，NOTCANCEL表示正常
+*/
+@Pipe({ name: &apos;cancelStatus&apos; })
+export class CancelStatusPipe implements PipeTransform {
+    transform(status:string, blank: boolean):string {
+         const map = {
+             &quot;ALL&quot;: &quot;全部&quot;, 
+             &quot;NOTCANCEL&quot;: &quot;正常&quot;,
+             &quot;CANCEL&quot;: &quot;已取消&quot;,
+              &quot;&quot;: &quot;暂无&quot;,  
+         }
+
+         return blank? &apos;特殊情况&apos;: map[status];
+    }
+}
+</code></pre><p> 使用前记得在模块的<code>declarations</code>声明，或者导到共享模块，在共享模块中导出去。使用如下：</p>
+<pre><code>{{ "ALL" | cancelStatus }}  // 全部
+{{ "ALL" | cancelStatus: true }}  // 特殊情况
+</code></pre><p>Angular内置了一些管道：</p>
+<pre><code>// 日期 DatePipe
+{{ expression | date:"MM/dd/yy" }} 
+
+// 数字 DecimalPipe,digitInfo的组成 {minIntegerDigits}.{minFractionDigits}-{maxfractionDigits}
+// minIntegerDigits：整数部分保留最小的位数，默认值为1.
+// minFractionDigits：小数部分保留最小的位数，默认值为0.
+// maxFractionDigits：小数部分保留最大的位数，默认值为3.
+{{ expression | number[:digitInfo] }}
+
+// 大写
+{{ expression | uppercase }}
+
+// 小写
+{{ expression | lowercase }}
+</code></pre><h2 id="后语"><a href="#后语" class="headerlink" title="后语"></a>后语</h2><p>由于篇幅的限制，Angular的每个特性都点到为止，只是讲了一些基本概念和使用方法，让你在项目中会用。还有一块项目中肯定会用到的是表单及其校验，这是个大头，还是放在下一篇单独拎出来说吧。</p>
+<p>如果你看到了这里，谢谢你花了那么多时间阅读。最近刚淘了视频，出自<a href="https://www.udemy.com/the-complete-guide-to-angular-2/" target="_blank" rel="external">这里</a>。 跟大家分享一下，链接: <a href="http://pan.baidu.com/s/1c2CGkVY" target="_blank" rel="external">http://pan.baidu.com/s/1c2CGkVY</a> 密码: xwg6。</p>
+<p>整体来说，接触Angular2不到一个月的时候，现在项目开发中。简单说下我的学习路径：</p>
+<ul>
+<li>大致浏览了下有关Angular2的文章，跟Angular1的比较，有个大体的印象</li>
+<li>看参考资料中的几个视频教程，我觉得蛮不错的，让我对Angular2有个整体的概念</li>
+<li>参考官网教程做了一下英雄展示板的例子</li>
+<li>开始上手开发，边开发边去看文档</li>
+<li>开发的时候可以尝试一些新的知识点，比如多模块，共享模块，路由懒加载，自定义表单验证指令，响应式表单，ngrx状态管理等等</li>
+<li>总结输出，也就是现在在写的这边博客</li>
+</ul>
+<p>参考资料</p>
+<ul>
+<li><a href="https://angular.io/" target="_blank" rel="external">Angular官网（英文）</a></li>
+<li><a href="https://cli.angular.io/" target="_blank" rel="external">Angular Cli</a></li>
+<li><a href="https://angular.cn/" target="_blank" rel="external">Angular官网（中文）</a></li>
+<li><a href="https://angular.cn/docs/ts/latest/tutorial/" target="_blank" rel="external">官网英雄展示板例子</a></li>
+<li><a href="http://www.shikezhi.com/html/2016/angularjs_0929/1221189.html" target="_blank" rel="external">英文视频教程</a></li>
+<li><a href="http://www.imooc.com/learn/789" target="_blank" rel="external">Angular2一小时快速入门</a></li>
+<li><a href="https://www.youtube.com/channel/UC6cY3GTGIk4-ahaIRj7Bk-Q" target="_blank" rel="external">大漠穷秋 Angular2 0视频教程</a></li>
+<li><a href="http://www.jsout.com/page/420.html" target="_blank" rel="external">angularjs 1 和 2区别,这才是Angular2的灵魂！</a></li>
+<li><a href="https://juejin.im/post/5860ee191b69e6006ce1347b" target="_blank" rel="external">Redux你的Angular 2应用–ngRx使用体验</a></li>
+<li><a href="https://segmentfault.com/a/1190000009674089#articleHeader14" target="_blank" rel="external">Angular 4 指令快速入门</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Framework/" rel="tag"># Framework</a>
+          
+            <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
+          
+            <a href="/tags/Component/" rel="tag"># Component</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/02/【译】手把手教你用ngrx管理Angular状态/" rel="next" title="【译】手把手教你用ngrx管理Angular状态">
+                <i class="fa fa-chevron-left"></i> 【译】手把手教你用ngrx管理Angular状态
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#AngularJS-VS-Angular"><span class="nav-number">1.</span> <span class="nav-text">AngularJS VS Angular</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Angular-Cli"><span class="nav-number">2.</span> <span class="nav-text">Angular Cli</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块"><span class="nav-number">3.</span> <span class="nav-text">模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件"><span class="nav-number">4.</span> <span class="nav-text">组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件生命周期"><span class="nav-number">5.</span> <span class="nav-text">组件生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件通信"><span class="nav-number">6.</span> <span class="nav-text">组件通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板与数据绑定"><span class="nav-number">7.</span> <span class="nav-text">模板与数据绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由"><span class="nav-number">8.</span> <span class="nav-text">路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务与依赖注入"><span class="nav-number">9.</span> <span class="nav-text">服务与依赖注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指令"><span class="nav-number">10.</span> <span class="nav-text">指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管道（过滤器）"><span class="nav-number">11.</span> <span class="nav-text">管道（过滤器）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后语"><span class="nav-number">12.</span> <span class="nav-text">后语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
