@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Framework,TypeScript,Component," />
+  <meta name="keywords" content="Component,Framework,TypeScript," />
 
 
 
@@ -93,20 +93,20 @@
 
 
 
-<meta name="description" content="刚实习的时候用过Angular1，那时候真的是连原生JavaScript都不会写，依样画葫芦做了几个管理后台。然后突然换项目了，Angular就不写了，感觉前前后后接触了一年多的Angular1，结果只懂点皮毛。 最近又有个管理后台的需求，决定再拾起Angular，但现在是升级版的Angular2了。终于，有机会好好再看一眼Angular了，这次希望能深入一点了解。 本文是笔者在学习开发过程中的总">
-<meta name="keywords" content="Framework,TypeScript,Component">
+<meta name="description" content="刚实习的时候用过AngularJS，那时候真的是连原生JavaScript都不会写，依样画葫芦做了几个管理后台。然后突然换项目了，AngularJS就不写了，感觉前前后后接触了一年多的AngularJS，结果只懂点皮毛。 最近又有个管理后台的需求，决定再拾起，但现在是升级版的Angular了。终于，有机会好好再看一眼Angular了，这次希望能深入一点了解。 本文是笔者在学习开发过程中的总结输出，">
+<meta name="keywords" content="Component,Framework,TypeScript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Angular 4 简单入门笔记">
 <meta property="og:url" content="http://yoursite.com/2017/07/03/Angular4简单入门笔记/index.html">
 <meta property="og:site_name" content="野草园">
-<meta property="og:description" content="刚实习的时候用过Angular1，那时候真的是连原生JavaScript都不会写，依样画葫芦做了几个管理后台。然后突然换项目了，Angular就不写了，感觉前前后后接触了一年多的Angular1，结果只懂点皮毛。 最近又有个管理后台的需求，决定再拾起Angular，但现在是升级版的Angular2了。终于，有机会好好再看一眼Angular了，这次希望能深入一点了解。 本文是笔者在学习开发过程中的总">
+<meta property="og:description" content="刚实习的时候用过AngularJS，那时候真的是连原生JavaScript都不会写，依样画葫芦做了几个管理后台。然后突然换项目了，AngularJS就不写了，感觉前前后后接触了一年多的AngularJS，结果只懂点皮毛。 最近又有个管理后台的需求，决定再拾起，但现在是升级版的Angular了。终于，有机会好好再看一眼Angular了，这次希望能深入一点了解。 本文是笔者在学习开发过程中的总结输出，">
 <meta property="og:image" content="https://cli.angular.io/images/cli-logo.svg">
 <meta property="og:image" content="https://angular.io/generated/images/guide/lifecycle-hooks/hooks-in-sequence.png">
 <meta property="og:image" content="http://v1-cn.vuejs.org/images/components.png">
-<meta property="og:updated_time" content="2017-07-04T13:28:19.000Z">
+<meta property="og:updated_time" content="2017-07-15T03:26:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Angular 4 简单入门笔记">
-<meta name="twitter:description" content="刚实习的时候用过Angular1，那时候真的是连原生JavaScript都不会写，依样画葫芦做了几个管理后台。然后突然换项目了，Angular就不写了，感觉前前后后接触了一年多的Angular1，结果只懂点皮毛。 最近又有个管理后台的需求，决定再拾起Angular，但现在是升级版的Angular2了。终于，有机会好好再看一眼Angular了，这次希望能深入一点了解。 本文是笔者在学习开发过程中的总">
+<meta name="twitter:description" content="刚实习的时候用过AngularJS，那时候真的是连原生JavaScript都不会写，依样画葫芦做了几个管理后台。然后突然换项目了，AngularJS就不写了，感觉前前后后接触了一年多的AngularJS，结果只懂点皮毛。 最近又有个管理后台的需求，决定再拾起，但现在是升级版的Angular了。终于，有机会好好再看一眼Angular了，这次希望能深入一点了解。 本文是笔者在学习开发过程中的总结输出，">
 <meta name="twitter:image" content="https://cli.angular.io/images/cli-logo.svg">
 
 
@@ -367,16 +367,16 @@
       
 
       
-        <p>刚实习的时候用过Angular1，那时候真的是连原生JavaScript都不会写，依样画葫芦做了几个管理后台。然后突然换项目了，Angular就不写了，感觉前前后后接触了一年多的Angular1，结果只懂点皮毛。</p>
-<p>最近又有个管理后台的需求，决定再拾起Angular，但现在是升级版的Angular2了。终于，有机会好好再看一眼Angular了，这次希望能深入一点了解。</p>
-<p>本文是笔者在学习开发过程中的总结输出，目的在于让初次接触Angular2的开发者对该框架也有整体清晰的认识，并且能快速上手开发工作。  <a id="more"></a></p>
-<h2 id="AngularJS-VS-Angular"><a href="#AngularJS-VS-Angular" class="headerlink" title="AngularJS VS Angular"></a>AngularJS VS Angular</h2><p>官方把Angular1叫做AngularJS，Angular2叫做Angular，所以由名字来看就知道Angular2并不是对Angular1的版本升级而已。回忆一下Angular1被人念念不忘的特性，比如双向数据绑定，MVC，指令，服务，过滤器，模块化，脏检查机制，依赖注入，Scope，路由，表单校验等等。</p>
-<p>看下升级到Angular2的过程中，Angular1中的哪些概念被保留下来，哪些被剔除了（所谓的取其精华，去其糟粕）。</p>
+        <p>刚实习的时候用过AngularJS，那时候真的是连原生JavaScript都不会写，依样画葫芦做了几个管理后台。然后突然换项目了，AngularJS就不写了，感觉前前后后接触了一年多的AngularJS，结果只懂点皮毛。</p>
+<p>最近又有个管理后台的需求，决定再拾起，但现在是升级版的Angular了。终于，有机会好好再看一眼Angular了，这次希望能深入一点了解。</p>
+<p>本文是笔者在学习开发过程中的总结输出，目的在于让初次接触Angular的开发者对该框架能有整体的认识，并且能快速上手开发工作。<a id="more"></a></p>
+<h2 id="AngularJS-VS-Angular"><a href="#AngularJS-VS-Angular" class="headerlink" title="AngularJS VS Angular"></a>AngularJS VS Angular</h2><p>AngularJS最大版本号只有1.x，2.x/4.x的版本号都是针对于全新的框架Angular。但不能说Angular和AngularJS一点关系都没有，你看名字这么像，是吧？！回忆一下AngularJS被人念念不忘的特性，双向数据绑定，MVC，指令，服务，过滤器，模块化，脏检查机制，依赖注入，Scope，路由，表单校验等等。</p>
+<p>看下AngularJS到Angular的过程中，哪些概念被保留下来，哪些被剔除了（所谓的取其精华，去其糟粕）。</p>
 <p>剔除的部分：</p>
 <ul>
-<li>ng-ontroller指令：控制器主要是业务逻辑的控制部分</li>
+<li>ng-controller指令：控制器主要是业务逻辑的控制部分</li>
 <li>$scope概念：很强大又很复杂</li>
-<li>脏检查机制：一直被诟病性能问题</li>
+<li>数据双向绑定：数据双向流通可能导致数据的震荡（故才有最多检查10次的限制，10次之后还不稳定就报错）</li>
 </ul>
 <p>保留/改善的部分：</p>
 <ul>
@@ -387,18 +387,18 @@
 <li>(事件) ng-click变成(click)</li>
 <li>[属性] href = “{ { } }”可以写成 [href]</li>
 <li>[(ngModel)]代替以前的ng-model</li>
-<li>*ngFor 代替 ng-repeat，只能适用数组</li>
+<li>*ngFor 代替 ng-repeat，不适用于对象，适用任何有Symbol.iterator属性的数据结构（能用for…of来访问），比如数组，集合等</li>
 <li>*ngIf 代替 ng-if，去掉ng-show，ng-hide</li>
 </ul>
 </li>
 <li>对移动端的支持</li>
-<li>模版，数据绑定，服务，模块等</li>
+<li>模版，数据绑定，服务，模块，脏检查机制等</li>
 </ul>
 <p>新增的部分：</p>
 <ul>
 <li>组件化：Angular的核心所在</li>
 <li>Typescript作为默认的开发语言</li>
-<li>ZoneJS负责监测数据的变化</li>
+<li>ZoneJS监听所有（可能导致数据变化）的异步事件</li>
 <li>支持服务端渲染 </li>
 </ul>
 <h2 id="Angular-Cli"><a href="#Angular-Cli" class="headerlink" title="Angular Cli"></a>Angular Cli</h2><p>Angular团队为开发者提供了一个开箱即用（out of the box）的脚手架工具：Angular Cli。我们再也不用担心在项目初始化时，要搭建配置一系列的工具，比如webpack，karma，tslint，protractor等。</p>
@@ -457,7 +457,7 @@
 <li>Component：组件定义装饰器</li>
 <li>Directive：指令定义装饰器  </li>
 <li>Pipe ：管道定义装饰器</li>
-<li>PipeTransform：管道基类</li>
+<li>PipeTransform：管道接口</li>
 <li>Injectable：服务定义装饰器</li>
 <li>ElmentRef：元素引用</li>
 <li>ViewChild：获取子元素</li>
@@ -501,7 +501,7 @@
 <p>模块的组成由组件，服务，指令，管道等等组成，这些概念会在下面讲到。定义模块的语法如下：  </p>
 <pre><code>@NgModuel({
     declarations: [],   // 用到的组件，指令，管道
-    providers: [],      // 依赖注入服务，注入的服务是全局的
+    providers: [],      // 依赖注入服务 
     imports: [],        // 导入需要的模块
     exports: [],        // 导出的模块，跨模块交流
     entryComponents: [] // 需提前编译好的模块
@@ -510,9 +510,9 @@
 })
 export class AppModule { }
 </code></pre><blockquote>
-<p>所有用到的组件，指令，管道，服务，模块都需要事先在模块中声明好，才能在具体组件中使用。</p>
+<p>所有用到的组件，指令，管道，模块都需要事先在模块中声明好，才能在具体组件中使用。服务可以在模块，组件，指令中的<code>providers</code>声明，也可以直接在运行时提供（参见Trotyl Yu的<a href="http://plnkr.co/edit/fiOq9J3BpD2csuV3FGhu?p=preview" target="_blank" rel="external">例子</a>）。</p>
 </blockquote>
-<p>一个模块中，至少要有一个根组件。在根模块中，需要设置启动的组件，也就是根组件。</p>
+<p>一般情况下，在根模块的<code>bootstrap</code>中设置启动的根组件即可，但也可以动态处理（参见Trotyl Yu的<a href="http://plnkr.co/edit/fzJtvnPKTyzOB8UILtoD?p=preview" target="_blank" rel="external">例子</a>）。</p>
 <p>那如何启动根模块呢？</p>
 <p>在入口脚本中，也就是Angular Cli项目中的<code>main.ts</code>中，启动如下：</p>
 <pre><code>// 导入需要模块
@@ -524,7 +524,10 @@ import { AppModule } from &apos;./app/app.module&apos;;
 // 编译启动模块
 platformBrowserDynamic().bootstrapModule(AppModule);
 </code></pre><p>至此，我们对模块有所了解，也知道了模块的定义。</p>
-<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><p>自从React开创性地提出了组件化之后，目前市面上炙手可热的框架全都采用了组件化的理念，Angular当然也不能落后了。可以说，组件化是Angular的核心理念。</p>
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><p>自从采用组件化的React大火之后，目前市面上炙手可热的框架全都采用了组件化的理念，Angular当然也不能落后了。可以说，组件化是Angular的核心理念。按Angular在中国的布道者大漠穷秋的话来说，就是：</p>
+<blockquote>
+<p>Angular的核心概念是组件，模块化机制NgModule是为组件化服务的，实际上所有其它机制都是围绕组件化而来的。只有从组件化这个角度才能把握Angular的精神内核。</p>
+</blockquote>
 <p>组件通常都是由模版和业务逻辑组成，看一下如何用Angular写一个很简单的组件：</p>
 <pre><code>// hello.component.ts
 
@@ -549,7 +552,7 @@ export class HelloComponent{
 &lt;hello&gt;
     &lt;p&gt; Hello, Angular2! &lt;/p&gt; 
 &lt;/hello&gt;
-</code></pre><p>定义类<code>HelloComponent</code>的时候，加上装饰器<code>@Component</code>（ES6语法），告诉Angular这个类是组件类。里面的数据称之为元数据（metadata），<code>selector</code>属性说明了该组件对外的使用标记，<code>template</code>就是组件的模版，<code>styles</code>是组件的样式。而<code>HelloComponent</code>中定义的就是该组件的业务逻辑了。 </p>
+</code></pre><p>定义类<code>HelloComponent</code>的时候，加上装饰器<code>@Component</code>（Typescript语法），告诉Angular这个类是组件类。里面的数据称之为元数据（metadata），<code>selector</code>属性说明了该组件对外的使用标记，<code>template</code>就是组件的模版，<code>styles</code>是组件的样式。而<code>HelloComponent</code>中定义的就是该组件的业务逻辑了。 </p>
 <p>如果模版内容太多，可以单独写在一个html文件中，用<code>templateUrl</code>属性引入；同理，样式文件用<code>styleUrls</code>引入。</p>
 <h2 id="组件生命周期"><a href="#组件生命周期" class="headerlink" title="组件生命周期"></a>组件生命周期</h2><p>正如其他框架的组件，Angular的组件也是有生命周期这个概念。在不同的阶段不同的场景下，可以调用不同的生命周期函数钩子（hook）。</p>
 <p><img src="https://angular.io/generated/images/guide/lifecycle-hooks/hooks-in-sequence.png" alt=""></p>
@@ -691,7 +694,7 @@ export class CountdownViewChildParentComponent implements AfterViewInit {
 }
 </code></pre><ul>
 <li>将数据保存在服务中</li>
-<li>@ngrx/store：这个我们下次细说  </li>
+<li>@ngrx/store：参见<a href="https://zhuanlan.zhihu.com/p/27656424" target="_blank" rel="external">【译】手把手教你用ngrx管理Angular状态</a>  </li>
 </ul>
 <h2 id="模板与数据绑定"><a href="#模板与数据绑定" class="headerlink" title="模板与数据绑定"></a>模板与数据绑定</h2><p>模版说白了就是html的内容，常规的html基本都是静态内容，而模版结合了框架中的新语法使得html动态化。来看看Angular中的模版有什么便利的语法：</p>
 <ul>
@@ -702,8 +705,6 @@ export class CountdownViewChildParentComponent implements AfterViewInit {
 <li>属性（Property）绑定  </li>
 </ul>
 <pre><code>&lt;input [value]=&apos;myData&apos;&gt;
-// 等同于
-&lt;input value=&apos;{{myData}}&apos;&gt;
 </code></pre><p>还有其他的，比如样式绑定：</p>
 <pre><code>&lt;div [ngClass]=&quot;{special: isSpecial}&quot;&gt;&lt;/div&gt;
 </code></pre><blockquote>
@@ -747,7 +748,7 @@ Can&apos;t bind to &apos;colspan&apos; since it isn&apos;t a known native proper
 <pre><code>&lt;div *ngIf=&quot;show; else elseBlock&quot;&gt; Can you see this? &lt;/div&gt;
 &lt;ng-template #elseBlock&gt;  else block   &lt;/ng-template&gt;
 </code></pre><ul>
-<li>*ngFor：循环某个数组</li>
+<li>*ngFor：循环</li>
 </ul>
 <pre><code>&lt;div *ngFor=&quot;let hero of heroes; let i=index&gt; {{i}}： {{hero.name}}&lt;/div&gt;
 </code></pre><p>具体的模版语法可以参考<a href="https://angular.io/guide/template-syntax" target="_blank" rel="external">这里</a>。</p>
@@ -878,7 +879,7 @@ export class OrderRoutingModule {
 }
 </code></pre><h2 id="服务与依赖注入"><a href="#服务与依赖注入" class="headerlink" title="服务与依赖注入"></a>服务与依赖注入</h2><p>服务是什么概念？可以简单地认为它是一个功能模块，重要在于它是单例对象，并且可以注入到其他的地方使用。</p>
 <p> 依赖注入是来自后端的概念，其实就是自动创建一个实例，省去每次需要手动创建的麻烦。</p>
-<p>在Angular中定义一个服务很简单，主要在类之前加上<code>@Injectable</code>装饰器的功能。只有添加了<code>@Injectable</code>的类，才能在其他地方被注入。</p>
+<p>在Angular中定义一个服务很简单，主要在类之前加上<code>@Injectable</code>装饰器的功能。这是最常见的依赖注入方式useClass，其他具体参见<a href="https://angular.io/guide/dependency-injection" target="_blank" rel="external">这里</a>。</p>
 <pre><code>import { Injectable } from &apos;@angular/core&apos;;  
 
 @Injectable() 
@@ -1076,7 +1077,7 @@ export class CancelStatusPipe implements PipeTransform {
 
 // 小写
 {{ expression | lowercase }}
-</code></pre><h2 id="后语"><a href="#后语" class="headerlink" title="后语"></a>后语</h2><p>由于篇幅的限制，Angular的每个特性都点到为止，只是讲了一些基本概念和使用方法，让你在项目中会用。还有一块项目中肯定会用到的是表单及其校验，这是个大头，还是放在下一篇单独拎出来说吧。</p>
+</code></pre><h2 id="后语"><a href="#后语" class="headerlink" title="后语"></a>后语</h2><p>由于篇幅的限制，Angular的每个特性都点到为止，只是讲了一些基本概念和使用方法（我也只会这点而已），让你在项目中会用。还有一块项目中肯定会用到的是表单及其校验，这是个大头，还是放在下一篇单独拎出来说吧。</p>
 <p>如果你看到了这里，谢谢你花了那么多时间阅读。最近刚淘了视频，出自<a href="https://www.udemy.com/the-complete-guide-to-angular-2/" target="_blank" rel="external">这里</a>。 跟大家分享一下，链接: <a href="http://pan.baidu.com/s/1c2CGkVY" target="_blank" rel="external">http://pan.baidu.com/s/1c2CGkVY</a> 密码: xwg6。</p>
 <p>整体来说，接触Angular2不到一个月的时候，现在项目开发中。简单说下我的学习路径：</p>
 <ul>
@@ -1100,6 +1101,7 @@ export class CancelStatusPipe implements PipeTransform {
 <li><a href="https://juejin.im/post/5860ee191b69e6006ce1347b" target="_blank" rel="external">Redux你的Angular 2应用–ngRx使用体验</a></li>
 <li><a href="https://segmentfault.com/a/1190000009674089#articleHeader14" target="_blank" rel="external">Angular 4 指令快速入门</a></li>
 </ul>
+<p>本文首发于<a href="https://wufenfen.github.io/2017/07/03/Angular4%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/" target="_blank" rel="external">野草园</a>，不当之处，欢迎批评指正！</p>
 
       
     </div>
@@ -1129,11 +1131,11 @@ export class CancelStatusPipe implements PipeTransform {
       
         <div class="post-tags">
           
+            <a href="/tags/Component/" rel="tag"># Component</a>
+          
             <a href="/tags/Framework/" rel="tag"># Framework</a>
           
             <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
-          
-            <a href="/tags/Component/" rel="tag"># Component</a>
           
         </div>
       
@@ -1155,6 +1157,10 @@ export class CancelStatusPipe implements PipeTransform {
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/15/Angular变化检测机制：改善的脏检查/" rel="prev" title="Angular变化检测机制：改善的脏检查">
+                Angular变化检测机制：改善的脏检查 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -1226,7 +1232,7 @@ export class CancelStatusPipe implements PipeTransform {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -1248,7 +1254,7 @@ export class CancelStatusPipe implements PipeTransform {
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
