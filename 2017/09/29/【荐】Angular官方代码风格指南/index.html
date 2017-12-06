@@ -1,0 +1,839 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Framework,TypeScript,Component," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="本文为笔者对Angular官网风格指南的整理版本，删除／增加了部分内容。另外，原文对每个规范都作出了原因的解释，个别还有示例，需要的请点击查看原文。 原链接：英文文档  ／  中文文档 单一职责单一文件 一个文件定义一样东西，比如一个组件、一个服务、一个管道、一个指令">
+<meta name="keywords" content="Framework,TypeScript,Component">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【荐】Angular官方代码风格指南">
+<meta property="og:url" content="http://yoursite.com/2017/09/29/【荐】Angular官方代码风格指南/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="本文为笔者对Angular官网风格指南的整理版本，删除／增加了部分内容。另外，原文对每个规范都作出了原因的解释，个别还有示例，需要的请点击查看原文。 原链接：英文文档  ／  中文文档 单一职责单一文件 一个文件定义一样东西，比如一个组件、一个服务、一个管道、一个指令">
+<meta property="og:updated_time" content="2017-12-06T10:54:36.512Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【荐】Angular官方代码风格指南">
+<meta name="twitter:description" content="本文为笔者对Angular官网风格指南的整理版本，删除／增加了部分内容。另外，原文对每个规范都作出了原因的解释，个别还有示例，需要的请点击查看原文。 原链接：英文文档  ／  中文文档 单一职责单一文件 一个文件定义一样东西，比如一个组件、一个服务、一个管道、一个指令">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/29/【荐】Angular官方代码风格指南/"/>
+
+
+
+
+
+  <title>【荐】Angular官方代码风格指南 | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/【荐】Angular官方代码风格指南/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【荐】Angular官方代码风格指南</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-29T21:52:26+08:00">
+                2017-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Angular/" itemprop="url" rel="index">
+                    <span itemprop="name">Angular</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文为笔者对Angular官网风格指南的整理版本，删除／增加了部分内容。另外，原文对每个规范都作出了原因的解释，个别还有示例，需要的请点击查看原文。</p>
+<p>原链接：<a href="https://angular.io/guide/styleguide" target="_blank" rel="external">英文文档</a>  ／  <a href="https://angular.cn/guide/styleguide" target="_blank" rel="external">中文文档</a></p>
+<h2 id="单一职责"><a href="#单一职责" class="headerlink" title="单一职责"></a>单一职责</h2><h3 id="单一文件"><a href="#单一文件" class="headerlink" title="单一文件"></a>单一文件</h3><ul>
+<li>一个文件定义一样东西，比如一个组件、一个服务、一个管道、一个指令  <a id="more"></a></li>
+<li><strong>每个文件最多不要超过400行</strong></li>
+</ul>
+<h3 id="单一函数"><a href="#单一函数" class="headerlink" title="单一函数"></a>单一函数</h3><ul>
+<li>定义功能单一的函数</li>
+<li><strong>一个函数最多不要超过75行</strong></li>
+</ul>
+<h2 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h2><ul>
+<li>文件名采用feature.type.**，feature表示特性，type表示类型<ul>
+<li>模块用 .module.ts</li>
+<li>路由模块用 -routing.module.ts</li>
+<li>组件用 .component.ts|html|css</li>
+<li>服务用 .service.ts</li>
+<li>管道用 .pipe.ts</li>
+<li>指令用 .directive.ts</li>
+<li>类型用 .model.ts </li>
+<li>数据用 .data.ts</li>
+</ul>
+</li>
+<li>用”-“来分割单词，比如hero-list.component.ts</li>
+<li>单元测试文件名保持和测试对象一致，并以.spec.ts结尾</li>
+<li>端到端测试文件名保持和测试对象一致，并以.e2e-spec.ts结尾</li>
+<li>类名用大写驼峰规则，并且保持跟文件名的一致<ul>
+<li>模块：比如app.module.ts定义的类名为AppModule  </li>
+<li>路由模块：比如app-routing.module.ts定义的类名魏AppRoutingModule</li>
+<li>组件：比如hero-list.component.ts定义的类名为HeroListComponent</li>
+<li>服务：比如logger.service.ts定义的类名为LoggerService</li>
+<li>管道：比如address.pipe.ts定义的类名为AddressPipe</li>
+<li>指令：比如highlight.directive.ts定义的类名为HighlightDirective</li>
+<li>类型例外：按模块来划分，一个.model.ts定义多个类型</li>
+<li>数据：比如address-book.data.ts定义的变量名为addressBook</li>
+</ul>
+</li>
+<li>脚本启动入口的文件名规定为main.ts，里面不包括任何业务逻辑，但要记得处理失败的情况</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// main.ts</div><div class="line">import &#123; platformBrowserDynamic &#125; from &apos;@angular/platform-browser-dynamic&apos;;</div><div class="line"></div><div class="line">import &#123; AppModule &#125;              from &apos;./app/app.module&apos;;</div><div class="line"></div><div class="line">platformBrowserDynamic().bootstrapModule(AppModule)</div><div class="line">  .then(success =&gt; console.log(`Bootstrap success`))</div><div class="line">  .catch(err =&gt; console.error(err));</div></pre></td></tr></table></figure>
+<ul>
+<li>指令选择器的命名采用小写驼峰规则，比如clickOutSide </li>
+<li>组件选择器的命名采用分隔符“-”连接小写字母的形式，比如hero-list</li>
+</ul>
+<h2 id="代码规范"><a href="#代码规范" class="headerlink" title="代码规范"></a>代码规范</h2><ul>
+<li>类命名采用大写驼峰规则</li>
+<li>常量定义用<code>const</code>，并且全部大写，如果有多个单词，用“_”连接，比如<code>HERO_URL</code></li>
+<li>支持ES6的环境下，禁止使用var定义变量</li>
+<li>变量命名尽量控制在3个单词以内，有常见缩写形式的单词可采用缩写形式</li>
+<li>接口类型用大写驼峰规则，<strong>不建议以I为前缀，考虑用类代替接口</strong></li>
+<li>属性和方法名用小写驼峰，<strong>私有属性和方法不建议以“_”为前缀</strong></li>
+<li>建议用空一行的方式来区分第三方库的导入和项目本身文件的导入</li>
+</ul>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><ul>
+<li>好的项目结构的准则就是快速定位，快速识别，尽可能保持扁平，不要写冗余／重复代码</li>
+<li>把所有项目代码放入src文件夹，为每个特性创建文件夹</li>
+<li>第三方库放在src外的一个文件夹</li>
+<li>每个组件、服务、管道、指令都独成一个文件</li>
+<li>当组件有多个附属文件时（htm，css，ts，spec.ts），建议创建一个独立的文件夹</li>
+</ul>
+<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><ul>
+<li>在src/app下创建根模块，建议命名为app.module.ts</li>
+<li><strong>为每个特性创建一个模块</strong>，并且保持文件夹命名和模块命名一致</li>
+<li>共享模块建议用SharedModule命名，放在app/shared/shared.module.ts中</li>
+<li>在共享模块中定义复用的组件、指令和管道，<strong>避免在共享模块中定义服务</strong></li>
+<li>在共享模块中导入所有必需的模块，比如CommonModule和FormsModule，导出所有复用的模块、组件、指令、管道</li>
+<li>考虑将只用一次的类放在核心特性模块中，并且仅在根模块中导入，建议写guard.ts来保证</li>
+<li>核心特性模块建议用CoreModule命名，放在app/core/core.module.ts中</li>
+<li>将单例服务放在核心特性模块中，比如ExceptionService和LoggerService</li>
+<li>在核心特性模块中导入所有必需的模块，比如CommonModule和FormsModule，导出所有定义的组件，服务等</li>
+<li>将全局仅用一次的组件放在核心特性模块，然后只在AppModule中导入，比如NavComponent和SpinnerComponent</li>
+<li>独立的特性模块可以做成懒加载模块，避免在任何地方导入懒加载模块，不然模块就会直接加载</li>
+</ul>
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><ul>
+<li>当模板／样式超过3行时，写成单独文件</li>
+<li>删除无样式定义的样式文件</li>
+<li>模板／样式的定义与组件命名保持一致</li>
+<li>导入时使用相对路径</li>
+<li>用装饰器@Input和@Output来修改输入输出数据，而不是使用元数据中的inputs和outputs属性</li>
+<li>不推荐重命名输入输出数据</li>
+<li><strong>按照变量，构造器，生命周期函数，一般方法的顺序定义；一般方法按页面的功能模块放一起，被调用的方法写在后面；变量和方法均先公有后私有排列；</strong></li>
+<li>组件中只写跟视图相关的逻辑，把其他的业务逻辑放在服务中</li>
+<li>将可复用的业务逻辑放在服务中</li>
+<li>不推荐事件命名加上on前缀</li>
+<li>将展示逻辑放在组件的类中，而不是在模板中</li>
+</ul>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><ul>
+<li>当有跟模板无关的展示逻辑时，使用属性指令，比如[highlight]指令</li>
+<li>推荐使用@HostListener和@HostBinding，而不是元数据的host属性</li>
+</ul>
+<h2 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h2><ul>
+<li>保持单例服务的使用规则，服务用来在特性模块或者应用中共享数据和方法</li>
+<li>跟函数一样，一个服务只有一个目的</li>
+<li>把服务注入在最高层的组件／模块中，使得该单例服务能在子组件、子模块中共享</li>
+<li>使用@Injectable装饰服务类，而不是@Inject装饰参数 </li>
+<li>跟数据相关的操作，比如xhr请求，本地储存等抽象成服务</li>
+</ul>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><ul>
+<li>需要生命周期钩子时，实现相关的接口，可有效防止错误</li>
+</ul>
+<h2 id="辅助工具"><a href="#辅助工具" class="headerlink" title="辅助工具"></a>辅助工具</h2><ul>
+<li>用<a href="https://www.npmjs.com/package/codelyzer" target="_blank" rel="external">codelyzer</a>来保持代码遵守该指南，当然你可以根据自己情况调整</li>
+<li>使用IDE的代码片段工具来快速生成具有一致性的代码片段，比如给VS Code安装<a href="https://marketplace.visualstudio.com/items?itemName=johnpapa.Angular2" target="_blank" rel="external">snippets</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Framework/" rel="tag"># Framework</a>
+          
+            <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
+          
+            <a href="/tags/Component/" rel="tag"># Component</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/20/【荐】深入Angular自定义表单控件/" rel="next" title="【荐】深入Angular自定义表单控件">
+                <i class="fa fa-chevron-left"></i> 【荐】深入Angular自定义表单控件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/20/微信小程序入门笔记（上）/" rel="prev" title="微信小程序入门笔记（上）">
+                微信小程序入门笔记（上） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单一职责"><span class="nav-number">1.</span> <span class="nav-text">单一职责</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单一文件"><span class="nav-number">1.1.</span> <span class="nav-text">单一文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单一函数"><span class="nav-number">1.2.</span> <span class="nav-text">单一函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命名规范"><span class="nav-number">2.</span> <span class="nav-text">命名规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码规范"><span class="nav-number">3.</span> <span class="nav-text">代码规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目结构"><span class="nav-number">4.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块"><span class="nav-number">5.</span> <span class="nav-text">模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件"><span class="nav-number">6.</span> <span class="nav-text">组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指令"><span class="nav-number">7.</span> <span class="nav-text">指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务"><span class="nav-number">8.</span> <span class="nav-text">服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期"><span class="nav-number">9.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#辅助工具"><span class="nav-number">10.</span> <span class="nav-text">辅助工具</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

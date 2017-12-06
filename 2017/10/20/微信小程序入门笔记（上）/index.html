@@ -1,0 +1,780 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="目前项目正在开发中，总结地比较少，也不全，后续会更新。 踩坑点 scroll-view标签设置横向滚动时，需要以下设置 设置滚动项display：inline-block;  设置滚动视图容器white-space: nowrap; 滚动项不要用float">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信小程序入门笔记（上）">
+<meta property="og:url" content="http://yoursite.com/2017/10/20/微信小程序入门笔记（上）/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="目前项目正在开发中，总结地比较少，也不全，后续会更新。 踩坑点 scroll-view标签设置横向滚动时，需要以下设置 设置滚动项display：inline-block;  设置滚动视图容器white-space: nowrap; 滚动项不要用float">
+<meta property="og:updated_time" content="2017-12-06T10:54:36.513Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信小程序入门笔记（上）">
+<meta name="twitter:description" content="目前项目正在开发中，总结地比较少，也不全，后续会更新。 踩坑点 scroll-view标签设置横向滚动时，需要以下设置 设置滚动项display：inline-block;  设置滚动视图容器white-space: nowrap; 滚动项不要用float">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/20/微信小程序入门笔记（上）/"/>
+
+
+
+
+
+  <title>微信小程序入门笔记（上） | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/20/微信小程序入门笔记（上）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微信小程序入门笔记（上）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-20T21:52:26+08:00">
+                2017-10-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Wechat/" itemprop="url" rel="index">
+                    <span itemprop="name">Wechat</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>目前项目正在开发中，总结地比较少，也不全，后续会更新。</p>
+<h2 id="踩坑点"><a href="#踩坑点" class="headerlink" title="踩坑点"></a>踩坑点</h2><ul>
+<li>scroll-view标签设置横向滚动时，需要以下设置<ol>
+<li>设置滚动项display：inline-block; </li>
+<li>设置滚动视图容器white-space: nowrap;</li>
+<li>滚动项不要用float    <a id="more"></a></li>
+</ol>
+</li>
+<li>背景图可以用base64格式，或者网络图片，不能用本地图片；本地图片只能用image标签，也就是说本地图片不能用作雪碧图</li>
+<li>image标签有默认的宽高，所以image都需要重新设置宽高</li>
+<li>模板中变量一定要用 "{{ }} " 包起来，比如</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;view wx:if=&quot;&#123;&#123;true&#125;&#125;&quot;&gt;</div><div class="line">    &lt;view wx:for=&quot;&#123;&#123;itemList&#125;&#125;&quot; wx:key=&apos;itemId&apos;&gt; &lt;/view&gt;</div><div class="line">&lt;/view&gt;</div></pre></td></tr></table></figure>
+<p>然而，我经常忘记，经常踩坑！！！</p>
+<ul>
+<li>模板中 "{{ }} " 不能执行js中定义的方法，只能执行wxs中定义的方法。比如Angular中的Pipe可以通过wxs实现：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">// pipe.wxs</div><div class="line">function getOrderStatus(status) &#123;</div><div class="line">  var statusMap = &#123;</div><div class="line">    WAIT_PAID: &apos;待付款&apos;,</div><div class="line">    WAIT_SHIPPED: &apos;待发货&apos;,</div><div class="line">    WAIT_RECEIVED: &apos;待收货&apos;,</div><div class="line">    RECEIVED: &apos;已收货&apos;,</div><div class="line">    CANCELED: &apos;已取消&apos;,</div><div class="line">    REFUNDED: &apos;已退款&apos;</div><div class="line">  &#125;</div><div class="line">  return statusMap[status] ? statusMap[status] : &apos;未知状态&apos;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">module.exports = &#123;</div><div class="line">  getOrderStatus: getOrderStatus</div><div class="line">&#125;</div><div class="line"></div><div class="line">// order-list.wxml</div><div class="line">&lt;wxs module=&quot;orderModule&quot;&gt;</div><div class="line">  module.exports = require(&apos;../../../utils/filter.wxs&apos;) </div><div class="line">&lt;/wxs&gt;</div><div class="line"> </div><div class="line">&lt;view&gt; &#123;&#123;orderModule.getOrderStatus(order.status)&#125;&#125; &lt;/view&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>绑定事件直接写函数名，参数的传法是data-开头传数据，参数大写的会直接转为小写，分隔符会直接转为驼峰，取值用event.currentTarget.dataset.**来取，是不是很奇怪？ </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">// mine.wxml</div><div class="line"> &lt;view data-orderType=&quot;0&quot; bindtap=&quot;navToOrder&quot;&gt; </div><div class="line">  &lt;text&gt; 全部订单 &lt;/text&gt;</div><div class="line">&lt;/view&gt; </div><div class="line">&lt;view data-order-type=&quot;1&quot; bindtap=&quot;navToOrder2&quot;&gt; </div><div class="line">  &lt;text&gt; 全部订单 &lt;/text&gt;</div><div class="line">&lt;/view&gt; </div><div class="line"></div><div class="line">//mine.js</div><div class="line">Page(&#123; </div><div class="line">  data: &#123; </div><div class="line">    ...</div><div class="line">  &#125;,    </div><div class="line">  navToOrder(event)&#123; </div><div class="line">    wx.navigateTo(&#123;</div><div class="line">      url: &apos;../order/order-list/order-list?type=&apos; + event.currentTarget.dataset.ordertype,</div><div class="line">    &#125;)</div><div class="line">  &#125;,</div><div class="line">  navToOrder2(event)&#123; </div><div class="line">    wx.navigateTo(&#123;</div><div class="line">      url: &apos;../order/order-list/order-list?type=&apos; + event.currentTarget.dataset.orderType,</div><div class="line">    &#125;)</div><div class="line">  &#125;, </div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<ul>
+<li>页面切换，如果是作为tab的页面要用switchTab，不能用navigateTo。如果点击没反应，用fail函数去捕捉错误信息。</li>
+<li>开发者工具假死了，重启再试！！！</li>
+</ul>
+<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><ul>
+<li>使用 page标签选择器，可以修改顶层节点的样式</li>
+<li>模板template只能使用data传入的数据</li>
+<li>catch开头的事件能阻止冒泡，比如catchtap</li>
+<li>for循环默认字段为index和item，最好加上wx:key属性，防止重新渲染，提高性能</li>
+<li>image可以设置自适应模式mode，具体点见<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/component/image.html" target="_blank" rel="external">https://mp.weixin.qq.com/debug/wxadoc/dev/component/image.html</a></li>
+<li>生命周期事件触发的顺序是onLoad加载， onShow显示，onReady渲染完成，onHide和 onUnload不会同时触发，根据不同情况只触发一个</li>
+<li>更新数据只能用setData（不然视图不能及时更新），setData时的key可以写成a.b.c.d的形式；虽然如此，有时候想要动态地改变某个值还是很不方便的，可以先赋完值，再用setData来通知更新试图</li>
+<li>url参数获取：用onLoad中的options</li>
+<li>事件event的target和currentTarget什么区别？<ul>
+<li>target是触发组件，currentTarget是当前组件。因为事件有捕获冒泡阶段，触发组件未定一直都是当前组件</li>
+</ul>
+</li>
+<li>注册小程序App()中有onError事件，可以跟后端约定接口将错误传给后端，以更好地排错</li>
+<li>目前小程序不提供跳转到网址的功能大家都知道的咯（它能，但不提供）</li>
+<li>用wx.getUserInfo请求用户信息，用户拒绝之后短时间不会再请求怎么办？<ul>
+<li>button组件有个open-type属性能让用户主动去调起授权接口</li>
+<li>调用wx.openSetting()接口会查看之前发起的授权设置信息，通过引导用户修改这里的授权设置，可以在不删除小程序的情况下重新拉起某些权限的获取</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">//按钮再次请求授权 getUserInfo为回调函数</div><div class="line">&lt;button type=&quot;primary&quot; open-type=&quot;getUserInfo&quot; bindgetuserinfo=&quot;getUserInfo&quot;&gt; 再次授权 &lt;/button&gt;</div><div class="line"></div><div class="line">// js请求</div><div class="line">wx.getUserInfo(&#123; </div><div class="line">    success: res =&gt; &#123; </div><div class="line">        // 获取用户信息成功后的操作</div><div class="line">    &#125;,</div><div class="line">    fail: () =&gt; &#123;</div><div class="line">        // 用户拒绝授权后，再次授权 </div><div class="line">        wx.openSetting(&#123;</div><div class="line">          success: res=&gt;&#123; </div><div class="line">            wx.getUserInfo(&#123;</div><div class="line">              success: res =&gt; &#123;</div><div class="line">                // 获取用户信息成功后的操作</div><div class="line">              &#125;</div><div class="line">            &#125;)</div><div class="line">          &#125;</div><div class="line">        &#125;) </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>兼容性处理的几种方式：<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/framework/compatibility.html" target="_blank" rel="external">https://mp.weixin.qq.com/debug/wxadoc/dev/framework/compatibility.html</a></li>
+<li>登录具体过程：<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/api/api-login.html" target="_blank" rel="external">https://mp.weixin.qq.com/debug/wxadoc/dev/api/api-login.html</a></li>
+</ul>
+<h2 id="延伸阅读："><a href="#延伸阅读：" class="headerlink" title="延伸阅读："></a>延伸阅读：</h2><ul>
+<li><a href="http://www.wxapp-union.com/article-1070-1.html" target="_blank" rel="external">github精选：微信小程序踩坑集合（更新）</a></li>
+<li><a href="https://segmentfault.com/a/1190000009024985" target="_blank" rel="external">小程序踩坑记录</a></li>
+<li><a href="https://juejin.im/post/597fd242f265da3e142a3115" target="_blank" rel="external">微信小程序开发深入解读</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/26497571" target="_blank" rel="external">小程序开发注意事项——前端篇</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/25126957" target="_blank" rel="external">小程序开发的一些经验</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/29/【荐】Angular官方代码风格指南/" rel="next" title="【荐】Angular官方代码风格指南">
+                <i class="fa fa-chevron-left"></i> 【荐】Angular官方代码风格指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#踩坑点"><span class="nav-number">1.</span> <span class="nav-text">踩坑点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意点"><span class="nav-number">2.</span> <span class="nav-text">注意点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#延伸阅读："><span class="nav-number">3.</span> <span class="nav-text">延伸阅读：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,775 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/16536105?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="缘起最近感觉自己搭的一个项目资料汇总的项目，主页真的是一点美感都没有，非常简单粗暴。就想来点改版，让主页显得高大上一点。改版前的效果是这样的：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="绘制随机不规则三角彩条——小谈EvanYou个人主页的实现">
+<meta property="og:url" content="http://yoursite.com/2017/08/02/绘制随机不规则三角彩条——小谈EvanYou个人主页的实现/index.html">
+<meta property="og:site_name" content="野草园">
+<meta property="og:description" content="缘起最近感觉自己搭的一个项目资料汇总的项目，主页真的是一点美感都没有，非常简单粗暴。就想来点改版，让主页显得高大上一点。改版前的效果是这样的：">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802115111071?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802115215051?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802115153072?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802115232660?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802115714441?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802115731254?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802115748555?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170802115814562?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-12-06T09:39:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="绘制随机不规则三角彩条——小谈EvanYou个人主页的实现">
+<meta name="twitter:description" content="缘起最近感觉自己搭的一个项目资料汇总的项目，主页真的是一点美感都没有，非常简单粗暴。就想来点改版，让主页显得高大上一点。改版前的效果是这样的：">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170802115111071?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/02/绘制随机不规则三角彩条——小谈EvanYou个人主页的实现/"/>
+
+
+
+
+
+  <title>绘制随机不规则三角彩条——小谈EvanYou个人主页的实现 | 野草园</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">野草园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">野火烧不尽，春风吹又生。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/02/绘制随机不规则三角彩条——小谈EvanYou个人主页的实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claire_Yecao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="野草园">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">绘制随机不规则三角彩条——小谈EvanYou个人主页的实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-02T21:52:26+08:00">
+                2017-08-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Canvas/" itemprop="url" rel="index">
+                    <span itemprop="name">Canvas</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h2><p>最近感觉自己搭的一个项目资料汇总的项目，主页真的是一点美感都没有，非常简单粗暴。就想来点改版，让主页显得高大上一点。改版前的效果是这样的：<br><img src="http://img.blog.csdn.net/20170802115111071?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="旧版主页"><br><a id="more"></a><br>寻思着怎么改版，刚开始想就简单加个背景图，换掉table显示方式吧。就在网上搜索背景图，搜着搜着就鬼使神差地来到了Evan You的个人主页。这不是我第一次看到他的主页，但正是这个契机让我想要不就copy这种风格吧。</p>
+<h2 id="初印象"><a href="#初印象" class="headerlink" title="初印象"></a>初印象</h2><p>当我第一次看到这个主页的时候，我觉得很惊艳。主页图案的组成元素只有一种：富有魅力的三角网格。整个页面简单却不单调，华丽而不喧闹。图案的配色也很亮，非常好看。总之，我非常喜欢这个页面的设计，耐看。贴几张图来：<br><img src="http://img.blog.csdn.net/20170802115215051?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="http://img.blog.csdn.net/20170802115153072?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="http://img.blog.csdn.net/20170802115232660?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>想看现场效果，可以点击<a href="http://evanyou.me/" target="_blank" rel="external">Evan You主页</a>。</p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>看到好看的作品，当然会去思考实现的原理。不难想到，这可以用Canvas画出来的。画有填充颜色的三角形，也是件不难的事情，一查Api就行了。问题在于，如何形成一条这种随机无规则而连续的三角形cluster。仔细观察可以发现，每次三角形的左侧起点是一致的，而走势却是随机，但基本集中在中间部分。颜色条的种类也是有限的。</p>
+<p>然后呢？很遗憾，我就没有继续仔细思考下去了。</p>
+<p>看了下源码，只有区区几十行的代码。我直接把它copy过来，竟然马上生效了。我就直接push了代码。。。</p>
+<h2 id="源码解读"><a href="#源码解读" class="headerlink" title="源码解读"></a>源码解读</h2><p>好吧，我直接就看他代码了。</p>
+<p>这里最关键的两个点，绘制三角形的算法和颜色的取值算法。</p>
+<p>贴源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">&lt;canvas&gt;&lt;/canvas&gt;</div><div class="line">&lt;script&gt;</div><div class="line">    document.addEventListener(&apos;touchmove&apos;, function (e) &#123;</div><div class="line">        e.preventDefault()</div><div class="line">    &#125;)</div><div class="line">    var c = document.getElementsByTagName(&apos;canvas&apos;)[0],</div><div class="line">        x = c.getContext(&apos;2d&apos;),</div><div class="line">        pr = window.devicePixelRatio || 1,</div><div class="line">        w = window.innerWidth,</div><div class="line">        h = window.innerHeight,</div><div class="line">        f = 90,</div><div class="line">        q,</div><div class="line">        m = Math,</div><div class="line">        r = 0,</div><div class="line">        u = m.PI*2,</div><div class="line">        v = m.cos,</div><div class="line">        z = m.random</div><div class="line">    c.width = w*pr</div><div class="line">    c.height = h*pr</div><div class="line">    x.scale(pr, pr)</div><div class="line">    x.globalAlpha = 0.6</div><div class="line">    function i()&#123;</div><div class="line">        x.clearRect(0,0,w,h)</div><div class="line">        q=[&#123;x:0,y:h*.7+f&#125;,&#123;x:0,y:h*.7-f&#125;]</div><div class="line">        while(q[1].x&lt;w+f) d(q[0], q[1])</div><div class="line">    &#125;</div><div class="line">    function d(i,j)&#123;   </div><div class="line">        x.beginPath()</div><div class="line">        x.moveTo(i.x, i.y)</div><div class="line">        x.lineTo(j.x, j.y)</div><div class="line">        var k = j.x + (z()*2-0.25)*f,</div><div class="line">            n = y(j.y)</div><div class="line">        x.lineTo(k, n)</div><div class="line">        x.closePath()</div><div class="line">        r-=u/-50</div><div class="line">        x.fillStyle = &apos;#&apos;+(v(r)*127+128&lt;&lt;16 | v(r+u/3)*127+128&lt;&lt;8 | v(r+u/3*2)*127+128).toString(16)</div><div class="line">        x.fill()</div><div class="line">        q[0] = q[1]</div><div class="line">        q[1] = &#123;x:k,y:n&#125;</div><div class="line">    &#125;</div><div class="line">    function y(p)&#123;</div><div class="line">        var t = p + (z()*2-1.1)*f</div><div class="line">        return (t&gt;h||t&lt;0) ? y(p) : t</div><div class="line">    &#125;</div><div class="line">    document.onclick = i</div><div class="line">    document.ontouchstart = i</div><div class="line">    i()</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<p>读了一下，发现实现原理挺简单，真希望我当初能仔细思考一下，兴许能自己思考出来。</p>
+<h3 id="三角形绘制"><a href="#三角形绘制" class="headerlink" title="三角形绘制"></a>三角形绘制</h3><p>三角形绘制算法步骤如下：</p>
+<ol>
+<li>设置左起第一个三角形的两个点坐标为：q0 <code>(0,h*.7+f)</code>, q1<code>(0,h*.7-f)</code>，h为窗口高度，f为初始距离90</li>
+<li>若q1.x &lt; w+f，取三角形的第三点为q2 <code>(q1.x + (Math.random()*2 - 0.25)*f,q1.y + (Math.random()*2 - 1.1)*f)</code>，q2.y如果超过了窗口大小则重新取，直到满足条件为止；否则，结束绘制</li>
+<li>绘制三角形</li>
+<li>设置q0 = q1, q1 = q2，重复上述步骤 </li>
+</ol>
+<p><img src="http://img.blog.csdn.net/20170802115714441?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="http://img.blog.csdn.net/20170802115731254?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>算法分析：</p>
+<ul>
+<li>主要是第4步使得每个相连的三角形都有一条共同的边，所以相连</li>
+<li>最初两个点的y值，以及第三点的取法都是经验值</li>
+<li>q1到q2的x方向增幅为<code>(Math.random()*2 - 0.25)*f</code>，<code>Math.random()*2 - 0.25</code>等于<code>[-0.25, 1.75)</code>，也就是说三角形的整体走势在x方向上是向右的，偶尔会向左，大小在<code>[0, 1.75*f)</code>的范围间随机</li>
+<li>q1到q2的y方向增幅为<code>(Math.random()*2 - 1.1)*f</code>，<code>(Math.random()*2 - 1.1)</code>等于<code>[-1.1, 0.9)</code>，也就是说三角形的整体走势在y方向上更多的概率是向上走的，大小在<code>[0, 1.1*f)</code>范围间随机。设置为1.1，我觉得本意是让三角形条能更多地经过内容区。设置为1.3的话，太靠上，不可；设置为1的话，由于左边起点为0.7*h，内容区在0.5左右，总体还是太靠下了。尝试了下1.2的效果也还可以</li>
+</ul>
+<h3 id="取色算法"><a href="#取色算法" class="headerlink" title="取色算法"></a>取色算法</h3><p>颜色的取值也是重头戏，看下他是如何取到这么漂亮的颜色的。关键的一条颜色赋值代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&apos;#&apos;+(v(r)*127+128&lt;&lt;16 | v(r+u/3)*127+128&lt;&lt;8 | v(r+u/3*2)*127+128).toString(16)</div><div class="line"></div><div class="line">其中v = Math.cos，u = 2*Math.PI; r = 0，r = r + Math.PI/25</div></pre></td></tr></table></figure>
+<p>有个转化，<code>(R,G,B)</code>转成十六进制的颜色值可以用<code>(R &lt;&lt; 16 | G &lt;&lt; 8 | B).toString(16)</code>。也就是说，上面的颜色取值相当于：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">R = cos(r)*127+128;</div><div class="line">G = cos(r+2*PI/3)*127+128;  </div><div class="line">B = cos(r+4*PI/3)*127+128);</div></pre></td></tr></table></figure>
+<p>那么<code>r</code>的取值范围是什么呢？按着每次迭代<code>Math.PI/25</code>的增幅，这决定于屏幕能绘制多少个三角形。上面分析过，三角形在x方向上的增幅为<code>[-0.25*f, 1.75*f)</code>，那么平均的增幅为<code>0.75*f</code>即67.5。假设取一般台式机屏幕的宽度为1440，那么平均可以绘制1440/67.5（20.5）个三角形。 所以，<code>r</code>的取值范围为<code>[0, Math.PI*4/5)</code>。每点击一次屏幕，继续绘制下一组三角形，<code>r</code>继续增加。由于余弦函数是周期函数，彩条的颜色也会周期性地出现重复。直接画出图像：</p>
+<p><img src="http://img.blog.csdn.net/20170802115748555?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>这样就很直观得看到三色的走势，仔细观察页面上的进度条，真的会出现周期性的颜色。 </p>
+<p>突然，我明白了为什么颜色这么设置了。当然这不是唯一的取色方法。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总的来说，这是个很小的但充满智慧的项目。</p>
+<p>说点我对这段代码代码的感受，格式规范，风格一致。统一没有分号，前面一次性定义好所有的变量，而且变量名字很简短。连函数名也只有一个字母。我觉得对于这么简单的程序没有问题，看起来像是打包后的代码。但是，复杂的程序命名这么简单会让人有点迷糊。</p>
+<p>另外，这次改版我有个深刻的感受。由于页面的内容是可配置的，所以DOM内容是不确定的。之前比较懒，直接在JS里面创建DOM，然后改版再改版，又要重写真是烦不胜烦。然后，正在研究EvanYou个人主页的我，突然想到为何不尝试一下Vue呢？不是说它是渐进式框架吗？在Html引用一下，直接就可以用了！！！果然好用！</p>
+<p>上一张改版后的效果：<br><img src="http://img.blog.csdn.net/20170802115814562?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZmVuNzQ3MDQyNzk2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>最后，感谢EvanYou，为本文提供了素材；感谢Vue，给我的小项目带来了便利。不当之处，欢迎指出！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/15/Angular变化检测机制：改善的脏检查/" rel="next" title="Angular变化检测机制：改善的脏检查">
+                <i class="fa fa-chevron-left"></i> Angular变化检测机制：改善的脏检查
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/04/【荐】Angular常见误区/" rel="prev" title="Angular常见误区">
+                Angular常见误区 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Claire_Yecao" />
+          <p class="site-author-name" itemprop="name">Claire_Yecao</p>
+           
+              <p class="site-description motion-element" itemprop="description">Try and fail, but don't fail to try.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#缘起"><span class="nav-number">1.</span> <span class="nav-text">缘起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初印象"><span class="nav-number">2.</span> <span class="nav-text">初印象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考"><span class="nav-number">3.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码解读"><span class="nav-number">4.</span> <span class="nav-text">源码解读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三角形绘制"><span class="nav-number">4.1.</span> <span class="nav-text">三角形绘制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取色算法"><span class="nav-number">4.2.</span> <span class="nav-text">取色算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claire_Yecao</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
